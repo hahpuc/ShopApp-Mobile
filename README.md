@@ -55,6 +55,12 @@ flutter pub run intl_utils:generate
 ```bash  
 flutter pub run flutter_launcher_icons:main
 ```  
+
+### Generate images   
+```bash  
+flutter packages pub run build_runner build
+```  
+
 ## Project Structure
 bloc/: Reusable blocs  
 commons/: mixins (loading view, post frame callback,...), helper classes  
