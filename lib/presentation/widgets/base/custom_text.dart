@@ -4,7 +4,7 @@ import 'package:furniture_shop/values/font_sizes.dart';
 
 class CustomText extends StatelessWidget {
   CustomText(this.text,
-      {this.fontFamily = FontFamily.poppins,
+      {this.fontFamily = FontFamily.nutinoSans,
       this.fontStyle = FontStyle.normal,
       this.color = Colors.black,
       this.fontSize = FontSize.MEDIUM,
