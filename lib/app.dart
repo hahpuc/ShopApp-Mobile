@@ -8,6 +8,7 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
+import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
 import 'package:furniture_shop/values/colors.dart';
 
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: HomePage(),
+              home: ProductDetailPage(),
             );
           }),
     );
@@ -63,10 +64,10 @@ class MyApp extends StatelessWidget {
     return ThemeData(
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
-        fontFamily: FontFamily.poppins,
+        fontFamily: FontFamily.nutinoSans,
         textTheme: Theme.of(context).textTheme.apply(
             bodyColor: AppColor.colorTextNormal,
-            fontFamily: FontFamily.poppins),
+            fontFamily: FontFamily.nutinoSans),
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
         ));
