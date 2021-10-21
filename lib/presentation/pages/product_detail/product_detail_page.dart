@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
@@ -10,6 +14,9 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
+import 'bloc/product_detail_bloc.dart';
+import 'bloc/product_detail_state.dart';
+
 class ProductDetailPage extends StatefulWidget {
   const ProductDetailPage({Key? key}) : super(key: key);
 
@@ -17,10 +24,19 @@ class ProductDetailPage extends StatefulWidget {
   _ProductDetailPageState createState() => _ProductDetailPageState();
 }
 
-class _ProductDetailPageState extends State<ProductDetailPage> {
+class _ProductDetailPageState extends State<ProductDetailPage>
+    with AfterLayoutMixin {
   final PageController _pageController = PageController(initialPage: 0);
 
+  ProductDetailPageBloc _bloc =
+      ProductDetailPageBloc(appRepository: locator.get());
+
   int currentQuantity = 1;
+
+  @override
+  void afterFirstFrame(BuildContext context) {
+    _bloc.getProductDetailsData('productID');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +53,35 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
+  _blocListener(BuildContext context, ProductDetailPageState state) async {
+    print("State $state");
+    if (state is ProductDetailPageLoadingState) {
+      EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
+    } else {
+      EasyLoading.dismiss();
+    }
+  }
+
   Widget _buildBody() {
-    return Stack(
-      children: [
-        _buildProductInformation(),
-        _buildFooterButton(),
-      ],
+    return BlocProvider(
+      create: (context) => _bloc,
+      child: BlocListener<ProductDetailPageBloc, ProductDetailPageState>(
+        listener: _blocListener,
+        child: BlocBuilder<ProductDetailPageBloc, ProductDetailPageState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            if (state is ProductDetailPageGetDataSuccessState)
+              return Stack(
+                children: [
+                  _buildProductInformation(),
+                  _buildFooterButton(),
+                ],
+              );
+
+            return Container();
+          },
+        ),
+      ),
     );
   }
 
