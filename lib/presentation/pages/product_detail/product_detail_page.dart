@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
+import 'package:furniture_shop/presentation/widgets/quantity_view.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -54,6 +56,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         child: Row(
           children: [
             SizedBox(width: 16.0),
+            IconButton(
+              iconSize: 50.0,
+              onPressed: () {},
+              icon: Image(
+                image: Assets.images.icAddWishList,
+              ),
+            ),
+            SizedBox(width: 8.0),
             Expanded(
               child: PrimaryButton(
                 title: 'Add to cart',
@@ -142,49 +152,4 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   void _onMinusTapped() {}
 
   void _onPlusTapped() {}
-}
-
-class QuantityView extends StatefulWidget {
-  const QuantityView({
-    Key? key,
-    this.quantity = 1,
-    required this.onMinusTapped,
-    required this.onPlusTapped,
-  }) : super(key: key);
-
-  final int? quantity;
-  final Function onMinusTapped;
-  final Function onPlusTapped;
-
-  @override
-  _QuantityViewState createState() => _QuantityViewState();
-}
-
-class _QuantityViewState extends State<QuantityView> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: () {
-            widget.onMinusTapped();
-          },
-          icon: Icon(Icons.remove,
-              color: Colors.black, size: AppDimen.icon_size_small),
-        ),
-        CustomText(
-          widget.quantity.toString(),
-          fontSize: 16.0,
-          color: Colors.black,
-        ),
-        IconButton(
-          onPressed: () {
-            widget.onPlusTapped();
-          },
-          icon: Icon(Icons.add,
-              color: Colors.black, size: AppDimen.icon_size_small),
-        ),
-      ],
-    );
-  }
 }
