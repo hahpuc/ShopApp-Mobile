@@ -15,8 +15,8 @@ class ProductPicture extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30.0),
-        image:
-            DecorationImage(image: NetworkImage(imageUrl!), fit: BoxFit.cover),
+        image: DecorationImage(
+            image: NetworkImage(imageUrl ?? ''), fit: BoxFit.cover),
       ),
     );
   }

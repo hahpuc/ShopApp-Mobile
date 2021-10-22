@@ -92,10 +92,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       left: 0,
       right: 0,
       child: Container(
-        height: 100,
+        height: AppDimen.footerButtonHeight,
         child: Row(
           children: [
-            SizedBox(width: 16.0),
+            SizedBox(width: AppDimen.horizontalSpacing),
             IconButton(
               iconSize: 50.0,
               onPressed: () {},
@@ -103,14 +103,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 image: Assets.images.icAddWishList,
               ),
             ),
-            SizedBox(width: 8.0),
+            SizedBox(width: AppDimen.spacing_1),
             Expanded(
               child: PrimaryButton(
                 title: 'Add to cart',
                 onPressed: () {},
               ),
             ),
-            SizedBox(width: 16.0),
+            SizedBox(width: AppDimen.horizontalSpacing),
           ],
         ),
       ),
@@ -137,17 +137,17 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   Widget _buildDetailInfo(ProductDetailResponseData data) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(AppDimen.spacing_2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(data.name ?? '', fontSize: 24.0),
+          CustomText(data.name ?? '', fontSize: FontSize.BIG_1),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
                 data.price.toString() + ' \$',
-                fontSize: 30.0,
+                fontSize: FontSize.BIG_2,
                 fontWeight: FontWeight.w700,
               ),
               QuantityView(
@@ -158,7 +158,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             ],
           ),
           _buildRatingView(data),
-          SizedBox(height: 16.0),
+          SizedBox(height: AppDimen.verticalSpacing),
           CustomText(
             data.description ?? '',
             fontWeight: FontWeight.w300,
