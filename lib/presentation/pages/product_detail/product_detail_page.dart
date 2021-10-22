@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
+import 'package:furniture_shop/data/model/response/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
@@ -73,7 +74,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             if (state is ProductDetailPageGetDataSuccessState)
               return Stack(
                 children: [
-                  _buildProductInformation(),
+                  _buildProductInformation(state.data),
                   _buildFooterButton(),
                 ],
               );
@@ -116,7 +117,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildProductInformation() {
+  Widget _buildProductInformation(ProductDetailResponseData data) {
     return Positioned(
       top: 0,
       left: 0,
@@ -124,25 +125,28 @@ class _ProductDetailPageState extends State<ProductDetailPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfilePictureList(pageController: _pageController),
-          _buildDetailInfo()
+          ProfilePictureList(
+            pageController: _pageController,
+            images: data.images,
+          ),
+          _buildDetailInfo(data)
         ],
       ),
     );
   }
 
-  Widget _buildDetailInfo() {
+  Widget _buildDetailInfo(ProductDetailResponseData data) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText('Modern Lamp', fontSize: 24.0),
+          CustomText(data.name ?? '', fontSize: 24.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                '50.00 \$',
+                data.price.toString() + ' \$',
                 fontSize: 30.0,
                 fontWeight: FontWeight.w700,
               ),
@@ -153,10 +157,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               )
             ],
           ),
-          _buildRatingView(),
+          _buildRatingView(data),
           SizedBox(height: 16.0),
           CustomText(
-            'Morden Lamp is made of by natural wood.The design that is very simple and minimal. This is truly one of the best furnitures in any family for now. With 3 different colors, you can easily select the best match for your home. ',
+            data.description ?? '',
             fontWeight: FontWeight.w300,
           )
         ],
@@ -164,7 +168,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildRatingView() {
+  Widget _buildRatingView(ProductDetailResponseData data) {
     return Row(
       children: [
         Icon(
@@ -174,13 +178,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         ),
         SizedBox(width: AppDimen.spacing_1),
         CustomText(
-          '4.5',
+          data.ratingStar.toString(),
           color: AppColor.colorRatingStar,
           fontWeight: FontWeight.w700,
         ),
         SizedBox(width: AppDimen.spacing_1),
         CustomText(
-          "(233 review)",
+          "(" + data.reviews.toString() + " review)",
           color: AppColor.colorTextLight,
           fontSize: FontSize.SMALL,
         ),

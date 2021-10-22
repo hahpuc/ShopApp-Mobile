@@ -26,9 +26,11 @@ class ProfilePictureList extends StatelessWidget {
   const ProfilePictureList({
     Key? key,
     required this.pageController,
+    this.images,
   }) : super(key: key);
 
   final PageController pageController;
+  final List<String>? images;
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +41,8 @@ class ProfilePictureList extends StatelessWidget {
           PageView(
             controller: pageController,
             children: [
-              ProductPicture(
-                imageUrl:
-                    'http://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg',
-              ),
-              ProductPicture(
-                imageUrl:
-                    'http://res.cloudinary.com/dynk5q1io/image/upload/v1634120354/products/Gaming%20Table/z36qyy9awic0eltow6qi.jpg',
-              ),
-              Container(color: Colors.blue),
-              Container(color: Colors.pink),
+              for (int i = 0; i < images!.length; ++i)
+                ProductPicture(imageUrl: images?[i]),
             ],
           ),
           Positioned(
@@ -62,7 +56,7 @@ class ProfilePictureList extends StatelessWidget {
                 child: IndicatorView(
                   color: Colors.black,
                   pageController: pageController,
-                  count: 4,
+                  count: images!.length,
                 ),
               ),
             ),
