@@ -32,6 +32,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   ProductDetailPageBloc _bloc =
       ProductDetailPageBloc(appRepository: locator.get());
 
+  ScrollController _scrollController = ScrollController();
+
   int currentQuantity = 1;
 
   @override
@@ -74,6 +76,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             if (state is ProductDetailPageGetDataSuccessState)
               return Stack(
                 children: [
+                  Container(height: double.infinity, width: double.infinity),
                   _buildProductInformation(state.data),
                   _buildFooterButton(),
                 ],
@@ -118,10 +121,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
   Widget _buildProductInformation(ProductDetailResponseData data) {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,7 +129,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             pageController: _pageController,
             images: data.images,
           ),
-          _buildDetailInfo(data)
+          _buildDetailInfo(data),
+          SizedBox(height: AppDimen.footerButtonHeight),
         ],
       ),
     );
@@ -162,7 +163,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
           CustomText(
             data.description ?? '',
             fontWeight: FontWeight.w300,
-          )
+          ),
+          SizedBox(height: AppDimen.verticalSpacing),
         ],
       ),
     );
