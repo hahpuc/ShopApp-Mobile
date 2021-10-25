@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: ProductDetailPage(),
+              home: HomePage(),
             );
           }),
     );
@@ -69,21 +69,21 @@ class MyApp extends StatelessWidget {
             .textTheme
             .apply(bodyColor: Colors.black, fontFamily: FontFamily.nutinoSans),
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
         ));
   }
 
-  static void initSystemTheme() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
-        .copyWith(statusBarColor: Colors.transparent));
-  }
+  // static void initSystemTheme() {
+  //   SystemChrome.setSystemUIOverlayStyle(
+  //       SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.black));
+  // }
 
   static Future<void> appRunner(FlavorConfig flavorConfig) async {
     // Ready to call native code
     WidgetsFlutterBinding.ensureInitialized();
 
     // System overlay
-    MyApp.initSystemTheme();
+    // MyApp.initSystemTheme();
 
     // IoC
     await setupServiceLocator();

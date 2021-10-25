@@ -57,7 +57,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   _blocListener(BuildContext context, ProductDetailPageState state) async {
     print("State $state");
     if (state is ProductDetailPageLoadingState) {
-      EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
+      EasyLoading.show(status: 'Loading', maskType: EasyLoadingMaskType.black);
     } else {
       EasyLoading.dismiss();
     }
