@@ -1,5 +1,4 @@
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
-import 'package:furniture_shop/data/model/response/product_detail_response.dart';
 
 class CategoriesResponse extends BaseResponseData<CategoriesResponseData> {}
 

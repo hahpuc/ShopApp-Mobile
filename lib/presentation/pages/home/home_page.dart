@@ -6,8 +6,10 @@ import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail_response.dart';
+import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/home/home_bloc.dart';
 import 'package:furniture_shop/presentation/pages/home/home_state.dart';
+import 'package:furniture_shop/presentation/pages/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
@@ -99,7 +101,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin {
   }
 
   _buildCategories(List<CategoriesResponseData> data) {
-    return Expanded(
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
       child: ListView.builder(
         itemCount: data.length,
         scrollDirection: Axis.horizontal,
@@ -161,29 +164,80 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin {
   }
 
   _buildListProduct(BuildContext context, List<CategoriesResponseData> data) {
-    int _indexSelected;
+    int _indexSelected = 0;
     for (int i = 0; i < _isSelected.length; i++) {
       if (_isSelected[i]) {
         _indexSelected = i;
       }
     }
     List<ProductDetailResponseData>? list =
-        _bloc.getProductWithCategoriesID(data[1]);
-    print(list);
+        _bloc.getProductWithCategoriesID(data[_indexSelected]);
     return Expanded(
-      child: GridView.builder(
-          itemCount: 10,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 5,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              color: Colors.red,
-            );
-          }),
+      child: Container(
+        margin: EdgeInsets.symmetric(
+            vertical: AppDimen.spacing_3, horizontal: AppDimen.spacing_2),
+        child: Container(
+          child: GridView.builder(
+              itemCount: list?.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.6,
+                crossAxisSpacing: AppDimen.spacing_2,
+                mainAxisSpacing: AppDimen.spacing_2,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                final item = list![index];
+                return Container(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          alignment: Alignment.topLeft,
+                          children: [
+                            Image.network(
+                              item.images![0],
+                              width: 150,
+                              height: 200,
+                            ),
+                            Positioned(
+                              right: AppDimen.spacing_1,
+                              bottom: AppDimen.spacing_2,
+                              child: Container(
+                                child: Row(children: [
+                                  CustomText(item.ratingStar.toString()),
+                                  SvgPicture.asset(
+                                    Assets.images.star.path,
+                                    width: AppDimen.spacing_2,
+                                    height: AppDimen.spacing_2,
+                                  )
+                                ]),
+                              ),
+                            )
+                          ],
+                        ),
+                        CustomText(
+                          item.name ?? "",
+                          fontSize: FontSize.SMALL,
+                          color: AppColor.colorGrey,
+                        ),
+                        CustomText(
+                          item.price.toString() + r"$",
+                          fontSize: FontSize.SMALL,
+                          color: AppColor.colorBlack,
+                          fontWeight: FontWeight.bold,
+                        )
+                        // Stack(Image(
+                        //   image: list[index].images,
+                        // ))
+                      ],
+                    ),
+                  ),
+                );
+              }),
+        ),
+      ),
     );
   }
 }

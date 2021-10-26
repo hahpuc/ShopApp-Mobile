@@ -12,7 +12,6 @@ import 'package:furniture_shop/presentation/pages/demo/demo_bloc.dart';
 import 'package:furniture_shop/presentation/pages/demo/demo_state.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
-import 'package:furniture_shop/utils/network_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';

@@ -8,9 +8,7 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
-import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
-import 'package:furniture_shop/values/colors.dart';
 
 import 'bloc/app/app_bloc.dart';
 import 'bloc/locale/locale_bloc.dart';

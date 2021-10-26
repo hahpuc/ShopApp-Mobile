@@ -36,10 +36,10 @@ class HomePageBloc extends BlocBase<HomePageState> {
 
   List<ProductDetailResponseData>? getProductWithCategoriesID(
       CategoriesResponseData categoriesResponseData) {
-    List<ProductDetailResponseData>? listProduct;
+    List<ProductDetailResponseData> listProduct = [];
     listProductResponse.forEach((element) {
       if (element.categoriesID == categoriesResponseData.id) {
-        listProduct?.add(element);
+        listProduct.add(element);
       }
     });
     return listProduct;
