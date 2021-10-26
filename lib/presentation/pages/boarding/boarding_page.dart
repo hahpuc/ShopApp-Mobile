@@ -23,7 +23,7 @@ class BoardingPage extends StatelessWidget {
               left: 25,
               child: Text(
                 "MAKE YOUR",
-                style: TextStyle(fontSize: FontSize.BIG_2, color: Colors.white),
+                style: TextStyle(fontSize: FontSize.BIG_1, color: Colors.white),
               ),
             ),
             Positioned(
@@ -31,7 +31,7 @@ class BoardingPage extends StatelessWidget {
               left: 25,
               child: Text(
                 "HOME BEAUTIFUL",
-                style: TextStyle(fontSize: FontSize.BIG_3, color: Colors.white),
+                style: TextStyle(fontSize: FontSize.BIG_2, color: Colors.white),
               ),
             ),
             Positioned(
@@ -39,7 +39,7 @@ class BoardingPage extends StatelessWidget {
               left: 25,
               child: Text(
                 "The best simple place where you\n discover most wonderful furnitures\n and make your home beautiful",
-                style: TextStyle(fontSize: FontSize.BIG_1, color: Colors.white),
+                style: TextStyle(fontSize: FontSize.BIG, color: Colors.white),
               ),
             ),
             Positioned(
