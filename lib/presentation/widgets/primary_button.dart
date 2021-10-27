@@ -25,8 +25,18 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 50.0),
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: AppColor.colorPrimary.withOpacity(0.25),
+            spreadRadius: 0,
+            blurRadius: 20,
+            offset: Offset(0, 10), // changes position of shadow
+          ),
+        ],
+      ),
       child: CustomButton(
         title,
         padding: EdgeInsets.all(16),
