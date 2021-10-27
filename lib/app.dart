@@ -11,6 +11,7 @@ import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
+import 'package:furniture_shop/presentation/pages/sign_up/sign_up_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
 import 'package:furniture_shop/values/colors.dart';
 

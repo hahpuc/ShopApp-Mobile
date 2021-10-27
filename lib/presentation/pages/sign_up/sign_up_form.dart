@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_shop/configs/app_constants.dart';
-import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/presentation/pages/boarding/dock_button.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/form_error.dart';
+import 'package:furniture_shop/configs/app_constants.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class SignForm extends StatefulWidget {
+class SignUpForm extends StatefulWidget {
   @override
-  _SignFormState createState() => _SignFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignFormState extends State<SignForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+  String? name;
+  String? phoneNumber;
   String? email;
   String? password;
-  bool? remember = false;
+  String? conform_password;
+  bool remember = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -41,40 +43,32 @@ class _SignFormState extends State<SignForm> {
         children: [
           Padding(
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+              child: buildNameFormField()),
+          SizedBox(height: 10),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: buildEmailFormField()),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+              child: buildPhoneNumberFormField()),
+          SizedBox(height: 10),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: buildPasswordFormField()),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: horizonPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    "Forgot Password ?",
-                    style: TextStyle(
-                        fontSize: FontSize.SMALL, fontStyle: FontStyle.italic),
-                  ),
-                )
-              ],
-            ),
+            child: buildConformPassFormField(),
+          ),
+          SizedBox(
+            height: 15,
           ),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: FormError(errors: errors)),
-          SizedBox(
-            height: 170,
-          ),
           InkWell(
-            child: DockButton(name: "Sign In"),
+            child: DockButton(name: "Sign Un"),
             onTap: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -91,17 +85,17 @@ class _SignFormState extends State<SignForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Don't have an account? ",
+                "Already have an account? ",
                 style: TextStyle(fontSize: FontSize.SMALL),
               ),
               GestureDetector(
                 child: Text(
-                  "SIGN UP",
+                  "SIGN IN",
                   style: TextStyle(
                       fontSize: FontSize.SMALL, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, RoutePaths.SIGNUP);
+                  Navigator.pop(context);
                 },
               )
             ],
@@ -110,6 +104,38 @@ class _SignFormState extends State<SignForm> {
             height: 30,
           ),
         ],
+      ),
+    );
+  }
+
+  TextFormField buildConformPassFormField() {
+    return TextFormField(
+      obscureText: true,
+      onSaved: (newValue) => conform_password = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: AppConstants.kPassNullError);
+        }
+        if (value.isNotEmpty && password == conform_password) {
+          removeError(error: AppConstants.kMatchPassError);
+        }
+        conform_password = value;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: AppConstants.kPassNullError);
+        } else if ((password != value)) {
+          addError(error: AppConstants.kMatchPassError);
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Confirm Password",
+        //hintText: "Re-enter your password",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        //suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
   }
@@ -125,7 +151,7 @@ class _SignFormState extends State<SignForm> {
         if (value.length >= 8) {
           removeError(error: AppConstants.kShortPassError);
         }
-        return null;
+        password = value;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -169,6 +195,60 @@ class _SignFormState extends State<SignForm> {
       },
       decoration: InputDecoration(
         labelText: "Email",
+        //hintText: "Enter your email",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        //suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildNameFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      onSaved: (newValue) => name = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: AppConstants.kNamelNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: AppConstants.kNamelNullError);
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Name",
+        //hintText: "Enter your email",
+        // If  you are using latest version of flutter then lable text and hint text shown like this
+        // if you r using flutter less then 1.20.* then maybe this is not working properly
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        //suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+      ),
+    );
+  }
+
+  TextFormField buildPhoneNumberFormField() {
+    return TextFormField(
+      keyboardType: TextInputType.phone,
+      onSaved: (newValue) => phoneNumber = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty) {
+          removeError(error: AppConstants.kPhoneNumberNullError);
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          addError(error: AppConstants.kPhoneNumberNullError);
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        labelText: "Phone Number",
         //hintText: "Enter your email",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly

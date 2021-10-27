@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_shop/presentation/pages/sign_in/sign_form.dart';
+import 'package:furniture_shop/presentation/pages/sign_up/sign_up_form.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class SignInPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,23 +17,14 @@ class SignInPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: AppDimen.spacing_3),
               child: Text(
-                "Hello !",
-                style: TextStyle(
-                    fontSize: FontSize.BIG_1,
-                    color: Colors.black.withOpacity(0.5)),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: AppDimen.spacing_3),
-              child: Text(
-                "Welcome Back",
+                "Welcome",
                 style: TextStyle(fontSize: FontSize.BIG_2),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            SignForm(),
+            SignUpForm(),
           ],
         ),
       ),
