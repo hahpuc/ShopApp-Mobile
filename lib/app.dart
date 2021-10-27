@@ -8,6 +8,7 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
+import 'package:furniture_shop/presentation/pages/order/order_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/whish_list/whish_list_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: WhishListPage(),
+              home: OrderPage(),
             );
           }),
     );
