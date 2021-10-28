@@ -9,7 +9,8 @@ class AppColor {
 
   static const Color colorGrey = Color(0XFF909090);
   static const Color colorGreyLight = Color(0XFFE0E0E0);
-
+  static const Color colorBoxShadowProfile = Color(0XFF8A959E);
+  static const Color colorWhite = Color(0XFFFFFFFF);
   static const Color indicator = Color(0xFF555555);
 
   static const Color colorRatingStar = Color(0XFFFFCE31);
