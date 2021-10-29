@@ -18,6 +18,7 @@ import 'bloc/app/app_bloc.dart';
 import 'bloc/locale/locale_bloc.dart';
 import 'configs/flavor.dart';
 import 'generated/localization/l10n.dart';
+import 'presentation/pages/checkout/checkout_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: OrderPage(),
+              home: CheckOutPage(),
             );
           }),
     );
