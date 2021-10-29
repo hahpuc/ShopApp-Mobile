@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/presentation/pages/demo/demo_page.dart';
+import 'package:furniture_shop/presentation/pages/forgot_password/forgot_password_page.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
+import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_up/sign_up_page.dart';
 
 class RoutePaths {
   static const String DEMO = "/demo";
   static const String HOME = "/home";
   static const String SIGNUP = "/sign_up";
+  static const String SIGNIN = "/sign_in";
+  static const String FORGOTPASSWORD = "/forgot_password";
 }
 
 class Routes {
@@ -22,6 +26,12 @@ class Routes {
       case RoutePaths.SIGNUP:
         return MaterialPageRoute(
             builder: (_) => SignUpPage(), settings: settings);
+      case RoutePaths.SIGNIN:
+        return MaterialPageRoute(
+            builder: (_) => SignInPage(), settings: settings);
+      case RoutePaths.FORGOTPASSWORD:
+        return MaterialPageRoute(
+            builder: (_) => ForgotPasswordPage(), settings: settings);
       default:
         return null;
     }

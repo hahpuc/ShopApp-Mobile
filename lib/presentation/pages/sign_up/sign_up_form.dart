@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/presentation/pages/boarding/dock_button.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/form_error.dart';
 import 'package:furniture_shop/configs/app_constants.dart';
@@ -68,7 +69,7 @@ class _SignUpFormState extends State<SignUpForm> {
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: FormError(errors: errors)),
           InkWell(
-            child: DockButton(name: "Sign Un"),
+            child: DockButton(name: "SIGN UP"),
             onTap: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -95,7 +96,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       fontSize: FontSize.SMALL, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, RoutePaths.SIGNIN);
                 },
               )
             ],

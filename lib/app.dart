@@ -8,6 +8,8 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
+import 'package:furniture_shop/presentation/pages/forgot_password/forgot_password_form.dart';
+import 'package:furniture_shop/presentation/pages/forgot_password/forgot_password_page.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: SignInPage(),
+              home: ForgotPasswordPage(),
             );
           }),
     );

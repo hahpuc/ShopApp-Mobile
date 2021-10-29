@@ -6,16 +6,14 @@ import 'package:furniture_shop/presentation/pages/sign_in/form_error.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class SignForm extends StatefulWidget {
+class ForgotPasswordForm extends StatefulWidget {
   @override
-  _SignFormState createState() => _SignFormState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _SignFormState extends State<SignForm> {
+class _ForgotPasswordState extends State<ForgotPasswordForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
-  String? password;
-  bool? remember = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -47,36 +45,12 @@ class _SignFormState extends State<SignForm> {
           ),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
-              child: buildPasswordFormField()),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizonPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, RoutePaths.FORGOTPASSWORD);
-                  },
-                  child: Text(
-                    "Forgot Password ?",
-                    style: TextStyle(
-                        fontSize: FontSize.SMALL, fontStyle: FontStyle.italic),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: FormError(errors: errors)),
           SizedBox(
             height: 170,
           ),
           InkWell(
-            child: DockButton(name: "SIGN IN"),
+            child: DockButton(name: "CONTINUE"),
             onTap: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -112,38 +86,6 @@ class _SignFormState extends State<SignForm> {
             height: 30,
           ),
         ],
-      ),
-    );
-  }
-
-  TextFormField buildPasswordFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: AppConstants.kPassNullError);
-        }
-        if (value.length >= 8) {
-          removeError(error: AppConstants.kShortPassError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: AppConstants.kPassNullError);
-        } else if (value.length < 8) {
-          addError(error: AppConstants.kShortPassError);
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "Password",
-        //hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        //suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
   }
