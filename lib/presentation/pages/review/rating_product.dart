@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
@@ -44,7 +45,7 @@ class RatingProduct extends StatelessWidget {
               children: [
                 Icon(
                   IconData(0xe5f9, fontFamily: 'MaterialIcons'),
-                  color: Colors.yellow[600],
+                  color: AppColor.colorRatingStar,
                 ),
                 SizedBox(
                   width: 3,
@@ -62,8 +63,7 @@ class RatingProduct extends StatelessWidget {
             Text(
               "(${this.reviewCount} reviews)",
               style: TextStyle(
-                  fontSize: FontSize.SMALL,
-                  color: Colors.black.withOpacity(0.5)),
+                  fontSize: FontSize.SMALL, color: AppColor.colorTextLight),
             ),
           ],
         ),

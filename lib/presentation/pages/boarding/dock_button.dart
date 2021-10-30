@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
 class DockButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class DockButton extends StatelessWidget {
       width: buttonWidth,
       height: 50,
       decoration: BoxDecoration(
-          borderRadius: borderRadius, color: Colors.black.withOpacity(0.8)),
+          borderRadius: borderRadius, color: AppColor.colorPrimary),
       child: Center(
         child: Text(
           name,

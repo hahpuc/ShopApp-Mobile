@@ -8,7 +8,6 @@ class ReviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: CustomAppBar(title: Text("Rating & Review")),
       body: _buildBody(),
     );

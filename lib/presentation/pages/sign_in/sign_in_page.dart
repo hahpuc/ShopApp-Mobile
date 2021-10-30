@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/sign_form.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
@@ -11,16 +12,38 @@ class SignInPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: AppDimen.verticalSpacing),
             SizedBox(
               height: 65.0,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppDimen.spacing_3),
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Divider(
+                      color: Colors.black,
+                      height: 1,
+                      thickness: 1,
+                    ),
+                    Container(
+                      //child: Image,
+                      color: Colors.grey[50],
+                      height: 65.0,
+                      width: 100,
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 30,
             ),
             Padding(
               padding: EdgeInsets.only(left: AppDimen.spacing_3),
               child: Text(
                 "Hello !",
                 style: TextStyle(
-                    fontSize: FontSize.BIG_1,
-                    color: Colors.black.withOpacity(0.5)),
+                    fontSize: FontSize.BIG_1, color: AppColor.colorTextLight),
               ),
             ),
             Padding(
@@ -31,7 +54,7 @@ class SignInPage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             SignForm(),
           ],

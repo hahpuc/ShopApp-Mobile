@@ -73,7 +73,7 @@ class _SignFormState extends State<SignForm> {
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: FormError(errors: errors)),
           SizedBox(
-            height: 170,
+            height: 90,
           ),
           InkWell(
             child: DockButton(name: "SIGN IN"),

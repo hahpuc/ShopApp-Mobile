@@ -13,7 +13,7 @@ class FormError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: 140,
       child: Column(
         children: List.generate(
             errors.length, (index) => formErrorText(error: errors[index]!)),

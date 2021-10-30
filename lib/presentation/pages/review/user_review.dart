@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
@@ -18,10 +19,10 @@ class UserReview extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withOpacity(0.2),
             spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            blurRadius: 10,
+            offset: Offset(3, 3), // changes position of shadow
           ),
         ],
       ),
@@ -41,7 +42,7 @@ class UserReview extends StatelessWidget {
                   '${this.date}',
                   style: TextStyle(
                       fontSize: FontSize.SMALL_1,
-                      color: Colors.black.withOpacity(0.5)),
+                      color: AppColor.colorTextLight),
                 )
               ],
             ),
@@ -71,7 +72,7 @@ class UserReview extends StatelessWidget {
       _list.add(
         Icon(
           IconData(0xe5f9, fontFamily: 'MaterialIcons'),
-          color: Colors.yellow[600],
+          color: AppColor.colorRatingStar,
         ),
       );
     }
