@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/boarding/dock_button.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
@@ -23,7 +24,8 @@ class BoardingPage extends StatelessWidget {
               left: 25,
               child: Text(
                 "MAKE YOUR",
-                style: TextStyle(fontSize: FontSize.BIG_1, color: Colors.white),
+                style: TextStyle(
+                    fontSize: FontSize.BIG_1, color: AppColor.colorTextLight),
               ),
             ),
             Positioned(
