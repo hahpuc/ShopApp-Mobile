@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -33,16 +34,15 @@ class UserReview extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                CustomText(
                   '${this.name}',
-                  style: TextStyle(
-                      fontSize: FontSize.SMALL, fontWeight: FontWeight.w600),
+                  fontSize: FontSize.SMALL,
+                  fontWeight: FontWeight.w600,
                 ),
-                Text(
+                CustomText(
                   '${this.date}',
-                  style: TextStyle(
-                      fontSize: FontSize.SMALL_1,
-                      color: AppColor.colorTextLight),
+                  fontSize: FontSize.SMALL_1,
+                  color: AppColor.colorTextLight,
                 )
               ],
             ),
@@ -50,9 +50,9 @@ class UserReview extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(
+            CustomText(
               '${this.comment}',
-              style: TextStyle(fontSize: FontSize.SMALL),
+              fontSize: FontSize.SMALL,
             ),
           ],
         ),
@@ -71,7 +71,7 @@ class UserReview extends StatelessWidget {
     for (int i = 0; i < rate; i++) {
       _list.add(
         Icon(
-          IconData(0xe5f9, fontFamily: 'MaterialIcons'),
+          Icons.star,
           color: AppColor.colorRatingStar,
         ),
       );
@@ -79,7 +79,7 @@ class UserReview extends StatelessWidget {
     for (int i = 0; i < 5 - rate; i++) {
       _list.add(
         Icon(
-          IconData(0xe5f9, fontFamily: 'MaterialIcons'),
+          Icons.star,
           color: Colors.grey[300],
         ),
       );

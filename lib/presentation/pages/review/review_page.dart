@@ -14,6 +14,12 @@ class ReviewPage extends StatelessWidget {
   }
 }
 
+Widget _buildReview() {
+  return Column(
+    children: userReviews,
+  );
+}
+
 Widget _buildBody() {
   return SingleChildScrollView(
     child: Padding(
@@ -36,15 +42,42 @@ Widget _buildBody() {
           SizedBox(
             height: 10,
           ),
-          UserReview(
-            name: 'Võ Minh Đôn',
-            date: DateTime.now(),
-            rate: 2,
-            comment:
-                'Võ Minh Đôn, Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn Võ Minh Đôn.',
+          _buildReview(),
+          SizedBox(
+            height: AppDimen.verticalSpacing,
           )
         ],
       ),
     ),
   );
 }
+
+List<Widget> userReviews = [
+  UserReview(
+    name: 'Võ Minh Đôn',
+    date: DateTime.now(),
+    rate: 2,
+    comment:
+        'Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama ',
+  ),
+  SizedBox(
+    height: 20,
+  ),
+  UserReview(
+    name: 'Võ Minh Đôn',
+    date: DateTime.now(),
+    rate: 3,
+    comment:
+        'Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama ',
+  ),
+  SizedBox(
+    height: 20,
+  ),
+  UserReview(
+    name: 'Võ Minh Đôn',
+    date: DateTime.now(),
+    rate: 5,
+    comment:
+        'Ảo ma Canada, lazada, sakura, hashirama Ảo ma Canada, lazada, sakura, hashirama ',
+  )
+];

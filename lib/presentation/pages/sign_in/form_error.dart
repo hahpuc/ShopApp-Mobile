@@ -24,7 +24,7 @@ class FormError extends StatelessWidget {
   Row formErrorText({required String error}) {
     return Row(
       children: [
-        SvgPicture.asset($AssetsImagesGen().error.path),
+        SvgPicture.asset($AssetsImagesGen().icError.path),
         SizedBox(
           width: 10,
         ),

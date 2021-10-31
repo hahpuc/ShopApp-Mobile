@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -31,12 +32,10 @@ class RatingProduct extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            CustomText(
               name ?? '',
-              style: TextStyle(
-                fontSize: FontSize.SMALL,
-                fontWeight: FontWeight.w600,
-              ),
+              fontSize: FontSize.SMALL,
+              fontWeight: FontWeight.w600,
             ),
             SizedBox(
               height: 5,
@@ -44,26 +43,26 @@ class RatingProduct extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  IconData(0xe5f9, fontFamily: 'MaterialIcons'),
+                  Icons.star,
                   color: AppColor.colorRatingStar,
                 ),
                 SizedBox(
                   width: 3,
                 ),
-                Text(
+                CustomText(
                   '${this.rating}',
-                  style: TextStyle(
-                      fontSize: FontSize.BIG, fontWeight: FontWeight.w600),
+                  fontSize: FontSize.BIG,
+                  fontWeight: FontWeight.w600,
                 ),
               ],
             ),
             SizedBox(
               height: 3,
             ),
-            Text(
+            CustomText(
               "(${this.reviewCount} reviews)",
-              style: TextStyle(
-                  fontSize: FontSize.SMALL, color: AppColor.colorTextLight),
+              fontSize: FontSize.SMALL,
+              color: AppColor.colorTextLight,
             ),
           ],
         ),
