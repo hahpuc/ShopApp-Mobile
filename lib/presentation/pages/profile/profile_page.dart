@@ -10,6 +10,7 @@ import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/profile/profile_bloc.dart';
 import 'package:furniture_shop/presentation/pages/profile/profile_state.dart';
+import 'package:furniture_shop/presentation/pages/profile/widget/option_button_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
@@ -48,9 +49,10 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
       ),
       leading: SizedBox(),
       actions: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: AppDimen.spacing_2),
-          child: SvgPicture.asset(Assets.images.icLogout.path,
+        IconButton(
+          padding: EdgeInsets.symmetric(horizontal: AppDimen.spacing_2),
+          onPressed: () {},
+          icon: SvgPicture.asset(Assets.images.icLogout.path,
               color: AppColor.colorTextLight),
         ),
       ],
@@ -117,58 +119,33 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
   }
 
   Widget _buildOptions() {
-    List<String> listOptions = [
-      "My Orders",
-      "Shipping Addresses",
-      "Payment Method",
-      "Settings"
-    ];
     return Expanded(
         child: Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: AppDimen.spacing_2, vertical: AppDimen.spacing_large),
-      child: ListView.builder(
-          itemCount: listOptions.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
-              padding: EdgeInsets.symmetric(
-                  horizontal: AppDimen.spacing_3, vertical: AppDimen.spacing_3),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        listOptions[index],
-                        fontSize: FontSize.BIG,
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.colorPrimary,
-                      ),
-                      CustomText(
-                        "Already have 10 orders",
-                        fontSize: FontSize.SMALL_1,
-                        color: AppColor.colorTextLight,
-                      )
-                    ],
-                  ),
-                  SvgPicture.asset(Assets.images.icNavigation.path)
-                ],
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: AppColor.colorWhite,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColor.colorBoxShadowProfile.withOpacity(0.2),
-                    blurRadius: 40,
-                    offset: Offset(0, 7), // Shadow position
-                  ),
-                ],
-              ),
-            );
-          }),
-    ));
+            margin: EdgeInsets.symmetric(
+                horizontal: AppDimen.spacing_2,
+                vertical: AppDimen.spacing_large),
+            child: Column(
+              children: [
+                OptionButton(
+                  option: "My Orders",
+                  detail: "Already have 10 orders",
+                  onPress: null,
+                ),
+                OptionButton(
+                    option: "Shipping Addresses",
+                    detail: "03 Address",
+                    onPress: null),
+                OptionButton(
+                  option: "Payment Method",
+                  detail: "Zalopay, Momo,...",
+                  onPress: null,
+                ),
+                OptionButton(
+                  option: "Settings",
+                  detail: null,
+                  onPress: null,
+                )
+              ],
+            )));
   }
 }
