@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/notification_response.dart';
@@ -91,7 +90,7 @@ class _NotificationPageState extends State<NotificationPage>
                     ? AppColor.colorNotSeen
                     : Colors.white,
                 padding: EdgeInsets.symmetric(
-                    horizontal: AppDimen.spacing_3,
+                    horizontal: AppDimen.spacing_2,
                     vertical: AppDimen.spacing_2),
                 child: Row(
                   children: [
