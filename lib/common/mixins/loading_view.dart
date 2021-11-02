@@ -1,6 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-mixin LoadingView {
+mixin LoadingViewMixin {
   void showLoading({String? msg}) {
     EasyLoading.show(status: msg, maskType: EasyLoadingMaskType.black);
   }
