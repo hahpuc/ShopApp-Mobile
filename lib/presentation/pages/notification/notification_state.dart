@@ -6,8 +6,11 @@ class NotificationPageState extends BaseState {}
 class NotificationPageLoadingState extends NotificationPageState {}
 
 class NotificationPageGetDataSuccessState extends NotificationPageState {
-  final List<NotificationResponseData> data;
-  NotificationPageGetDataSuccessState(this.data);
+  int? page;
+  int? totalPages;
+  final List<NotificationResponseData>? data;
+
+  NotificationPageGetDataSuccessState({this.page, this.totalPages, this.data});
 }
 
 class NotificationPageGetDataFailState extends NotificationPageState {}

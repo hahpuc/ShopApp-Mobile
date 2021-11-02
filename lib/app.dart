@@ -63,20 +63,23 @@ class MyApp extends StatelessWidget {
 
   ThemeData _buildThemeData(BuildContext context) {
     return ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primarySwatch: Colors.blue,
-        fontFamily: FontFamily.nutinoSans,
-        textTheme: Theme.of(context)
-            .textTheme
-            .apply(bodyColor: Colors.black, fontFamily: FontFamily.nutinoSans),
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
-        ));
+      scaffoldBackgroundColor: Colors.white,
+      primarySwatch: Colors.blue,
+      fontFamily: FontFamily.nutinoSans,
+      textTheme: Theme.of(context)
+          .textTheme
+          .apply(bodyColor: Colors.black, fontFamily: FontFamily.nutinoSans),
+      appBarTheme: AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle.light, // 2
+      ),
+    );
   }
 
   static void initSystemTheme() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
-        .copyWith(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.white, // this one for android
+        statusBarBrightness: Brightness.light // this one for iOS
+        ));
   }
 
   static Future<void> appRunner(FlavorConfig flavorConfig) async {
