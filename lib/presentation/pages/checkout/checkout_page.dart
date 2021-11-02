@@ -34,19 +34,21 @@ class CheckOutPage extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        top: 0,
-        left: AppDimen.horizontalSpacing,
-        right: AppDimen.horizontalSpacing,
-        bottom: AppDimen.spacing_3,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildDetailList(),
-          _buildFooterInfo(),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 0,
+          left: AppDimen.horizontalSpacing,
+          right: AppDimen.horizontalSpacing,
+          bottom: AppDimen.spacing_3,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildDetailList(),
+            _buildFooterInfo(),
+          ],
+        ),
       ),
     );
   }

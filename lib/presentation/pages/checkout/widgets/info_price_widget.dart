@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -47,6 +48,7 @@ class InfoPriceWidget extends StatelessWidget {
             : '${price!.toStringAsFixed(2)}',
         style: TextStyle(
           fontSize: FontSize.BIG,
+          fontFamily: FontFamily.nutinoSans,
           color: AppColor.colorPrimary,
           fontWeight: fontWeight!,
         ),

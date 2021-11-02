@@ -49,9 +49,11 @@ class WhishListWidget extends StatelessWidget {
           color: statusWhish == 1 ? AppColor.colorGrey : Colors.transparent,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Icon(
+      child: IconButton(
+        onPressed: () {
+          print('CHOOSE PRODUCT');
+        },
+        icon: Icon(
           Icons.check,
           size: AppDimen.icon_size_small,
           color:

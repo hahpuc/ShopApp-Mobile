@@ -23,33 +23,38 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppDimen.verticalSpacing,
-        vertical: AppDimen.spacing_1,
-      ),
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(1, 1),
-                  blurRadius: 12,
-                  color: AppColor.colorPrimary.withOpacity(.15),
-                )
-              ],
+    return InkWell(
+      onTap: () {
+        print('Navigator to Order Detail');
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppDimen.verticalSpacing,
+          vertical: AppDimen.spacing_1,
+        ),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(1, 1),
+                    blurRadius: 12,
+                    color: AppColor.colorPrimary.withOpacity(.15),
+                  )
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildHeader(),
+                  _buildInfo(),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                _buildHeader(),
-                _buildInfo(),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

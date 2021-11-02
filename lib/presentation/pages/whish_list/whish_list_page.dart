@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/whish_list/widget/whish_list_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
+import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
+import 'package:furniture_shop/values/font_sizes.dart';
 
 class WhishListPage extends StatelessWidget {
   const WhishListPage({Key? key}) : super(key: key);
@@ -17,7 +21,12 @@ class WhishListPage extends StatelessWidget {
 
   CustomAppBar _buildAppBar() {
     return CustomAppBar(
-      title: Text('My cart'),
+      title: CustomText(
+        'My order',
+        fontFamily: FontFamily.gelasio,
+        fontSize: FontSize.BIG_1,
+        color: AppColor.colorPrimary,
+      ),
     );
   }
 

@@ -15,13 +15,18 @@ class PaymentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CardShadowWidget(
-      margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing),
-      child: Row(
-        children: [
-          _buildIconPayment(),
-          _buildNamePayment(),
-        ],
+    return InkWell(
+      onTap: () {
+        print('Change Payment');
+      },
+      child: CardShadowWidget(
+        margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing),
+        child: Row(
+          children: [
+            _buildIconPayment(),
+            _buildNamePayment(),
+          ],
+        ),
       ),
     );
   }
