@@ -11,6 +11,7 @@ class AppDimen {
   static const double footerButtonHeight = 100.0;
   static const double heightNotification = 100.0;
   static const double imageSquare = 70.0;
+  static const double avatarRadius = 100.0;
 
   static const double icon_size = 24.0;
   static const double icon_size_small = 14.0;

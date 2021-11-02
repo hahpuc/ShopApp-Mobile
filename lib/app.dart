@@ -10,6 +10,7 @@ import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
+import 'package:furniture_shop/presentation/pages/profile/profile_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
 import 'package:furniture_shop/values/colors.dart';
 
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: NotificationPage(),
+              home: ProfilePage(),
             );
           }),
     );
