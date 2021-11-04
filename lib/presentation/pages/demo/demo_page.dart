@@ -26,7 +26,7 @@ class DemoPage extends StatefulWidget {
 }
 
 class _DemoPageState extends State<DemoPage>
-    with AfterLayoutMixin, LoadingView {
+    with AfterLayoutMixin, LoadingViewMixin {
   late DemoBloc _bloc;
 
   @override
