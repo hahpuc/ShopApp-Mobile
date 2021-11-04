@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 
-class IconWhishList extends StatelessWidget {
+class IconWishList extends StatelessWidget {
   final IconData? icon;
   final Color? color;
   final Function()? onTap;
 
-  const IconWhishList({
+  const IconWishList({
     this.icon,
     this.color = AppColor.colorPrimary,
     this.onTap,

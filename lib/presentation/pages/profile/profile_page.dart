@@ -96,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
           CircleAvatar(
             maxRadius: 50,
             child: Image.asset(
-              Assets.images.nancy.path,
+              Assets.images.imgNancy.path,
               width: AppDimen.avatarRadius,
               height: AppDimen.avatarRadius,
             ),

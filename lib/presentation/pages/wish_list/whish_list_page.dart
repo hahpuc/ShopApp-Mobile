@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
-import 'package:furniture_shop/presentation/pages/whish_list/widget/whish_list_widget.dart';
+import 'package:furniture_shop/presentation/pages/wish_list/widget/whish_list_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
@@ -8,8 +8,8 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class WhishListPage extends StatelessWidget {
-  const WhishListPage({Key? key}) : super(key: key);
+class WishListPage extends StatelessWidget {
+  const WishListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class WhishListPage extends StatelessWidget {
         },
         itemCount: 4,
         itemBuilder: (context, index) {
-          return WhishListWidget(
+          return WishListWidget(
             checked: true,
             imageUrl:
                 'http://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg',

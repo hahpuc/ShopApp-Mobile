@@ -5,16 +5,16 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-import 'icon_whishlist_widget.dart';
+import 'icon_wishlist_widget.dart';
 
-class WhishListWidget extends StatelessWidget {
+class WishListWidget extends StatelessWidget {
   final String? title;
   final String? imageUrl;
   final double? price;
   final bool? checked;
   final int? statusWhish;
 
-  const WhishListWidget({
+  const WishListWidget({
     this.title,
     this.imageUrl,
     this.price,
@@ -107,7 +107,7 @@ class WhishListWidget extends StatelessWidget {
   }
 
   Widget _buildButtonMore(BuildContext context) {
-    return IconWhishList(
+    return IconWishList(
       onTap: () {
         showModalBottomSheet(
           context: context,
@@ -177,7 +177,7 @@ class WhishListWidget extends StatelessWidget {
             fontSize: FontSize.BIG,
             fontWeight: FontWeight.w600,
           ),
-          IconWhishList(
+          IconWishList(
             icon: Icons.close,
             color: AppColor.colorGrey,
             onTap: () => Navigator.pop(context),
@@ -195,7 +195,7 @@ class WhishListWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
         child: Row(
           children: [
-            IconWhishList(icon: icon, color: AppColor.colorGrey),
+            IconWishList(icon: icon, color: AppColor.colorGrey),
             const SizedBox(width: AppDimen.spacing_2),
             CustomText(
               title!,
