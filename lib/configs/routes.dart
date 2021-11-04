@@ -4,6 +4,7 @@ import 'package:furniture_shop/presentation/pages/forgot_password/forgot_passwor
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_up/sign_up_page.dart';
+import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
 
 class RoutePaths {
   static const String DEMO = "/demo";
@@ -11,6 +12,7 @@ class RoutePaths {
   static const String SIGNUP = "/sign_up";
   static const String SIGNIN = "/sign_in";
   static const String FORGOTPASSWORD = "/forgot_password";
+  static const String NOTIFICATION_PAGE = '/notification';
 }
 
 class Routes {
@@ -32,6 +34,10 @@ class Routes {
       case RoutePaths.FORGOTPASSWORD:
         return MaterialPageRoute(
             builder: (_) => ForgotPasswordPage(), settings: settings);
+
+      case RoutePaths.NOTIFICATION_PAGE:
+        return MaterialPageRoute(
+            builder: (_) => NotificationPage(), settings: settings);
       default:
         return null;
     }
