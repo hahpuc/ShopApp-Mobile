@@ -41,6 +41,8 @@ class WhishListWidget extends StatelessWidget {
 
   Widget _buildRadioCheckbox() {
     return Container(
+      width: 32.0,
+      height: 32.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: statusWhish == 1 ? Colors.white : Colors.black,
@@ -55,7 +57,7 @@ class WhishListWidget extends StatelessWidget {
         },
         icon: Icon(
           Icons.check,
-          size: AppDimen.icon_size_small,
+          size: 16.0,
           color:
               statusWhish == 1 ? AppColor.colorGrey : AppColor.colorGreyLight,
         ),

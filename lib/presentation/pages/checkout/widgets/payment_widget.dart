@@ -33,7 +33,7 @@ class PaymentWidget extends StatelessWidget {
 
   Widget _buildIconPayment() {
     return Container(
-      child: Assets.images.card.image(),
+      child: Assets.images.icMomo.image(),
     );
   }
 

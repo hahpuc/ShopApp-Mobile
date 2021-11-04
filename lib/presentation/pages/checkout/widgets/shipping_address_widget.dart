@@ -61,7 +61,7 @@ class ShippingAddressWidget extends StatelessWidget {
   Widget _buildButtonIcon() {
     return InkWell(
       onTap: () {},
-      child: Assets.images.edit2.image(),
+      child: Assets.images.icEdit.image(),
     );
   }
 
