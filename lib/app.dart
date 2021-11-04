@@ -7,6 +7,7 @@ import 'package:furniture_shop/bloc/locale/locale_state.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/cart/my_cart_page.dart';
 import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/order/order_page.dart';

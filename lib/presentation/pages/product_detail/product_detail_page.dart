@@ -32,8 +32,6 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   ProductDetailPageBloc _bloc =
       ProductDetailPageBloc(appRepository: locator.get());
 
-  ScrollController _scrollController = ScrollController();
-
   int currentQuantity = 1;
 
   @override

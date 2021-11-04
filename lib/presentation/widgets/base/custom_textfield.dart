@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField(
       {required this.textController,
-      this.fontFamily = FontFamily.poppins,
+      this.fontFamily = FontFamily.nutinoSans,
       this.fontStyle = FontStyle.normal,
       this.textColor = Colors.black,
       this.contentPadding,
-      this.hintTextColor = Colors.black,
+      this.hintTextColor = AppColor.colorTextLight,
       this.hintText,
       this.fontSize = FontSize.MEDIUM,
       this.maxLines = 1,
