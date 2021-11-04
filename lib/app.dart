@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
             .textTheme
             .apply(bodyColor: Colors.black, fontFamily: FontFamily.nutinoSans),
         appBarTheme: AppBarTheme(
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
         ));
   }
 

@@ -69,32 +69,6 @@ class _ForgotPasswordState extends State<ForgotPasswordForm> {
               ],
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          RichText(
-            text: TextSpan(
-              style: DefaultTextStyle.of(context).style,
-              children: [
-                TextSpan(
-                  text: "Don't have an account? ",
-                  style: TextStyle(
-                      fontSize: FontSize.SMALL, color: AppColor.colorTextLight),
-                ),
-                TextSpan(
-                  text: "SIGN UP",
-                  style: TextStyle(
-                      fontSize: FontSize.SMALL, fontWeight: FontWeight.bold),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap =
-                        () => {Navigator.pushNamed(context, RoutePaths.SIGNUP)},
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
         ],
       ),
     );

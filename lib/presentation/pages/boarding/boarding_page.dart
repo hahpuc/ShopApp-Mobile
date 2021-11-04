@@ -15,7 +15,7 @@ class BoardingPage extends StatelessWidget {
         child: Stack(
           children: [
             Image(
-              image: $AssetsImagesGen().imgBackground,
+              image: Assets.images.imgBackground,
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,
@@ -62,7 +62,7 @@ class BoardingPage extends StatelessWidget {
                         child: PrimaryButton(
                           title: "GET START",
                           onPressed: () {
-                            Navigator.pushNamed(context, RoutePaths.SIGNIN);
+                            Navigator.of(context).pushNamed(RoutePaths.SIGNIN);
                           },
                         ),
                       ),

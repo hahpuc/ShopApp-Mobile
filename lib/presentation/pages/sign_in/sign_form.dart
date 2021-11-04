@@ -46,13 +46,13 @@ class _SignFormState extends State<SignForm> {
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: buildEmailFormField()),
           SizedBox(
-            height: 10,
+            height: 16.0,
           ),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: horizonPadding),
               child: buildPasswordFormField()),
           SizedBox(
-            height: 10,
+            height: 16.0,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: horizonPadding),
@@ -123,7 +123,7 @@ class _SignFormState extends State<SignForm> {
             ),
           ),
           SizedBox(
-            height: 30,
+            height: 16.0,
           ),
         ],
       ),
