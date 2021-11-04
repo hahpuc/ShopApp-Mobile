@@ -9,6 +9,9 @@ import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
+import 'package:furniture_shop/presentation/pages/order/order_page.dart';
+import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
+import 'package:furniture_shop/presentation/pages/whish_list/whish_list_page.dart';
 import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/profile/profile_page.dart';
@@ -19,6 +22,7 @@ import 'bloc/app/app_bloc.dart';
 import 'bloc/locale/locale_bloc.dart';
 import 'configs/flavor.dart';
 import 'generated/localization/l10n.dart';
+import 'presentation/pages/checkout/checkout_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
