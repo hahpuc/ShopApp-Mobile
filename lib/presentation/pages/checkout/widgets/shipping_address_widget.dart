@@ -62,7 +62,7 @@ class ShippingAddressWidget extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: SvgPicture.asset(
-        Assets.images.icEdit.path,
+        Assets.images.icEditSvg.path,
         height: 24.0,
         width: 24.0,
       ),

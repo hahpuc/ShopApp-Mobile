@@ -127,7 +127,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     fontWeight: FontWeight.bold,
                   ),
                   SvgPicture.asset(
-                    Assets.images.icEdit.path,
+                    Assets.images.icEditSvg.path,
                     height: 24.0,
                     width: 24.0,
                   ),

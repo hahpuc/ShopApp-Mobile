@@ -11,10 +11,12 @@ import 'package:furniture_shop/presentation/pages/cart/my_cart_page.dart';
 import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/order/order_page.dart';
+import 'package:furniture_shop/presentation/pages/order_detail/order_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/profile/profile_page.dart';
+import 'package:furniture_shop/presentation/pages/wish_list/whish_list_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
 import 'package:furniture_shop/values/colors.dart';
 

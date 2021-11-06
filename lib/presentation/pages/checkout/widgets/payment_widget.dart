@@ -20,7 +20,7 @@ class PaymentWidget extends StatelessWidget {
         print('Change Payment');
       },
       child: CardShadowWidget(
-        margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing),
+        padding: 16.0,
         child: Row(
           children: [
             _buildIconPayment(),
