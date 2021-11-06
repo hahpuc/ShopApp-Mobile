@@ -17,4 +17,5 @@ class AppDimen {
   static const double icon_size_small = 14.0;
 
   static const double radiusNormal = 8.0;
+  static const double radiusMedium = 16.0;
 }

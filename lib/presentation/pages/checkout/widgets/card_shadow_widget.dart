@@ -28,9 +28,10 @@ class CardShadowWidget extends StatelessWidget {
         color: backgroundColor,
         boxShadow: [
           BoxShadow(
-            offset: Offset(1, 1),
-            blurRadius: 10,
-            color: AppColor.colorPrimary.withOpacity(.15),
+            color: AppColor.colorDropShadow.withOpacity(0.20),
+            spreadRadius: 0.0,
+            blurRadius: 40.0,
+            offset: Offset(0.0, 8.0), // changes position of shadow
           ),
         ],
       ),
