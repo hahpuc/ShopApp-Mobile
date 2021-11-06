@@ -11,3 +11,8 @@ class AppConstants {
   static const String kNamelNullError = "Please Enter your name";
   static const String kPhoneNumberNullError = "Please Enter your phone number";
 }
+
+class AppPayment {
+  static final zalo = 'Zalo';
+  static final momo = 'Momo';
+}

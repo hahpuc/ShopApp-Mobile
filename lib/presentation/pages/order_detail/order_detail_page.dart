@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:furniture_shop/configs/app_constants.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/card_shadow_widget.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/info_price_widget.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/payment_widget.dart';
+import 'package:furniture_shop/presentation/widgets/card_shadow_widget.dart';
+import 'package:furniture_shop/presentation/widgets/horizontal_informations_widget.dart';
+import 'package:furniture_shop/presentation/widgets/payment_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/base/footer_scroll_view.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
+import 'package:furniture_shop/presentation/widgets/shipping_information_widget.dart';
 import 'package:furniture_shop/presentation/widgets/time_line_view.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
@@ -91,9 +93,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         ],
       ),
       SizedBox(height: AppDimen.verticalSpacing),
-      Divider(color: AppColor.indicator, height: 1.0),
-      SizedBox(height: AppDimen.verticalSpacing),
       TimeLiveView(),
+      SizedBox(height: AppDimen.verticalSpacing),
+      Divider(color: AppColor.indicator, height: 1.0),
       SizedBox(height: AppDimen.verticalSpacing),
     ];
   }
@@ -111,47 +113,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         ],
       ),
       SizedBox(height: AppDimen.verticalSpacing),
-      CardShadowWidget(
-        padding: 0.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(AppDimen.spacing_2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    'Long Nguyen',
-                    fontSize: FontSize.BIG,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  SvgPicture.asset(
-                    Assets.images.icEditSvg.path,
-                    height: 24.0,
-                    width: 24.0,
-                  ),
-                ],
-              ),
-            ),
-            Divider(height: 1.0, color: AppColor.indicator),
-            SizedBox(height: AppDimen.verticalSpacing),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimen.horizontalSpacing),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText('(+84) 123456789', color: AppColor.colorTextLight),
-                  SizedBox(height: AppDimen.spacing_1),
-                  CustomText('Nha xx, Duong xx, Quan XX, Tp XXX, Tỉnh XX',
-                      color: AppColor.colorTextLight)
-                ],
-              ),
-            ),
-            SizedBox(height: AppDimen.verticalSpacing),
-          ],
-        ),
+      ShippingInformation(
+        name: 'Long Nguyen',
+        phoneNumber: '(+84) 123456789',
+        address: '123 Nguyen Van Linh, District 1, Ho Chi Minh City',
       ),
     ];
   }
@@ -228,7 +193,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       SizedBox(height: AppDimen.verticalSpacing),
       Container(
         height: 75.0,
-        child: PaymentWidget(),
+        child: PaymentWidget(
+          namePayment: AppPayment.momo,
+          icon: Assets.images.icMomo.image(),
+        ),
       ),
     ];
   }
@@ -242,18 +210,26 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            InfoPriceWidget(title: 'Order ID', price: 70),
-            InfoPriceWidget(title: 'Order Time', price: 15),
-            InfoPriceWidget(title: 'Payment Time', price: 15),
-            InfoPriceWidget(
-              title: 'Ship time',
-              price: 20,
-              discount: true,
+            HorizontalInformations(
+              title: 'Order ID',
+              value: '210909T28121W6XD',
+              fontWeight: FontWeight.bold,
             ),
-            InfoPriceWidget(
+            HorizontalInformations(
+              title: 'Order Time',
+              value: '09-09-2021 21:09',
+            ),
+            HorizontalInformations(
+              title: 'Payment Time',
+              value: '09-09-2021 21:15',
+            ),
+            HorizontalInformations(
+              title: 'Shipping Time',
+              value: '11-09-2021 09:05',
+            ),
+            HorizontalInformations(
               title: 'Completed time',
-              price: 20,
-              fontWeight: FontWeight.w700,
+              value: '22-09-2021 11:03',
             ),
           ],
         ),

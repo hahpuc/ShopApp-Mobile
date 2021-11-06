@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/card_shadow_widget.dart';
+import 'package:furniture_shop/presentation/widgets/card_shadow_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 import '/values/dimens.dart';
 
 class PaymentWidget extends StatelessWidget {
   final String? namePayment;
+  final Image? icon;
 
   const PaymentWidget({
-    this.namePayment = 'Momo',
     Key? key,
+    this.namePayment,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class PaymentWidget extends StatelessWidget {
         child: Row(
           children: [
             _buildIconPayment(),
+            SizedBox(width: AppDimen.horizontalSpacing),
             _buildNamePayment(),
           ],
         ),
@@ -33,7 +36,8 @@ class PaymentWidget extends StatelessWidget {
 
   Widget _buildIconPayment() {
     return Container(
-      child: Assets.images.icMomo.image(),
+      //   child: Assets.images.icMomo.image(),
+      child: icon,
     );
   }
 

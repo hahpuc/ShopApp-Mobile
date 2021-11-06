@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/configs/app_constants.dart';
+import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/card_shadow_widget.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/info_price_widget.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/payment_widget.dart';
-import 'package:furniture_shop/presentation/pages/checkout/widgets/shipping_address_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
+import 'package:furniture_shop/presentation/widgets/card_shadow_widget.dart';
+import 'package:furniture_shop/presentation/widgets/horizontal_informations_widget.dart';
+import 'package:furniture_shop/presentation/widgets/payment_widget.dart';
+import 'package:furniture_shop/presentation/widgets/shipping_information_widget.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -87,11 +89,18 @@ class CheckOutPage extends StatelessWidget {
   }
 
   Widget _buildDetailShippingAddress() {
-    return ShippingAddressWidget();
+    return ShippingInformation(
+      name: 'Long Nguyen',
+      phoneNumber: '(+84) 123456789',
+      address: '123 Nguyen Van Linh, District 1, Ho Chi Minh City',
+    );
   }
 
   Widget __buildDetailPayment() {
-    return PaymentWidget();
+    return PaymentWidget(
+      namePayment: AppPayment.zalo,
+      icon: Assets.images.icZalo.image(),
+    );
   }
 
   Widget _buildInfoPrice() {
@@ -101,17 +110,22 @@ class CheckOutPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InfoPriceWidget(title: 'Order', price: 70),
-          InfoPriceWidget(title: 'Delivery', price: 15),
-          InfoPriceWidget(
-            title: 'Discount',
-            price: 20,
-            discount: true,
+          HorizontalInformations(
+            title: 'Order',
+            value: '70.00 \$',
           ),
-          InfoPriceWidget(
+          HorizontalInformations(
+            title: 'Delivery',
+            value: '15.00 \$',
+          ),
+          HorizontalInformations(
+            title: 'Discount',
+            value: '-20.00 \$',
+          ),
+          HorizontalInformations(
             title: 'Total',
-            price: 20,
-            fontWeight: FontWeight.w700,
+            value: '65.00 \$',
+            fontWeight: FontWeight.bold,
           ),
         ],
       ),
