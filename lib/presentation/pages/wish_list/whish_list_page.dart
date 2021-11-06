@@ -22,11 +22,12 @@ class WishListPage extends StatelessWidget {
   CustomAppBar _buildAppBar() {
     return CustomAppBar(
       title: CustomText(
-        'My order',
+        'Wish List',
         fontFamily: FontFamily.gelasio,
         fontSize: FontSize.BIG_1,
         color: AppColor.colorPrimary,
       ),
+      leading: Container(),
     );
   }
 
