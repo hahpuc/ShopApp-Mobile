@@ -18,4 +18,6 @@ class AppDimen {
 
   static const double radiusNormal = 8.0;
   static const double radiusMedium = 16.0;
+
+  static const double bottomNavigationIcon = 20.0;
 }
