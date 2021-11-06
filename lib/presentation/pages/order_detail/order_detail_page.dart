@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/checkout/widgets/card_shadow_widget.dart';
+import 'package:furniture_shop/presentation/pages/checkout/widgets/info_price_widget.dart';
+import 'package:furniture_shop/presentation/pages/checkout/widgets/payment_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/base/footer_scroll_view.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
+import 'package:furniture_shop/presentation/widgets/time_line_view.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -66,6 +70,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           ..._buildShippingInformation(),
           ..._buildDeliveryAddress(),
           ..._buildListItem(),
+          ..._buildPaymentInfo(),
+          ..._buildInfoPrice(),
         ],
       ),
     );
@@ -87,6 +93,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       SizedBox(height: AppDimen.verticalSpacing),
       Divider(color: AppColor.indicator, height: 1.0),
       SizedBox(height: AppDimen.verticalSpacing),
+      TimeLiveView(),
+      SizedBox(height: AppDimen.verticalSpacing),
     ];
   }
 
@@ -103,20 +111,8 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         ],
       ),
       SizedBox(height: AppDimen.verticalSpacing),
-      Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimen.spacing_2),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: AppColor.colorDropShadow.withOpacity(0.20),
-              spreadRadius: 0.0,
-              blurRadius: 40.0,
-              offset: Offset(0.0, 8.0), // changes position of shadow
-            ),
-          ],
-        ),
+      CardShadowWidget(
+        padding: 0.0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -156,12 +152,14 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
             SizedBox(height: AppDimen.verticalSpacing),
           ],
         ),
-      )
+      ),
     ];
   }
 
   List<Widget> _buildListItem() {
     return [
+      SizedBox(height: AppDimen.verticalSpacing),
+
       for (int i = 0; i < 2; ++i) ..._buildItem(),
       SizedBox(height: AppDimen.verticalSpacing),
 
@@ -218,6 +216,47 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       Divider(
         color: AppColor.colorGreyLight,
         height: 1.0,
+      )
+    ];
+  }
+
+  List<Widget> _buildPaymentInfo() {
+    return [
+      SizedBox(height: AppDimen.verticalSpacing),
+      CustomText('Payment',
+          fontSize: FontSize.BIG, fontWeight: FontWeight.bold),
+      SizedBox(height: AppDimen.verticalSpacing),
+      Container(
+        height: 75.0,
+        child: PaymentWidget(),
+      ),
+    ];
+  }
+
+  List<Widget> _buildInfoPrice() {
+    return [
+      SizedBox(height: AppDimen.verticalSpacing),
+      CardShadowWidget(
+        padding: AppDimen.verticalSpacing,
+        margin: const EdgeInsets.symmetric(vertical: AppDimen.verticalSpacing),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InfoPriceWidget(title: 'Order ID', price: 70),
+            InfoPriceWidget(title: 'Order Time', price: 15),
+            InfoPriceWidget(title: 'Payment Time', price: 15),
+            InfoPriceWidget(
+              title: 'Ship time',
+              price: 20,
+              discount: true,
+            ),
+            InfoPriceWidget(
+              title: 'Completed time',
+              price: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          ],
+        ),
       )
     ];
   }
