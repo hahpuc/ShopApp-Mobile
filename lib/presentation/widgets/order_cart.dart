@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/common/interfaces/iOrder.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
@@ -11,14 +12,16 @@ class OrderCard extends StatelessWidget {
   final int? quantity;
   final double? total;
   final int? status;
+  final OnOrderItemListener? listener;
 
   const OrderCard({
+    Key? key,
     this.idOrder = '123456789',
     this.date,
     this.total = 0,
     this.quantity = 1,
     this.status = 2,
-    Key? key,
+    this.listener,
   }) : super(key: key);
 
   @override
@@ -26,6 +29,7 @@ class OrderCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('Navigator to Order Detail');
+        listener?.onOrderItemClick(idOrder ?? '');
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -34,6 +38,7 @@ class OrderCard extends StatelessWidget {
         ),
         child: Column(
           children: [
+            SizedBox(height: AppDimen.verticalSpacing),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -74,7 +79,7 @@ class OrderCard extends StatelessWidget {
         children: [
           CustomText(
             'Order #$idOrder',
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
           ),
           CustomText(
             '$date',

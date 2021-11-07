@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
@@ -129,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
                 OptionButton(
                   option: "My Orders",
                   detail: "Already have 10 orders",
-                  onPress: null,
+                  onPress: _onMyOrderTapped,
                 ),
                 OptionButton(
                     option: "Shipping Addresses",
@@ -147,5 +148,9 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
                 )
               ],
             )));
+  }
+
+  void _onMyOrderTapped() {
+    Navigator.pushNamed(context, RoutePaths.MY_ORDER);
   }
 }

@@ -56,7 +56,10 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       child: Container(
         height: 50.0,
         child: PrimaryButton(
-          title: 'Add to cart',
+          imageRight: SvgPicture.asset(
+            Assets.images.icChat.path,
+          ),
+          title: 'Contact Seller',
           onPressed: () {},
         ),
       ),
