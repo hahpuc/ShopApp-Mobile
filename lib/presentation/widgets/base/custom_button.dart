@@ -72,9 +72,10 @@ class CustomButton extends StatelessWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(minWidth: 60),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   if (rightIcon != null) ..._buildRightIcon(),
+                  Expanded(child: Container()),
                   CustomText(
                     text,
                     overflow: TextOverflow.visible,
@@ -83,6 +84,8 @@ class CustomButton extends StatelessWidget {
                     fontWeight: fontWeight,
                     align: textAlignment,
                   ),
+                  Expanded(child: Container()),
+                  if (rightIcon != null) SizedBox(width: 24.0)
                 ],
               ),
             ),

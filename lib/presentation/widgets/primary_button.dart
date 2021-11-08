@@ -39,7 +39,7 @@ class PrimaryButton extends StatelessWidget {
       ),
       child: CustomButton(
         title,
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: AppDimen.horizontalSpacing),
         fontSize: FontSize.BIG,
         borderRadius: AppDimen.radiusNormal,
         sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
