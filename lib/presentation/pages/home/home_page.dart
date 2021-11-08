@@ -9,7 +9,6 @@ import 'package:furniture_shop/data/model/response/product_detail_response.dart'
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/home/home_bloc.dart';
 import 'package:furniture_shop/presentation/pages/home/home_state.dart';
-import 'package:furniture_shop/presentation/pages/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
