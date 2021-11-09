@@ -20,4 +20,5 @@ class AppColor {
 
   static const Color colorDropShadow = Color(0XFF8A959E);
   static const Color boxIcon = Color(0xFFF0F0F0);
+  static const Color dotMessage = Color(0xFFEB5757);
 }
