@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/presentation/pages/cart/my_cart_page.dart';
+import 'package:furniture_shop/presentation/pages/home_tab/home_tab_page.dart';
 import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/profile/profile_page.dart';
@@ -17,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final _tabs = [
-    ProductDetailPage(),
+    HomeTabPage(),
     WishListPage(),
     NotificationPage(),
     ProfilePage(),

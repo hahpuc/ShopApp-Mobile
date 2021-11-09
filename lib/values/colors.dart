@@ -13,9 +13,11 @@ class AppColor {
 
   static const Color colorBoxShadowProfile = Color(0XFF8A959E);
   static const Color colorWhite = Color(0XFFFFFFFF);
+  static const Color colorBlack = Color(0XFF000000);
   static const Color indicator = Color(0xFFE7E7E7);
 
   static const Color colorRatingStar = Color(0XFFFFCE31);
 
   static const Color colorDropShadow = Color(0XFF8A959E);
+  static const Color boxIcon = Color(0xFFF0F0F0);
 }
