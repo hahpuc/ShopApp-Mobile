@@ -77,8 +77,10 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
           bloc: _bloc,
           builder: (context, state) {
             if (state is ProfilePageGetDataSuccessState) {
-              return Column(
-                children: [_buildInformation(state.data), _buildOptions()],
+              return SingleChildScrollView(
+                child: Column(
+                  children: [_buildInformation(state.data), _buildOptions()],
+                ),
               );
             }
             return Container();
@@ -119,33 +121,31 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
   }
 
   Widget _buildOptions() {
-    return Expanded(
-        child: Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: AppDimen.spacing_2,
-                vertical: AppDimen.spacing_large),
-            child: Column(
-              children: [
-                OptionButton(
-                  option: "My Orders",
-                  detail: "Already have 10 orders",
-                  onPress: null,
-                ),
-                OptionButton(
-                    option: "Shipping Addresses",
-                    detail: "03 Address",
-                    onPress: null),
-                OptionButton(
-                  option: "Payment Method",
-                  detail: "Zalopay, Momo,...",
-                  onPress: null,
-                ),
-                OptionButton(
-                  option: "Settings",
-                  detail: null,
-                  onPress: null,
-                )
-              ],
-            )));
+    return Container(
+        margin: EdgeInsets.symmetric(
+            horizontal: AppDimen.spacing_2, vertical: AppDimen.spacing_large),
+        child: Column(
+          children: [
+            OptionButton(
+              option: "My Orders",
+              detail: "Already have 10 orders",
+              onPress: null,
+            ),
+            OptionButton(
+                option: "Shipping Addresses",
+                detail: "03 Address",
+                onPress: null),
+            OptionButton(
+              option: "Payment Method",
+              detail: "Zalopay, Momo,...",
+              onPress: null,
+            ),
+            OptionButton(
+              option: "Settings",
+              detail: null,
+              onPress: null,
+            )
+          ],
+        ));
   }
 }
