@@ -100,7 +100,7 @@ class _AddAddressesState extends State<AddAddresses> {
       padding: EdgeInsets.symmetric(horizontal: AppDimen.horizontalSpacing),
       decoration: BoxDecoration(
         border: Border.all(color: AppColor.colorGrey),
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -130,7 +130,7 @@ class _AddAddressesState extends State<AddAddresses> {
       padding: EdgeInsets.symmetric(horizontal: AppDimen.horizontalSpacing),
       decoration: BoxDecoration(
         border: Border.all(color: AppColor.colorGrey),
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -160,7 +160,7 @@ class _AddAddressesState extends State<AddAddresses> {
       padding: EdgeInsets.symmetric(horizontal: AppDimen.horizontalSpacing),
       decoration: BoxDecoration(
         border: Border.all(color: AppColor.colorGrey),
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
