@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/shipping_addresses/address.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
@@ -12,19 +13,35 @@ class ShippingAddressesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       body: _buildBody(),
     );
   }
 
-  CustomAppBar _buildAppBar() {
+  CustomAppBar _buildAppBar(BuildContext context) {
     return CustomAppBar(
       title: CustomText(
         'Shipping Addresses',
         fontFamily: FontFamily.gelasio,
         fontSize: FontSize.BIG_1,
       ),
+      actions: [
+        IconButton(
+          padding: EdgeInsets.symmetric(horizontal: AppDimen.spacing_2),
+          onPressed: () {
+            _addShippingAddressesTapped(context);
+          },
+          icon: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
+        ),
+      ],
     );
+  }
+
+  void _addShippingAddressesTapped(BuildContext context) {
+    Navigator.pushNamed(context, RoutePaths.ADD_SHIPPING_ADDRESSES);
   }
 
   Widget _buildBody() {
