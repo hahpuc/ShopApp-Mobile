@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
       this.contentPadding,
       this.hintTextColor = AppColor.colorTextLight,
       this.hintText,
+      this.labelText,
       this.fontSize = FontSize.MEDIUM,
       this.maxLines = 1,
       this.maxLength,
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
   final double fontSize;
   final FontStyle fontStyle;
   final String? hintText;
+  final String? labelText;
   final int? maxLines;
   final int? maxLength;
   final FontWeight fontWeight;
@@ -57,14 +59,23 @@ class CustomTextField extends StatelessWidget {
           fontStyle: fontStyle,
           fontWeight: fontWeight),
       decoration: InputDecoration(
-          isDense: true,
-          border: InputBorder.none,
-          contentPadding: contentPadding,
-          hintStyle: TextStyle(
-              fontFamily: fontFamily,
-              color: hintTextColor,
-              fontStyle: fontStyle),
-          hintText: hintText),
+        labelText: labelText,
+        labelStyle: TextStyle(
+          fontFamily: fontFamily,
+          color: hintTextColor,
+          fontStyle: fontStyle,
+          fontWeight: FontWeight.w500,
+        ),
+        isDense: true,
+        border: InputBorder.none,
+        contentPadding: contentPadding,
+        hintStyle: TextStyle(
+          fontFamily: fontFamily,
+          color: hintTextColor,
+          fontStyle: fontStyle,
+        ),
+        hintText: hintText,
+      ),
       maxLines: maxLines,
       maxLength: maxLength,
       textAlign: TextAlign.start,
