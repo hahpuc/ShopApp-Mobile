@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
+import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/home_tab/home_tab_bloc.dart';
 import 'package:furniture_shop/presentation/pages/home_tab/home_tab_state.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
@@ -84,7 +86,11 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
 
   CustomAppBar _buildAppBar(List<CategoriesResponseData> data) {
     return CustomAppBar(
-      title: Text("HOME"),
+      title: CustomText(
+        'Home',
+        fontFamily: FontFamily.gelasio,
+        fontSize: FontSize.BIG_1,
+      ),
       actions: [
         IconButton(
           onPressed: () {},
@@ -124,7 +130,7 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
             height: AppDimen.icon_size,
           )),
       bottom: PreferredSize(
-        preferredSize: Size(0, 80),
+        preferredSize: const Size(0.0, 80.0),
         child: TabBar(
             isScrollable: true,
             labelColor: Colors.amber,
@@ -147,15 +153,6 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
                           : AppColor.boxIcon,
                       borderRadius:
                           BorderRadius.circular(AppDimen.radiusNormal),
-                      boxShadow: [
-                        _currentIndex == item.id
-                            ? BoxShadow(
-                                color: AppColor.colorBlack.withOpacity(0.25),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                              )
-                            : BoxShadow(),
-                      ],
                     ),
                     child: Center(
                       child: SvgPicture.asset(
@@ -199,49 +196,54 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
             itemBuilder: (BuildContext context, int index) {
               final item = list![index];
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      alignment: Alignment.topLeft,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            item.images![0],
-                            width: 150,
-                            height: 200,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        alignment: Alignment.topLeft,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              item.images![0],
+                              width: 150,
+                              height: 200,
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          right: AppDimen.spacing_1,
-                          bottom: AppDimen.spacing_2,
-                          child: Container(
-                            child: Row(children: [
-                              CustomText(item.ratingStar.toString()),
-                              SvgPicture.asset(
-                                Assets.images.icStar.path,
-                                width: AppDimen.spacing_2,
-                                height: AppDimen.spacing_2,
-                              )
-                            ]),
-                          ),
-                        )
-                      ],
-                    ),
-                    CustomText(
-                      item.name ?? "",
-                      fontSize: FontSize.SMALL,
-                      color: AppColor.colorGrey,
-                    ),
-                    CustomText(
-                      item.price.toString() + r"$",
-                      fontSize: FontSize.SMALL,
-                      color: AppColor.colorBlack,
-                      fontWeight: FontWeight.bold,
-                    )
-                  ],
+                          Positioned(
+                            right: AppDimen.spacing_1,
+                            bottom: AppDimen.spacing_2,
+                            child: Container(
+                              child: Row(children: [
+                                CustomText(item.ratingStar.toString()),
+                                SvgPicture.asset(
+                                  Assets.images.icStar.path,
+                                  width: AppDimen.spacing_2,
+                                  height: AppDimen.spacing_2,
+                                )
+                              ]),
+                            ),
+                          )
+                        ],
+                      ),
+                      CustomText(
+                        item.name ?? "",
+                        fontSize: FontSize.SMALL,
+                        color: AppColor.colorGrey,
+                      ),
+                      CustomText(
+                        item.price.toString() + r"$",
+                        fontSize: FontSize.SMALL,
+                        color: AppColor.colorBlack,
+                        fontWeight: FontWeight.bold,
+                      )
+                    ],
+                  ),
                 ),
               );
             }),

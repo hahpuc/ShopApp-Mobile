@@ -5,6 +5,7 @@ import 'package:furniture_shop/presentation/pages/forgot_password/forgot_passwor
 import 'package:furniture_shop/presentation/pages/home/home_page.dart';
 import 'package:furniture_shop/presentation/pages/order/order_page.dart';
 import 'package:furniture_shop/presentation/pages/order_detail/order_detail_page.dart';
+import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_up/sign_up_page.dart';
 import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
@@ -21,6 +22,7 @@ class RoutePaths {
   static const String WISHLIST_PAGE = '/wishlist';
   static const String MY_ORDER = '/my_order';
   static const String ORDER_DETAIL = '/order_detail';
+  static const String PRODUCT_DETAIL = '/product_detail';
 }
 
 class Routes {
@@ -62,6 +64,10 @@ class Routes {
       case RoutePaths.ORDER_DETAIL:
         return MaterialPageRoute(
             builder: (_) => OrderDetailPage(), settings: settings);
+
+	case RoutePaths.PRODUCT_DETAIL:
+		return MaterialPageRoute(
+			builder: (_) => ProductDetailPage(), settings: settings);
       default:
         return null;
     }
