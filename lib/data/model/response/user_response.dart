@@ -1,6 +1,12 @@
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
 
-class UserResponse extends BaseResponseData<UserResponseData> {}
+class UserResponse extends BaseResponseData<UserResponseData> {
+  @override
+  UserResponseData parseData(data) {
+    // TODO: implement parseData
+    throw UnimplementedError();
+  }
+}
 
 class UserResponseData {
   final int? userId;

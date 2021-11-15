@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_shop/presentation/pages/add_shipping_address/add_shipping_address_page.dart';
-import 'package:furniture_shop/presentation/pages/checkout/checkout_page.dart';
-import 'package:furniture_shop/presentation/pages/demo/demo_page.dart';
-import 'package:furniture_shop/presentation/pages/forgot_password/forgot_password_page.dart';
-import 'package:furniture_shop/presentation/pages/home/home_page.dart';
-import 'package:furniture_shop/presentation/pages/order/order_page.dart';
-import 'package:furniture_shop/presentation/pages/order_detail/order_detail_page.dart';
-import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
-import 'package:furniture_shop/presentation/pages/payment_methods/payment_methods_page.dart';
-import 'package:furniture_shop/presentation/pages/add_address/add_addresses_page.dart';
-import 'package:furniture_shop/presentation/pages/shipping_addresses/shipping_addresses_page.dart';
-import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
-import 'package:furniture_shop/presentation/pages/sign_up/sign_up_page.dart';
-import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
-import 'package:furniture_shop/presentation/pages/wish_list/whish_list_page.dart';
+import 'package:furniture_shop/presentation/pages/auth/forgot_password/forgot_password_page.dart';
+import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_in_page.dart';
+import 'package:furniture_shop/presentation/pages/auth/sign_up/sign_up_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/add_shipping_address/add_shipping_address_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/demo/demo_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/home/home_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/notification/notification_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/order/order_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/order_detail/order_detail_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/payment_methods/payment_methods_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/product_detail/product_detail_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/shipping_addresses_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/wish_list/whish_list_page.dart';
 
 class RoutePaths {
   static const String DEMO = "/demo";

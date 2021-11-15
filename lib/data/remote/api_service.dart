@@ -16,12 +16,13 @@ class ApiService {
 
   ApiService({required this.baseUrl});
 
+  // =========================== DEMO ===============================
   Future<Result<DemoResponse, Exception>> getDemo() async {
     return _apiServiceHelper.handleResponse<DemoResponse>(request: () async {
       var response = await _apiServiceHelper.get(
           url: 'https://jsonplaceholder.typicode.com/albums/1');
       // Parse data here to BaseResponse
-      return DemoResponse.fromMap(response);
+      return DemoResponse.tryParse(response);
     });
   }
 }

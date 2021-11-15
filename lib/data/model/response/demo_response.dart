@@ -7,7 +7,7 @@ class DemoResponse extends BaseResponseData<DemoResponseData> {
 
   DemoResponse({required this.userId, required this.id, required this.title});
 
-  factory DemoResponse.fromMap(Map<String, dynamic> map) {
+  factory DemoResponse.tryParse(Map<String, dynamic> map) {
     return DemoResponse(
         userId: map["userId"] as int,
         id: map["id"] as int,
@@ -16,6 +16,12 @@ class DemoResponse extends BaseResponseData<DemoResponseData> {
 
   Map<String, dynamic> toMap() {
     return {"userId": this.userId, "id": this.id, "title": this.title};
+  }
+
+  @override
+  DemoResponseData parseData(dynamic data) {
+    // TODO: implement fromMapData
+    throw UnimplementedError();
   }
 }
 
