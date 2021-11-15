@@ -139,7 +139,7 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
                 OptionButton(
                   option: "Payment Method",
                   detail: "Zalopay, Momo,...",
-                  onPress: null,
+                  onPress: _onPaymentMethodsTap,
                 ),
                 OptionButton(
                   option: "Settings",
@@ -156,5 +156,9 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
 
   void _onShippingAddressTapped() {
     Navigator.pushNamed(context, RoutePaths.SHIPPING_ADDRESS_PAGE);
+  }
+
+  void _onPaymentMethodsTap() {
+    Navigator.pushNamed(context, RoutePaths.PAYMENT_METHODS);
   }
 }
