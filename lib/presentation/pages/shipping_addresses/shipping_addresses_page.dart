@@ -9,7 +9,12 @@ import 'package:furniture_shop/presentation/widgets/primary_button.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class ShippingAddressesPage extends StatelessWidget {
+class ShippingAddressesPage extends StatefulWidget {
+  @override
+  State<ShippingAddressesPage> createState() => _ShippingAddressesPageState();
+}
+
+class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

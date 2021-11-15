@@ -24,7 +24,7 @@ class Address extends StatelessWidget {
               isDefaultAddress == true
                   ? Icons.check_circle
                   : Icons.check_circle_outline,
-              size: 32.0,
+              size: 16.0,
             ),
             SizedBox(width: AppDimen.horizontalSpacing),
             CustomText('Use as the shipping address'),
