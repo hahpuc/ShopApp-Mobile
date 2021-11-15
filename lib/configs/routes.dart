@@ -8,6 +8,8 @@ import 'package:furniture_shop/presentation/pages/order/order_page.dart';
 import 'package:furniture_shop/presentation/pages/order_detail/order_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/payment_methods/payment_methods_page.dart';
+import 'package:furniture_shop/presentation/pages/add_address/add_addresses_page.dart';
+import 'package:furniture_shop/presentation/pages/shipping_addresses/shipping_addresses_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/sign_up/sign_up_page.dart';
 import 'package:furniture_shop/presentation/pages/notification/notification_page.dart';
@@ -27,6 +29,7 @@ class RoutePaths {
   static const String PRODUCT_DETAIL = '/product_detail';
   static const String SHIPPING_ADDRESS_PAGE = '/shipping_address';
   static const String PAYMENT_METHODS = '/payment_methods';
+  static const String ADD_SHIPPING_ADDRESSES = '/add_address';
 }
 
 class Routes {
@@ -73,12 +76,16 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => ProductDetailPage(), settings: settings);
 
-      case RoutePaths.SHIPPING_ADDRESS_PAGE:
-        return MaterialPageRoute(
-            builder: (_) => AddShippingAddressPage(), settings: settings);
       case RoutePaths.PAYMENT_METHODS:
         return MaterialPageRoute(
             builder: (_) => PaymentMethodPage(), settings: settings);
+      case RoutePaths.SHIPPING_ADDRESS_PAGE:
+        return MaterialPageRoute(
+            builder: (_) => ShippingAddressesPage(), settings: settings);
+
+      case RoutePaths.ADD_SHIPPING_ADDRESSES:
+        return MaterialPageRoute(
+            builder: (_) => AddShippingAddressPage(), settings: settings);
       default:
         return null;
     }
