@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/presentation/pages/add_shipping_address/add_shipping_address_page.dart';
 import 'package:furniture_shop/presentation/pages/checkout/checkout_page.dart';
 import 'package:furniture_shop/presentation/pages/demo/demo_page.dart';
 import 'package:furniture_shop/presentation/pages/forgot_password/forgot_password_page.dart';
@@ -23,6 +24,7 @@ class RoutePaths {
   static const String MY_ORDER = '/my_order';
   static const String ORDER_DETAIL = '/order_detail';
   static const String PRODUCT_DETAIL = '/product_detail';
+  static const String SHIPPING_ADDRESS_PAGE = '/shipping_address';
 }
 
 class Routes {
@@ -65,9 +67,13 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => OrderDetailPage(), settings: settings);
 
-	case RoutePaths.PRODUCT_DETAIL:
-		return MaterialPageRoute(
-			builder: (_) => ProductDetailPage(), settings: settings);
+      case RoutePaths.PRODUCT_DETAIL:
+        return MaterialPageRoute(
+            builder: (_) => ProductDetailPage(), settings: settings);
+
+      case RoutePaths.SHIPPING_ADDRESS_PAGE:
+        return MaterialPageRoute(
+            builder: (_) => AddShippingAddressPage(), settings: settings);
       default:
         return null;
     }

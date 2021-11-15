@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/presentation/widgets/base/tap_outside_to_unfocus.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
 import 'package:furniture_shop/values/colors.dart';
 import '/generated/assets/fonts.gen.dart';
@@ -39,25 +40,27 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: CustomText(
-          'Add Shipping Address',
-          fontFamily: FontFamily.gelasio,
-          fontSize: FontSize.BIG,
+    return TapOutsideToUnfocus(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: CustomText(
+            'Add Shipping Address',
+            fontFamily: FontFamily.gelasio,
+            fontSize: FontSize.BIG,
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: AppDimen.spacing_2,
-          horizontal: AppDimen.spacing_2 - 4,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildFormInput(),
-            _buildButton(),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: AppDimen.spacing_2,
+            horizontal: AppDimen.spacing_2,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildFormInput(),
+              _buildButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -96,7 +99,7 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
       margin: const EdgeInsets.only(bottom: AppDimen.spacing_2),
       padding: const EdgeInsets.symmetric(
         vertical: 6.0,
-        horizontal: AppDimen.spacing_1 + 2,
+        horizontal: AppDimen.spacing_1,
       ),
       decoration: BoxDecoration(
         border: Border.all(
