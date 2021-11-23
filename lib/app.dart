@@ -7,7 +7,7 @@ import 'package:furniture_shop/bloc/locale/locale_state.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
-import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/chat/chat_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
 
 import 'bloc/app/app_bloc.dart';
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: BoardingPage(),
+              home: ChatPage(),
             );
           }),
     );
