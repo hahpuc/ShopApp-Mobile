@@ -5,7 +5,7 @@ void main() async {
   var flavorConfig = FlavorConfig(
       flavor: Flavor.DEV,
       values: FlavorValues(
-        baseUrl: "",
+        baseUrl: "https://hahpuc-test-shop-app.herokuapp.com",
       ));
   return MyApp.appRunner(flavorConfig);
 }

@@ -8,7 +8,8 @@ import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
-import 'package:furniture_shop/data/model/response/product_detail_response.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
+import 'package:furniture_shop/data/model/response/test_product.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_bloc.dart';
@@ -179,8 +180,7 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
   }
 
   _buildListProduct(int id) {
-    List<ProductDetailResponseData>? list =
-        _bloc.getProductWithCategoriesID(id);
+    List<ProductTest>? list = _bloc.getProductWithCategoriesID(id);
     return Container(
       margin: EdgeInsets.symmetric(
           vertical: AppDimen.spacing_3, horizontal: AppDimen.spacing_2),

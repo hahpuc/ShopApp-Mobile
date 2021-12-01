@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
-import 'package:furniture_shop/data/model/response/product_detail_response.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
@@ -36,7 +36,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   @override
   void afterFirstFrame(BuildContext context) {
-    _bloc.getProductDetailsData('productID');
+    // HARD CODE HERE
+    _bloc.getProductDetailsData('6166b1a5f1300453bc24adb5');
   }
 
   @override
@@ -61,6 +62,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     } else {
       EasyLoading.dismiss();
     }
+
+    if (state is ProductDetailGetDataFailed) {
+      EasyLoading.showError(state.msg);
+    }
   }
 
   Widget _buildBody() {
@@ -71,7 +76,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         child: BlocBuilder<ProductDetailPageBloc, ProductDetailPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is ProductDetailPageGetDataSuccessState)
+            if (state is ProductDetailGetDataSuccess)
               return Stack(
                 children: [
                   Container(height: double.infinity, width: double.infinity),
@@ -118,7 +123,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildProductInformation(ProductDetailResponseData data) {
+  Widget _buildProductInformation(ProductDetailModel data) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +139,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildDetailInfo(ProductDetailResponseData data) {
+  Widget _buildDetailInfo(ProductDetailModel data) {
     return Container(
       padding: const EdgeInsets.all(AppDimen.spacing_2),
       child: Column(
@@ -168,7 +173,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildRatingView(ProductDetailResponseData data) {
+  Widget _buildRatingView(ProductDetailModel data) {
     return Row(
       children: [
         Icon(
