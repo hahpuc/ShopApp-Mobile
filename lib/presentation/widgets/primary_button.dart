@@ -13,6 +13,9 @@ class PrimaryButton extends StatelessWidget {
   final Widget? imageRight;
   final bool? primaryStyle;
   final Color? primaryColor;
+  final double borderWidth;
+  final double borderOpacity;
+  final Color textColor;
 
   const PrimaryButton({
     Key? key,
@@ -21,6 +24,9 @@ class PrimaryButton extends StatelessWidget {
     this.onPressed,
     this.primaryStyle = true,
     this.primaryColor = AppColor.colorPrimary,
+    this.borderWidth = 0.0,
+    this.borderOpacity = 0.3,
+    this.textColor = Colors.white,
   }) : super(key: key);
 
   @override
@@ -44,6 +50,10 @@ class PrimaryButton extends StatelessWidget {
         borderRadius: AppDimen.radiusNormal,
         sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
         rightIcon: imageRight,
+        backgroundColor: primaryColor!,
+        borderWidth: borderWidth,
+        borderOpacity: borderOpacity,
+        textColor: textColor,
         onTap: onPressed,
       ),
     );
