@@ -120,7 +120,8 @@ class _SignUpFormState extends State<SignUpForm> {
                             child: PrimaryButton(
                               title: "SIGN UP",
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
+                                if (_formKey.currentState!.validate() &&
+                                    errors.isEmpty) {
                                   _formKey.currentState!.save();
                                   final user = UserModel(
                                       email: this.email.text,
@@ -188,10 +189,8 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: AppConstants.kPassNullError);
-          return "";
         } else if ((this.password.text != value)) {
           addError(error: AppConstants.kMatchPassError);
-          return "";
         }
         return null;
       },
@@ -230,10 +229,8 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: AppConstants.kPassNullError);
-          return "";
         } else if (value.length < 8) {
           addError(error: AppConstants.kShortPassError);
-          return "";
         }
         return null;
       },
@@ -270,10 +267,8 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: AppConstants.kEmailNullError);
-          return "";
         } else if (!AppConstants.emailValidatorRegExp.hasMatch(value)) {
           addError(error: AppConstants.kInvalidEmailError);
-          return "";
         }
         return null;
       },
@@ -297,7 +292,6 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: AppConstants.kNamelNullError);
-          return "";
         }
         return null;
       },
@@ -321,7 +315,6 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: AppConstants.kPhoneNumberNullError);
-          return "";
         }
         return null;
       },

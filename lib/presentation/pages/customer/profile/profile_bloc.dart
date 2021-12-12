@@ -11,8 +11,8 @@ class ProfilePageBloc extends BlocBase<ProfilePageState> {
   Future<void> getCategoriesData() async {
     emit(ProfilePageLoadingState());
 
-    UserModel user =
-        UserModel(userId: 1, name: "Nancy Momoland", phoneNumber: "0969696969");
+    UserModel user = UserModel(
+        userId: "1", name: "Nancy Momoland", phoneNumber: "0969696969");
     if (user != null) {
       emit(ProfilePageGetDataSuccessState(user));
     } else

@@ -12,6 +12,7 @@ class ApiConfigs {
 class ApiPath {
   static const DEMO = "/v1/abc";
   static const SIGNUP = "/signup/";
+  static const SIGNIN = "/signin/";
   static const PRODUCT_DETAIL = "/product/";
 }
 
@@ -46,7 +47,16 @@ class ApiService {
   Future<Result<UserResponse, Exception>> postUserSignUp(UserModel user) async {
     return _apiServiceHelper.handleResponse(request: () async {
       var response = await _apiServiceHelper.post(
-          url: baseUrl + ApiPath.SIGNUP, body: user.toJson());
+          url: baseUrl + ApiPath.SIGNUP, body: user.toSignUpJson());
+      return UserResponse().tryParse(response);
+    });
+  }
+
+  // =========================== SIGN IN ===============================
+  Future<Result<UserResponse, Exception>> postUserSignIn(UserModel user) async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response = await _apiServiceHelper.post(
+          url: baseUrl + ApiPath.SIGNIN, body: user.toSignInJson());
       return UserResponse().tryParse(response);
     });
   }

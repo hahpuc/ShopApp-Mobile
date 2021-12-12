@@ -15,19 +15,21 @@ class UserResponseData {
   String? accessToken;
   String? refreshToken;
 
-  UserResponseData(
-      {this.code,
-      this.message,
-      this.data,
-      this.accessToken,
-      this.refreshToken});
+  UserResponseData({
+    this.code,
+    this.message,
+    this.data,
+  });
 
   UserResponseData.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = json['data'] != null ? new UserModel.fromJson(json['data']) : null;
-    accessToken = json['accessToken'];
-    refreshToken = json['refreshToken'];
+    data = json['data'] != null
+        ? new UserModel.fromJson(json['data']['result'])
+        : null;
+
+    accessToken = json['data']['accessToken'];
+    refreshToken = json['data']['refreshToken'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,7 +44,7 @@ class UserResponseData {
 }
 
 class UserModel {
-  int? userId;
+  String? userId;
   String? name;
   String? email;
   String? password;
@@ -80,7 +82,7 @@ class UserModel {
     role = json['role'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toSignUpJson() {
     final Map<String, dynamic> map = new Map<String, dynamic>();
     //map['_id'] = this.userId;
     map['name'] = this.name;
@@ -94,6 +96,40 @@ class UserModel {
     // }
     // map['payment_method'] = this.paymentMethod;
     // map['role'] = this.role;
+    return map;
+  }
+
+  Map<String, dynamic> toSignInJson() {
+    final Map<String, dynamic> map = new Map<String, dynamic>();
+    //map['_id'] = this.userId;
+    //map['name'] = this.name;
+    map['email'] = this.email;
+    map['password'] = this.password;
+    //map['phone_number'] = this.phoneNumber;
+    // map['total_address'] = this.totalAddress;
+    // if (this.shippingAddress != null) {
+    //   map['shipping_address'] =
+    //       this.shippingAddress!.map((v) => v.toJson()).toList();
+    // }
+    // map['payment_method'] = this.paymentMethod;
+    // map['role'] = this.role;
+    return map;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> map = new Map<String, dynamic>();
+    map['_id'] = this.userId;
+    map['name'] = this.name;
+    map['email'] = this.email;
+    map['password'] = this.password;
+    map['phone_number'] = this.phoneNumber;
+    map['total_address'] = this.totalAddress;
+    if (this.shippingAddress != null) {
+      map['shipping_address'] =
+          this.shippingAddress!.map((v) => v.toJson()).toList();
+    }
+    map['payment_method'] = this.paymentMethod;
+    map['role'] = this.role;
     return map;
   }
 }
