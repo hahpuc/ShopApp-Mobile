@@ -2,9 +2,8 @@ import 'package:furniture_shop/data/model/response/base/base_response.dart';
 
 class UserResponse extends BaseResponseData<UserResponseData> {
   @override
-  UserResponseData parseData(data) {
-    // TODO: implement parseData
-    throw UnimplementedError();
+  UserResponseData parseData(dynamic mapData) {
+    return UserResponseData.fromJson(mapData);
   }
 }
 
@@ -83,18 +82,18 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> map = new Map<String, dynamic>();
-    map['_id'] = this.userId;
+    //map['_id'] = this.userId;
     map['name'] = this.name;
     map['email'] = this.email;
     map['password'] = this.password;
     map['phone_number'] = this.phoneNumber;
-    map['total_address'] = this.totalAddress;
-    if (this.shippingAddress != null) {
-      map['shipping_address'] =
-          this.shippingAddress!.map((v) => v.toJson()).toList();
-    }
-    map['payment_method'] = this.paymentMethod;
-    map['role'] = this.role;
+    // map['total_address'] = this.totalAddress;
+    // if (this.shippingAddress != null) {
+    //   map['shipping_address'] =
+    //       this.shippingAddress!.map((v) => v.toJson()).toList();
+    // }
+    // map['payment_method'] = this.paymentMethod;
+    // map['role'] = this.role;
     return map;
   }
 }
