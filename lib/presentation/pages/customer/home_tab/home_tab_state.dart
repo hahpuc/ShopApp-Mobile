@@ -6,8 +6,11 @@ class HomeTabPageState extends BaseState {}
 class HomeTabPageLoadingState extends HomeTabPageState {}
 
 class HomeTabPageGetDataSuccessState extends HomeTabPageState {
-  final List<CategoriesResponseData> data;
+  final List<CategoriesModel> data;
   HomeTabPageGetDataSuccessState(this.data);
 }
 
-class HomeTabPageGetDataFailState extends HomeTabPageState {}
+class HomeTabPageGetDataFailState extends HomeTabPageState {
+  final String msg;
+  HomeTabPageGetDataFailState(this.msg);
+}

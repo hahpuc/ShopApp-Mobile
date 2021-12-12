@@ -8,7 +8,6 @@ import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
-import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/data/model/response/test_product.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
@@ -60,7 +59,6 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
                       DefaultTabController.of(context)!;
                   tabController.addListener(() {
                     if (!tabController.indexIsChanging) {
-                      log(tabController.index.toString());
                       setState(() {
                         _currentIndex = tabController.index + 1;
                       });
@@ -69,23 +67,23 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
                   return Scaffold(
                       appBar: _buildAppBar(state.data),
                       body: TabBarView(children: [
-                        for (int i = 0; i < 6; i++) _buildListProduct(i + 1)
+                        for (int i = 0; i < state.data.length; i++)
+                          _buildListProduct(i + 1)
                       ]));
                 }),
               );
             }
-
             return Container(
-              color: Colors.red,
-              height: 50,
-            );
+                // color: Colors.red,
+                // height: 50,
+                );
           },
         ),
       ),
     );
   }
 
-  CustomAppBar _buildAppBar(List<CategoriesResponseData> data) {
+  CustomAppBar _buildAppBar(List<CategoriesModel> data) {
     return CustomAppBar(
       title: CustomText(
         'Home',
@@ -157,7 +155,7 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
                     ),
                     child: Center(
                       child: SvgPicture.asset(
-                        item.image,
+                        item.image ?? Assets.images.icArmchair.path,
                         width: AppDimen.icon_size,
                         height: AppDimen.icon_size,
                         color: _currentIndex == item.id
@@ -167,7 +165,7 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
                     ),
                   ),
                   CustomText(
-                    item.name,
+                    item.name ?? '',
                     fontSize: FontSize.SMALL,
                     color: _currentIndex == item.id
                         ? AppColor.colorPrimary

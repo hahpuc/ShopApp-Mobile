@@ -1,27 +1,41 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:developer';
+
+import 'package:furniture_shop/bloc/base/base_bloc.dart';
 import 'package:furniture_shop/data/app_repository.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
-import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/data/model/response/test_product.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_state.dart';
 
-class HomeTabPageBloc extends BlocBase<HomeTabPageState> {
+class HomeTabPageBloc extends BaseBloc<HomeTabPageState> {
   final AppRepository appRepository;
 
   HomeTabPageBloc({required this.appRepository}) : super(HomeTabPageState());
 
-  List<CategoriesResponseData> listCategories = [
-    CategoriesResponseData(
-        id: 1, name: "Popular", image: Assets.images.icPopular.path),
-    CategoriesResponseData(
-        id: 2, name: "Chair", image: Assets.images.icChair.path),
-    CategoriesResponseData(
-        id: 3, name: "Lamp", image: Assets.images.icLamp.path),
-    CategoriesResponseData(
-        id: 4, name: "Armchair", image: Assets.images.icArmchair.path),
-    CategoriesResponseData(id: 5, name: "TV", image: Assets.images.icTv.path),
-    CategoriesResponseData(id: 6, name: "Bed", image: Assets.images.icBed.path)
+  List<CategoriesModel> listCategories = [
+    CategoriesModel(id: '1', name: "Popular"
+        // , image: Assets.images.icPopular.path
+        ),
+    CategoriesModel(
+      id: '2', name: "Chair",
+      //  image: Assets.images.icChair.path
+    ),
+    CategoriesModel(
+      id: '3', name: "Lamp",
+      // image: Assets.images.icLamp.path
+    ),
+    CategoriesModel(
+      id: '4', name: "Armchair",
+      //  image: Assets.images.icArmchair.path
+    ),
+    CategoriesModel(
+      id: '5', name: "TV",
+      // image: Assets.images.icTv.path
+    ),
+    CategoriesModel(
+      id: '6', name: "Bed",
+      //  image: Assets.images.icBed.path
+    )
   ];
   List<ProductTest> listProductResponse = [
     ProductTest(
@@ -224,11 +238,13 @@ class HomeTabPageBloc extends BlocBase<HomeTabPageState> {
 
   Future<void> getCategoriesData() async {
     emit(HomeTabPageLoadingState());
+    var response = await appRepository.apiService.getCategories();
 
-    if (listCategories != null) {
-      emit(HomeTabPageGetDataSuccessState(listCategories));
+    if (response.isSuccessful()) {
+      final resultData = response.response?.data;
+      emit(HomeTabPageGetDataSuccessState(resultData!.data!));
     } else
-      emit(HomeTabPageGetDataFailState());
+      emit(HomeTabPageGetDataFailState(getErrorMessage(response)));
   }
 
   List<ProductTest>? getProductWithCategoriesID(int id) {
