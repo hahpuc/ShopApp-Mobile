@@ -73,6 +73,7 @@ class _SignFormState extends State<SignForm> {
                 print(state.refreshToken);
                 Future.delayed(const Duration(milliseconds: 500), () {
                   Navigator.pushNamed(context, RoutePaths.HOME);
+                  _showToast(context);
                 });
               }
               return Form(
@@ -177,6 +178,16 @@ class _SignFormState extends State<SignForm> {
                 ),
               );
             }),
+      ),
+    );
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: const Text('Sign in success'),
       ),
     );
   }

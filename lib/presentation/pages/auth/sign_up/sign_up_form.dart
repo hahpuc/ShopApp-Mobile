@@ -74,6 +74,7 @@ class _SignUpFormState extends State<SignUpForm> {
             if (state is SignUpDataSuccess) {
               Future.delayed(const Duration(milliseconds: 500), () {
                 Navigator.pushNamed(context, RoutePaths.SIGNIN);
+                _showToast(context);
               });
             }
             return Form(
@@ -164,6 +165,16 @@ class _SignUpFormState extends State<SignUpForm> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: const Text('User created'),
       ),
     );
   }
