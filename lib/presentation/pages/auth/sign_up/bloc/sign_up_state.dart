@@ -12,7 +12,7 @@ class SignUpDataSuccess extends SignUpPageState {
 }
 
 class SignUpDataFailed extends SignUpPageState {
-  final String msg;
+  String msg;
 
   SignUpDataFailed(this.msg);
 }

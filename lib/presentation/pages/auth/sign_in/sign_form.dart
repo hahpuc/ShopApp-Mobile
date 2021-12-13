@@ -39,6 +39,7 @@ class _SignFormState extends State<SignForm> {
     }
 
     if (state is SignInFailed) {
+      state.msg = "User doesn't exist";
       EasyLoading.showError(state.msg);
     }
   }
@@ -73,111 +74,108 @@ class _SignFormState extends State<SignForm> {
                 Future.delayed(const Duration(milliseconds: 500), () {
                   Navigator.pushNamed(context, RoutePaths.HOME);
                 });
-                return Container();
-              } else {
-                return Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: horizonPadding),
-                          child: buildEmailFormField()),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                      Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: horizonPadding),
-                          child: buildPasswordFormField()),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                      Padding(
+              }
+              return Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: horizonPadding),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, RoutePaths.FORGOTPASSWORD);
+                        child: buildEmailFormField()),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: horizonPadding),
+                        child: buildPasswordFormField()),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.FORGOTPASSWORD);
+                            },
+                            child: CustomText(
+                              "Forgot Password ?",
+                              fontSize: FontSize.SMALL,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: horizonPadding),
+                        child: FormError(errors: errors)),
+                    SizedBox(
+                      height: 90,
+                    ),
+                    Container(
+                      height: 50,
+                      width: MediaQuery.of(context).size.width - 32.0,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: PrimaryButton(
+                              title: "SIGN IN",
+                              onPressed: () {
+                                if (_formKey.currentState!.validate() &&
+                                    errors.isEmpty) {
+                                  _formKey.currentState!.save();
+                                  final user = UserModel(
+                                      email: email.text,
+                                      password: password.text);
+                                  // if all are valid then go to success screen
+                                  _bloc.postUserSignInData(user);
+                                }
                               },
-                              child: CustomText(
-                                "Forgot Password ?",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: DefaultTextStyle.of(context).style,
+                        children: [
+                          TextSpan(
+                            text: "Don't have an account? ",
+                            style: TextStyle(
                                 fontSize: FontSize.SMALL,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            )
-                          ],
-                        ),
+                                color: AppColor.colorTextLight),
+                          ),
+                          TextSpan(
+                            text: "SIGN UP",
+                            style: TextStyle(
+                                fontSize: FontSize.SMALL,
+                                fontWeight: FontWeight.bold),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => {
+                                    Navigator.pushNamed(
+                                        context, RoutePaths.SIGNUP)
+                                  },
+                          ),
+                        ],
                       ),
-                      Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: horizonPadding),
-                          child: FormError(errors: errors)),
-                      SizedBox(
-                        height: 90,
-                      ),
-                      Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 32.0,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: PrimaryButton(
-                                title: "SIGN IN",
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate() &&
-                                      errors.isEmpty) {
-                                    _formKey.currentState!.save();
-                                    final user = UserModel(
-                                        email: email.text,
-                                        password: password.text);
-                                    // if all are valid then go to success screen
-                                    _bloc.postUserSignInData(user);
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: [
-                            TextSpan(
-                              text: "Don't have an account? ",
-                              style: TextStyle(
-                                  fontSize: FontSize.SMALL,
-                                  color: AppColor.colorTextLight),
-                            ),
-                            TextSpan(
-                              text: "SIGN UP",
-                              style: TextStyle(
-                                  fontSize: FontSize.SMALL,
-                                  fontWeight: FontWeight.bold),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => {
-                                      Navigator.pushNamed(
-                                          context, RoutePaths.SIGNUP)
-                                    },
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16.0,
-                      ),
-                    ],
-                  ),
-                );
-              }
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                  ],
+                ),
+              );
             }),
       ),
     );

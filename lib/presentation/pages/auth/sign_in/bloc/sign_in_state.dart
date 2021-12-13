@@ -14,7 +14,7 @@ class SignInSuccess extends SignInPageState {
 }
 
 class SignInFailed extends SignInPageState {
-  final String msg;
+  String msg;
 
   SignInFailed(this.msg);
 }

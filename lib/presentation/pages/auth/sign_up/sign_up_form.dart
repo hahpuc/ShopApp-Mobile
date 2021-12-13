@@ -42,6 +42,7 @@ class _SignUpFormState extends State<SignUpForm> {
     }
 
     if (state is SignUpDataFailed) {
+      state.msg = "User already exist";
       EasyLoading.showError(state.msg);
     }
   }
@@ -74,100 +75,93 @@ class _SignUpFormState extends State<SignUpForm> {
               Future.delayed(const Duration(milliseconds: 500), () {
                 Navigator.pushNamed(context, RoutePaths.SIGNIN);
               });
-              return Container();
-            } else {
-              return Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizonPadding),
-                        child: buildNameFormField()),
-                    SizedBox(height: 10),
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizonPadding),
-                        child: buildEmailFormField()),
-                    SizedBox(height: 10),
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizonPadding),
-                        child: buildPhoneNumberFormField()),
-                    SizedBox(height: 10),
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizonPadding),
-                        child: buildPasswordFormField()),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
-                      child: buildConformPassFormField(),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizonPadding),
-                        child: FormError(errors: errors)),
-                    Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width - 32.0,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: PrimaryButton(
-                              title: "SIGN UP",
-                              onPressed: () {
-                                if (_formKey.currentState!.validate() &&
-                                    errors.isEmpty) {
-                                  _formKey.currentState!.save();
-                                  final user = UserModel(
-                                      email: this.email.text,
-                                      name: this.name.text,
-                                      password: this.password.text,
-                                      phoneNumber: this.phoneNumber.text);
-                                  print(user);
-                                  _bloc.postUserSignUpData(user);
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
-                        children: [
-                          TextSpan(
-                            text: "Already have an account? ",
-                            style: TextStyle(
-                                fontSize: FontSize.SMALL,
-                                color: AppColor.colorTextLight),
-                          ),
-                          TextSpan(
-                            text: "SIGN IN",
-                            style: TextStyle(
-                                fontSize: FontSize.SMALL,
-                                fontWeight: FontWeight.bold),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => {Navigator.pop(context)},
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                ),
-              );
             }
+            return Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                      child: buildNameFormField()),
+                  SizedBox(height: 10),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                      child: buildEmailFormField()),
+                  SizedBox(height: 10),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                      child: buildPhoneNumberFormField()),
+                  SizedBox(height: 10),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                      child: buildPasswordFormField()),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                    child: buildConformPassFormField(),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizonPadding),
+                      child: FormError(errors: errors)),
+                  Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 32.0,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: PrimaryButton(
+                            title: "SIGN UP",
+                            onPressed: () {
+                              if (_formKey.currentState!.validate() &&
+                                  errors.isEmpty) {
+                                _formKey.currentState!.save();
+                                final user = UserModel(
+                                    email: this.email.text,
+                                    name: this.name.text,
+                                    password: this.password.text,
+                                    phoneNumber: this.phoneNumber.text);
+                                print(user);
+                                _bloc.postUserSignUpData(user);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        TextSpan(
+                          text: "Already have an account? ",
+                          style: TextStyle(
+                              fontSize: FontSize.SMALL,
+                              color: AppColor.colorTextLight),
+                        ),
+                        TextSpan(
+                          text: "SIGN IN",
+                          style: TextStyle(
+                              fontSize: FontSize.SMALL,
+                              fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => {Navigator.pop(context)},
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),
