@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/configs/app_constants.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
+import 'package:furniture_shop/data/local/pref_repository.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_in/bloc/sign_in_bloc.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_in/form_error.dart';
@@ -13,6 +14,7 @@ import 'package:furniture_shop/presentation/widgets/primary_button.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/sign_in_state.dart';
 
@@ -58,6 +60,13 @@ class _SignFormState extends State<SignForm> {
       });
   }
 
+  void _saveToken(String accessToken, String refreshToken) async {
+    final _preferences = await SharedPreferences.getInstance();
+    final repo = PrefRepository(_preferences);
+    repo.setAccessToken(accessToken);
+    repo.setRefreshToken(refreshToken);
+  }
+
   @override
   Widget build(BuildContext context) {
     final horizonPadding = AppDimen.spacing_3;
@@ -71,6 +80,7 @@ class _SignFormState extends State<SignForm> {
               if (state is SignInSuccess) {
                 print(state.accessToken);
                 print(state.refreshToken);
+                _saveToken(state.accessToken, state.refreshToken);
                 Future.delayed(const Duration(milliseconds: 500), () {
                   Navigator.pushNamed(context, RoutePaths.HOME);
                   _showToast(context);
