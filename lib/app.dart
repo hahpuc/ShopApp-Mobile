@@ -7,6 +7,8 @@ import 'package:furniture_shop/bloc/locale/locale_state.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/admin/home_admin/home_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_form.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/home/home_page.dart';
@@ -102,7 +104,11 @@ class MyApp extends StatelessWidget {
     if (AppUtils.needOnboarding()) {
       return BoardingPage();
     } else if (AppUtils.isLoggedIn()) {
-      return HomePage();
+      var role = AppUtils.getRoleUser();
+
+      if (role == UserRole.customer) return HomePage();
+
+      return HomeAdminPage();
     } else {
       return SignInPage();
     }

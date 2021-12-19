@@ -14,6 +14,7 @@ import 'package:furniture_shop/presentation/pages/customer/profile/profile_state
 import 'package:furniture_shop/presentation/pages/customer/profile/widget/option_button_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
+import 'package:furniture_shop/values/app_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -52,12 +53,16 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
       actions: [
         IconButton(
           padding: EdgeInsets.symmetric(horizontal: AppDimen.spacing_2),
-          onPressed: () {},
+          onPressed: _logout,
           icon: SvgPicture.asset(Assets.images.icLogout.path,
               color: AppColor.colorTextLight),
         ),
       ],
     );
+  }
+
+  _logout() {
+    AppUtils.logout();
   }
 
   _blocListener(BuildContext context, ProfilePageState state) async {

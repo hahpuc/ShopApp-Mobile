@@ -11,6 +11,7 @@ import 'package:furniture_shop/presentation/pages/auth/sign_in/bloc/sign_in_bloc
 import 'package:furniture_shop/presentation/pages/auth/sign_in/form_error.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
+import 'package:furniture_shop/values/app_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -19,8 +20,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/sign_in_state.dart';
 
 class UserRole {
-  static const int customer = 1;
-  static const int admin = 2;
+  static const int customer_id = 1;
+  static const int admin_id = 2;
+  static const String customer = "customer";
+  static const String admin = "admin";
 }
 
 class SignForm extends StatefulWidget {
@@ -57,9 +60,11 @@ class _SignFormState extends State<SignForm> {
       Future.delayed(const Duration(milliseconds: 500), () {
         var userRole = state.data.role;
 
-        if (userRole == UserRole.customer) {
+        if (userRole == UserRole.customer_id) {
+          AppUtils.setRoleUser(UserRole.customer);
           Navigator.pushReplacementNamed(context, RoutePaths.HOME);
         } else {
+          AppUtils.setRoleUser(UserRole.admin);
           Navigator.pushReplacementNamed(context, RoutePaths.ADMIN_HOME);
         }
 
