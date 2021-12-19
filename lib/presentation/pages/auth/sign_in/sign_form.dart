@@ -18,6 +18,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/sign_in_state.dart';
 
+class UserRole {
+  static const int customer = 1;
+  static const int admin = 2;
+}
+
 class SignForm extends StatefulWidget {
   @override
   _SignFormState createState() => _SignFormState();
@@ -50,7 +55,14 @@ class _SignFormState extends State<SignForm> {
       print(state.refreshToken);
       _saveToken(state.accessToken, state.refreshToken);
       Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pushReplacementNamed(context, RoutePaths.HOME);
+        var userRole = state.data.role;
+
+        if (userRole == UserRole.customer) {
+          Navigator.pushReplacementNamed(context, RoutePaths.HOME);
+        } else {
+          Navigator.pushReplacementNamed(context, RoutePaths.ADMIN_HOME);
+        }
+
         _showToast(context);
       });
     }
