@@ -3,6 +3,7 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
+import 'package:furniture_shop/values/app_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
@@ -62,6 +63,7 @@ class BoardingPage extends StatelessWidget {
                         child: PrimaryButton(
                           title: "GET START",
                           onPressed: () {
+                            AppUtils.finishOnboarding();
                             Navigator.of(context).pushNamed(RoutePaths.SIGNIN);
                           },
                         ),

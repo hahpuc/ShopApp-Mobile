@@ -45,6 +45,13 @@ class _SignUpFormState extends State<SignUpForm> {
       state.msg = "User already exist";
       EasyLoading.showError(state.msg);
     }
+
+    if (state is SignUpDataSuccess) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.pushNamed(context, RoutePaths.SIGNIN);
+        _showToast(context);
+      });
+    }
   }
 
   void addError({String? error}) {
@@ -71,12 +78,6 @@ class _SignUpFormState extends State<SignUpForm> {
         child: BlocBuilder<SignUpPageBloc, SignUpPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is SignUpDataSuccess) {
-              Future.delayed(const Duration(milliseconds: 500), () {
-                Navigator.pushNamed(context, RoutePaths.SIGNIN);
-                _showToast(context);
-              });
-            }
             return Form(
               key: _formKey,
               child: Column(

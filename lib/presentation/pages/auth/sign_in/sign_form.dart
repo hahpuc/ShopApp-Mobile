@@ -44,6 +44,16 @@ class _SignFormState extends State<SignForm> {
       state.msg = "User doesn't exist";
       EasyLoading.showError(state.msg);
     }
+
+    if (state is SignInSuccess) {
+      print(state.accessToken);
+      print(state.refreshToken);
+      _saveToken(state.accessToken, state.refreshToken);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.pushReplacementNamed(context, RoutePaths.HOME);
+        _showToast(context);
+      });
+    }
   }
 
   void addError({String? error}) {
@@ -77,15 +87,6 @@ class _SignFormState extends State<SignForm> {
         child: BlocBuilder<SignInPageBloc, SignInPageState>(
             bloc: _bloc,
             builder: (context, state) {
-              if (state is SignInSuccess) {
-                print(state.accessToken);
-                print(state.refreshToken);
-                _saveToken(state.accessToken, state.refreshToken);
-                Future.delayed(const Duration(milliseconds: 500), () {
-                  Navigator.pushNamed(context, RoutePaths.HOME);
-                  _showToast(context);
-                });
-              }
               return Form(
                 key: _formKey,
                 child: Column(

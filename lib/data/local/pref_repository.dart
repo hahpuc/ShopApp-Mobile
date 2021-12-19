@@ -5,11 +5,14 @@ class PrefRepositoryKeys {
   static const String LANGUAGE = "LANGUAGE";
   static const String ACCESSTOKEN = "ACCESSTOKEN";
   static const String REFRESHTOKEN = "REFRESHTOKEN";
+  static const String SHOW_ONBOARDING = "SHOW_ONBOARDING";
 }
 
 class PrefRepository {
   final SharedPreferences _preferences;
   PrefRepository(this._preferences);
+
+  // ============================ LANGUAGE ===========================
 
   Locale? getAppLanguage() {
     var langCode = _preferences.getString(PrefRepositoryKeys.LANGUAGE);
@@ -21,6 +24,8 @@ class PrefRepository {
     return _preferences.setString(
         PrefRepositoryKeys.LANGUAGE, locale.languageCode);
   }
+
+  // ============================ USER SESSION ===========================
 
   String? getAccessToken() {
     String? accessToken =
@@ -42,5 +47,19 @@ class PrefRepository {
 
   Future<bool> setRefreshToken(String token) {
     return _preferences.setString(PrefRepositoryKeys.REFRESHTOKEN, token);
+  }
+
+  void clearUserSession() {
+    _preferences.remove(PrefRepositoryKeys.ACCESSTOKEN);
+    _preferences.remove(PrefRepositoryKeys.REFRESHTOKEN);
+  }
+
+  // ============================ SHOW ONBOARDING ===========================
+  Future<bool> finishOnboarding() {
+    return _preferences.setBool(PrefRepositoryKeys.SHOW_ONBOARDING, false);
+  }
+
+  bool needOnboarding() {
+    return _preferences.getBool(PrefRepositoryKeys.SHOW_ONBOARDING) ?? true;
   }
 }

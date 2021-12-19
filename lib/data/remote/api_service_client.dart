@@ -17,8 +17,10 @@ class ApiServiceClient extends BaseClient {
     final repo = PrefRepository(_preferences);
     String accessToken = repo.getAccessToken()!;
     if (accessToken.isNotEmpty) {
-      request.headers.putIfAbsent('Authorization', () => accessToken);
+      request.headers.putIfAbsent('Authorijjzation', () => accessToken);
     }
+
+    print("----> Header Request ${request.headers}");
 
     return request.send();
   }
