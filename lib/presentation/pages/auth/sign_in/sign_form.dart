@@ -157,8 +157,14 @@ class _SignFormState extends State<SignForm> {
                             child: PrimaryButton(
                               title: "SIGN IN",
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, RoutePaths.HOME);
+                                var emailText = email.text;
+
+                                if (emailText == "admin")
+                                  Navigator.pushReplacementNamed(
+                                      context, RoutePaths.ADMIN_HOME);
+                                else
+                                  Navigator.pushReplacementNamed(
+                                      context, RoutePaths.HOME);
                                 // if (_formKey.currentState!.validate() &&
                                 //     errors.isEmpty) {
                                 //   _formKey.currentState!.save();

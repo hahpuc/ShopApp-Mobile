@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
@@ -101,7 +102,9 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
           ),
           child: PrimaryButton(
             title: 'Update',
-            onPressed: () {},
+            onPressed: () {
+              EasyLoading.showSuccess('Update success');
+            },
           ),
         );
       default:
@@ -113,7 +116,9 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
           ),
           child: PrimaryButton(
             title: 'Add new product',
-            onPressed: () {},
+            onPressed: () {
+              EasyLoading.showSuccess('Add new product success');
+            },
           ),
         );
     }

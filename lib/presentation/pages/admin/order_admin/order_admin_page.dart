@@ -48,6 +48,7 @@ class _OrderAdminPageState extends State<OrderAdminPage> {
 
   CustomAppBar _buildAppBar() {
     return CustomAppBar(
+      leading: Container(),
       title: CustomText(
         'My Order',
         fontSize: FontSize.BIG_1,
