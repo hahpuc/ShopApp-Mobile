@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/configs/app_constants.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
@@ -13,9 +14,14 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class CheckOutPage extends StatelessWidget {
+class CheckOutPage extends StatefulWidget {
   const CheckOutPage({Key? key}) : super(key: key);
 
+  @override
+  State<CheckOutPage> createState() => _CheckOutPageState();
+}
+
+class _CheckOutPageState extends State<CheckOutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +144,15 @@ class CheckOutPage extends StatelessWidget {
       padding: EdgeInsets.all(AppDimen.spacing_2),
       sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
       fontSize: FontSize.BIG,
+      onTap: _onTapButton,
     );
+  }
+
+  void _onTapButton() {
+    print('Submit order');
+
+    EasyLoading.showSuccess('Check out order success');
+
+    Navigator.popUntil(context, (Route<dynamic> route) => route.isFirst);
   }
 }

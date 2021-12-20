@@ -7,7 +7,7 @@ import 'package:furniture_shop/values/font_sizes.dart';
 
 import 'icon_wishlist_widget.dart';
 
-class WishListWidget extends StatelessWidget {
+class WishListWidget extends StatefulWidget {
   final String? title;
   final String? imageUrl;
   final double? price;
@@ -22,6 +22,13 @@ class WishListWidget extends StatelessWidget {
     this.statusWhish = 0, //0: In stock ---- 1: Sold out
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<WishListWidget> createState() => _WishListWidgetState();
+}
+
+class _WishListWidgetState extends State<WishListWidget> {
+  bool isCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +52,22 @@ class WishListWidget extends StatelessWidget {
       height: 32.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: statusWhish == 1 ? Colors.white : Colors.black,
+        color: isCheck ? Colors.white : Colors.black,
         border: Border.all(
           width: 1,
-          color: statusWhish == 1 ? AppColor.colorGrey : Colors.transparent,
+          color: isCheck ? AppColor.colorGrey : Colors.transparent,
         ),
       ),
       child: IconButton(
         onPressed: () {
-          print('CHOOSE PRODUCT');
+          setState(() {
+            isCheck = !isCheck;
+          });
         },
         icon: Icon(
           Icons.check,
           size: 16.0,
-          color:
-              statusWhish == 1 ? AppColor.colorGrey : AppColor.colorGreyLight,
+          color: isCheck ? AppColor.colorGrey : AppColor.colorGreyLight,
         ),
       ),
     );
@@ -73,7 +81,7 @@ class WishListWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: NetworkImage(imageUrl ?? ''),
+          image: NetworkImage(widget.imageUrl ?? ''),
         ),
       ),
     );
@@ -91,7 +99,7 @@ class WishListWidget extends StatelessWidget {
   }
 
   Widget _buildStatus() {
-    switch (statusWhish) {
+    switch (widget.statusWhish) {
       case 0:
         return SizedBox.shrink();
       case 1:
@@ -218,9 +226,9 @@ class WishListWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: CustomText(
-        title!,
+        widget.title!,
         fontSize: FontSize.MEDIUM,
-        color: statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
+        color: widget.statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
         letterSpacing: 1,
       ),
     );
@@ -228,10 +236,10 @@ class WishListWidget extends StatelessWidget {
 
   Widget _buildPrice() {
     return CustomText(
-      '\$ ${price!.toStringAsFixed(2)}',
+      '\$ ${widget.price!.toStringAsFixed(2)}',
       fontSize: FontSize.SMALL,
       fontWeight: FontWeight.w700,
-      color: statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
+      color: widget.statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/presentation/widgets/base/tap_outside_to_unfocus.dart';
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
 import 'package:furniture_shop/values/colors.dart';
@@ -88,6 +89,9 @@ class _AddShippingAddressPageState extends State<AddShippingAddressPage> {
   Widget _buildButton() {
     return PrimaryButton(
       title: 'Add new address',
+      onPressed: () {
+        EasyLoading.showSuccess('Add new address successfully');
+      },
     );
   }
 

@@ -15,6 +15,8 @@ class ShippingAddressesPage extends StatefulWidget {
 }
 
 class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
+  bool isDefault = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,24 +83,22 @@ class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
 
   List<Address> mockAddress = [
     Address(
-        name: "Đầu cắt moi",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: true),
+      name: "Đầu cắt moi",
+      phoneNumber: "09099909009",
+      address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
+      isDefaultAddress: true,
+    ),
     Address(
-        name: "Ngô Bá Khá",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: false),
+      name: "Ngô Bá Khá",
+      phoneNumber: "09099909009",
+      address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
+      isDefaultAddress: false,
+    ),
     Address(
-        name: "Phúc XO",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: false),
-    Address(
-        name: "Bomman",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: false),
+      name: "Phúc XO",
+      phoneNumber: "09099909009",
+      address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
+      isDefaultAddress: false,
+    ),
   ];
 }

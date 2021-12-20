@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/wish_list/widget/whish_list_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
@@ -44,6 +45,33 @@ class WishListPage extends StatelessWidget {
     );
   }
 
+//   List<ListWishList> listItem = [
+//     ListWishList(
+//       checked: true,
+//       imagUrl:
+//           'http://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg',
+//       title: 'Desk Gaming',
+//       price: 59,
+//     ),
+
+// 	ListWishList(
+//       checked: false,
+//       imagUrl:
+//           'https://res.cloudinary.com/dynk5q1io/image/upload/v1636561688/products/Floor%20Lamp/dmhgvhimkjbtsqknuvad.jpg',
+//       title: 'Lamp',
+//       price: 49,
+//     ),
+
+// 	ListWishList(
+// 	  checked: false,
+// 	  imagUrl:
+// 		  'https://res.cloudinary.com/dynk5q1io/image/upload/v1634120101/products/Folding%20Computer%20Desk/l0d5kxt8okip8doh3tos.jpg',
+// 	  title: 'Chair',
+// 	  price: 129,
+// 	),
+
+//   ];
+
   Widget _buildWhishLists() {
     return Expanded(
       child: ListView.separated(
@@ -67,6 +95,24 @@ class WishListPage extends StatelessWidget {
   Widget _buildFooterButton() {
     return PrimaryButton(
       title: 'Add to cart',
+      onPressed: () {
+        EasyLoading.showSuccess('Added to cart');
+      },
     );
   }
+}
+
+//---------
+class ListWishList {
+  bool? checked;
+  String? imagUrl;
+  String? title;
+  int? price;
+
+  ListWishList({
+    this.checked,
+    this.imagUrl,
+    this.title,
+    this.price,
+  });
 }

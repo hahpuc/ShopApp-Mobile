@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
@@ -36,10 +37,16 @@ class ShippingInformation extends StatelessWidget {
                   fontSize: FontSize.BIG,
                   fontWeight: FontWeight.bold,
                 ),
-                SvgPicture.asset(
-                  Assets.images.icEditSvg.path,
-                  height: 24.0,
-                  width: 24.0,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RoutePaths.ADD_SHIPPING_ADDRESSES);
+                  },
+                  child: SvgPicture.asset(
+                    Assets.images.icEditSvg.path,
+                    height: 24.0,
+                    width: 24.0,
+                  ),
                 ),
               ],
             ),
