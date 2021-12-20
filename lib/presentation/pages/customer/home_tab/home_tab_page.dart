@@ -104,7 +104,9 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
           ),
         ),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, RoutePaths.CHAT_PAGE);
+            },
             icon: Center(
               child: Row(
                 children: [

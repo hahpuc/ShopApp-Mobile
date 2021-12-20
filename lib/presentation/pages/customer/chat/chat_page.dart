@@ -64,7 +64,12 @@ class _ChatPageState extends State<ChatPage> with LoadingViewMixin {
         fontFamily: FontFamily.gelasio,
         fontSize: FontSize.BIG_1,
       ),
-      leading: IconButton(onPressed: () {}, icon: Assets.images.icBack.svg()),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: Assets.images.icBack.svg(),
+      ),
     );
   }
 
