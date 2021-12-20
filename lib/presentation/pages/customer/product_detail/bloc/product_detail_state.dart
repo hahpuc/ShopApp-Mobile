@@ -6,9 +6,9 @@ class ProductDetailPageState extends BaseState {}
 class ProductDetailPageLoadingState extends ProductDetailPageState {}
 
 class ProductDetailGetDataSuccess extends ProductDetailPageState {
-  final ProductDetailModel data;
+//   final ProductDetailModel data;
 
-  ProductDetailGetDataSuccess(this.data);
+  ProductDetailGetDataSuccess(/*this.data*/);
 }
 
 class ProductDetailGetDataFailed extends ProductDetailPageState {

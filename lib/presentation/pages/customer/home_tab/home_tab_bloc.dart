@@ -29,119 +29,225 @@ class HomeTabPageBloc extends BlocBase<HomeTabPageState> {
       name: 'Hold Up Tool Storage Rack',
       price: 580.32,
       ratingStar: 3,
-      images: ["http://dummyimage.com/150x200.png/5fa2dd/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561690/products/Floor%20Lamp/ulxpvitpejqbsqtdwbkp.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 3,
       name: 'Tray - Foam, Square 4 - S',
       price: 725.73,
       ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561688/products/Floor%20Lamp/dmhgvhimkjbtsqknuvad.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 4,
       name: 'Crab - Back Fin Meat, Canned',
       price: 305.11,
       ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/dddddd/000000"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561690/products/Floor%20Lamp/ulxpvitpejqbsqtdwbkp.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 2,
       name: 'Dc - Sakura Fu',
       price: 939.98,
       ratingStar: 2,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 5,
       name: 'Mousse - Passion Fruit',
       price: 591.91,
       ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561688/products/Floor%20Lamp/dmhgvhimkjbtsqknuvad.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 6,
       name: 'Towel Dispenser',
       price: 249.45,
       ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120101/products/Folding%20Computer%20Desk/l0d5kxt8okip8doh3tos.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 4,
       name: 'Magnotta Bel Paese Red',
       price: 671.43,
       ratingStar: 4,
-      images: ["http://dummyimage.com/150x200.png/dddddd/000000"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 6,
       name: 'Bread - Sour Batard',
       price: 420.05,
       ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 5,
       name: 'Pork Ham Prager',
       price: 21.72,
       ratingStar: 3,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561688/products/Floor%20Lamp/dmhgvhimkjbtsqknuvad.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 1,
       name: 'Bread - Wheat Baguette',
       price: 248.81,
       ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561692/products/Floor%20Lamp/c2e3vi6rbbqm3mypdmkd.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 2,
       name: 'Hold Up Tool Storage Rack',
       price: 580.32,
       ratingStar: 3,
-      images: ["http://dummyimage.com/150x200.png/5fa2dd/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120101/products/Folding%20Computer%20Desk/l0d5kxt8okip8doh3tos.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 3,
       name: 'Tray - Foam, Square 4 - S',
       price: 725.73,
       ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561692/products/Floor%20Lamp/c2e3vi6rbbqm3mypdmkd.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 4,
       name: 'Crab - Back Fin Meat, Canned',
       price: 305.11,
       ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/dddddd/000000"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 2,
       name: 'Dc - Sakura Fu',
       price: 939.98,
       ratingStar: 2,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561692/products/Floor%20Lamp/c2e3vi6rbbqm3mypdmkd.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 5,
       name: 'Mousse - Passion Fruit',
       price: 591.91,
       ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 6,
       name: 'Towel Dispenser',
       price: 249.45,
       ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561692/products/Floor%20Lamp/c2e3vi6rbbqm3mypdmkd.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 4,
       name: 'Magnotta Bel Paese Red',
       price: 671.43,
       ratingStar: 4,
-      images: ["http://dummyimage.com/150x200.png/dddddd/000000"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120101/products/Folding%20Computer%20Desk/l0d5kxt8okip8doh3tos.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 6,
+      name: 'Bread - Sour Batard',
+      price: 420.05,
+      ratingStar: 5,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120097/products/Folding%20Computer%20Desk/yq2u0jj9mrwdwjzlfyh9.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 5,
+      name: 'Pork Ham Prager',
+      price: 21.72,
+      ratingStar: 3,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120097/products/Folding%20Computer%20Desk/yq2u0jj9mrwdwjzlfyh9.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 1,
+      name: 'Bread - Wheat Baguette',
+      price: 248.81,
+      ratingStar: 5,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561692/products/Floor%20Lamp/c2e3vi6rbbqm3mypdmkd.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 4,
+      name: 'Crab - Back Fin Meat, Canned',
+      price: 305.11,
+      ratingStar: 5,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 2,
+      name: 'Dc - Sakura Fu',
+      price: 939.98,
+      ratingStar: 2,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 5,
+      name: 'Mousse - Passion Fruit',
+      price: 591.91,
+      ratingStar: 1,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1636561692/products/Floor%20Lamp/c2e3vi6rbbqm3mypdmkd.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 6,
+      name: 'Towel Dispenser',
+      price: 249.45,
+      ratingStar: 1,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg"
+      ],
+    ),
+    ProductTest(
+      categoriesID: 4,
+      name: 'Magnotta Bel Paese Red',
+      price: 671.43,
+      ratingStar: 4,
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120097/products/Folding%20Computer%20Desk/yq2u0jj9mrwdwjzlfyh9.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 6,
@@ -155,70 +261,18 @@ class HomeTabPageBloc extends BlocBase<HomeTabPageState> {
       name: 'Pork Ham Prager',
       price: 21.72,
       ratingStar: 3,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120097/products/Folding%20Computer%20Desk/yq2u0jj9mrwdwjzlfyh9.jpg"
+      ],
     ),
     ProductTest(
       categoriesID: 1,
       name: 'Bread - Wheat Baguette',
       price: 248.81,
       ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
-    ),
-    ProductTest(
-      categoriesID: 4,
-      name: 'Crab - Back Fin Meat, Canned',
-      price: 305.11,
-      ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/dddddd/000000"],
-    ),
-    ProductTest(
-      categoriesID: 2,
-      name: 'Dc - Sakura Fu',
-      price: 939.98,
-      ratingStar: 2,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
-    ),
-    ProductTest(
-      categoriesID: 5,
-      name: 'Mousse - Passion Fruit',
-      price: 591.91,
-      ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
-    ),
-    ProductTest(
-      categoriesID: 6,
-      name: 'Towel Dispenser',
-      price: 249.45,
-      ratingStar: 1,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
-    ),
-    ProductTest(
-      categoriesID: 4,
-      name: 'Magnotta Bel Paese Red',
-      price: 671.43,
-      ratingStar: 4,
-      images: ["http://dummyimage.com/150x200.png/dddddd/000000"],
-    ),
-    ProductTest(
-      categoriesID: 6,
-      name: 'Bread - Sour Batard',
-      price: 420.05,
-      ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
-    ),
-    ProductTest(
-      categoriesID: 5,
-      name: 'Pork Ham Prager',
-      price: 21.72,
-      ratingStar: 3,
-      images: ["http://dummyimage.com/150x200.png/ff4444/ffffff"],
-    ),
-    ProductTest(
-      categoriesID: 1,
-      name: 'Bread - Wheat Baguette',
-      price: 248.81,
-      ratingStar: 5,
-      images: ["http://dummyimage.com/150x200.png/cc0000/ffffff"],
+      images: [
+        "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg"
+      ],
     ),
   ];
 

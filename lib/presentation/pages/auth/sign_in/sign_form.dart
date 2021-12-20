@@ -157,15 +157,17 @@ class _SignFormState extends State<SignForm> {
                             child: PrimaryButton(
                               title: "SIGN IN",
                               onPressed: () {
-                                if (_formKey.currentState!.validate() &&
-                                    errors.isEmpty) {
-                                  _formKey.currentState!.save();
-                                  final user = UserModel(
-                                      email: email.text,
-                                      password: password.text);
-                                  // if all are valid then go to success screen
-                                  _bloc.postUserSignInData(user);
-                                }
+                                Navigator.pushReplacementNamed(
+                                    context, RoutePaths.HOME);
+                                // if (_formKey.currentState!.validate() &&
+                                //     errors.isEmpty) {
+                                //   _formKey.currentState!.save();
+                                //   final user = UserModel(
+                                //       email: email.text,
+                                //       password: password.text);
+                                //   // if all are valid then go to success screen
+                                //   _bloc.postUserSignInData(user);
+                                // }
                               },
                             ),
                           ),

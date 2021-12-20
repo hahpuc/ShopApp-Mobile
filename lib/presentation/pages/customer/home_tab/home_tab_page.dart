@@ -209,26 +209,36 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
                       Stack(
                         alignment: Alignment.topLeft,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.network(
-                              item.images![0],
-                              width: 150,
-                              height: 200,
+                          Container(
+                            height: 200,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(8.0),
+                              image: DecorationImage(
+                                  image: NetworkImage(item.images![0]),
+                                  fit: BoxFit.cover),
                             ),
                           ),
                           Positioned(
                             right: AppDimen.spacing_1,
                             bottom: AppDimen.spacing_2,
                             child: Container(
-                              child: Row(children: [
-                                CustomText(item.ratingStar.toString()),
-                                SvgPicture.asset(
-                                  Assets.images.icStar.path,
-                                  width: AppDimen.spacing_2,
-                                  height: AppDimen.spacing_2,
-                                )
-                              ]),
+                              child: Row(
+                                children: [
+                                  CustomText(
+                                    item.ratingStar.toString(),
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 4.0),
+                                  SvgPicture.asset(
+                                    Assets.images.icStar.path,
+                                    width: AppDimen.spacing_2,
+                                    height: AppDimen.spacing_2,
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],

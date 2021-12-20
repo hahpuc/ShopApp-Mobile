@@ -48,7 +48,9 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   @override
   void afterFirstFrame(BuildContext context) {
     // HARD CODE HERE
-    _bloc.getProductDetailsData('6166b1a5f1300453bc24adb5');
+    // _bloc.getProductDetailsData('6166b1a5f1300453bc24adb5');
+
+    _bloc.getProductDetail();
   }
 
   @override
@@ -91,7 +93,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               return Stack(
                 children: [
                   Container(height: double.infinity, width: double.infinity),
-                  _buildProductInformation(state.data),
+                  _buildProductInformation(),
                   _buildFooterButton(),
                 ],
               );
@@ -165,7 +167,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 Expanded(
                   child: PrimaryButton(
                     title: 'Add to cart',
-                    onPressed: () {},
+                    onPressed: _onAddToCartButton,
                   ),
                 ),
                 SizedBox(width: AppDimen.horizontalSpacing),
@@ -176,34 +178,42 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     }
   }
 
-  Widget _buildProductInformation(ProductDetailModel data) {
+  void _onAddToCartButton() {
+    EasyLoading.showSuccess('Added to cart');
+  }
+
+  Widget _buildProductInformation() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProfilePictureList(
             pageController: _pageController,
-            images: data.images,
+            images: [
+              "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg",
+              "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg",
+              "https://res.cloudinary.com/dynk5q1io/image/upload/v1634120354/products/Gaming%20Table/z36qyy9awic0eltow6qi.jpg"
+            ],
           ),
-          _buildDetailInfo(data),
+          _buildDetailInfo(),
           SizedBox(height: AppDimen.footerButtonHeight),
         ],
       ),
     );
   }
 
-  Widget _buildDetailInfo(ProductDetailModel data) {
+  Widget _buildDetailInfo() {
     return Container(
       padding: const EdgeInsets.all(AppDimen.spacing_2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(data.name ?? '', fontSize: FontSize.BIG_1),
+          CustomText('Folding Computer Desk', fontSize: FontSize.BIG_1),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                data.price.toString() + ' \$',
+                '59' + ' \$',
                 fontSize: FontSize.BIG_2,
                 fontWeight: FontWeight.w700,
               ),
@@ -214,10 +224,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
               )
             ],
           ),
-          _buildRatingView(data),
+          _buildRatingView(),
           SizedBox(height: AppDimen.verticalSpacing),
           CustomText(
-            data.description ?? '',
+            'The computer table can be folded, you can fold it and put it away, which can save your space',
             fontWeight: FontWeight.w300,
           ),
           SizedBox(height: AppDimen.verticalSpacing),
@@ -226,7 +236,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildRatingView(ProductDetailModel data) {
+  Widget _buildRatingView() {
     return Row(
       children: [
         Icon(
@@ -236,13 +246,13 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         ),
         SizedBox(width: AppDimen.spacing_1),
         CustomText(
-          data.ratingStar.toString(),
+          '4.5',
           color: AppColor.colorRatingStar,
           fontWeight: FontWeight.w700,
         ),
         SizedBox(width: AppDimen.spacing_1),
         CustomText(
-          "(" + data.reviews.toString() + " review)",
+          "(" + '59' + " review)",
           color: AppColor.colorTextLight,
           fontSize: FontSize.SMALL,
         ),
@@ -250,7 +260,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  void _onMinusTapped() {}
+  void _onMinusTapped() {
+    if (currentQuantity == 0) return;
+    setState(() {
+      currentQuantity--;
+    });
+  }
 
-  void _onPlusTapped() {}
+  void _onPlusTapped() {
+    setState(() {
+      currentQuantity++;
+    });
+  }
 }

@@ -7,17 +7,24 @@ class ProductDetailPageBloc extends BaseBloc<ProductDetailPageState> {
   ProductDetailPageBloc({required this.appRepository})
       : super(ProductDetailPageState());
 
-  Future<void> getProductDetailsData(String productID) async {
+//   Future<void> getProductDetailsData(String productID) async {
+//     emit(ProductDetailPageLoadingState());
+
+//     var response = await appRepository.apiService.getProductDetail(productID);
+
+//     if (response.isSuccessful()) {
+//       final resultData = response.response?.data;
+
+//       emit(ProductDetailGetDataSuccess(resultData!.data!));
+//     } else {
+//       emit(ProductDetailGetDataFailed(getErrorMessage(response)));
+//     }
+//   }
+
+  Future<void> getProductDetail() async {
     emit(ProductDetailPageLoadingState());
+    await Future.delayed(Duration(seconds: 1));
 
-    var response = await appRepository.apiService.getProductDetail(productID);
-
-    if (response.isSuccessful()) {
-      final resultData = response.response?.data;
-
-      emit(ProductDetailGetDataSuccess(resultData!.data!));
-    } else {
-      emit(ProductDetailGetDataFailed(getErrorMessage(response)));
-    }
+    emit(ProductDetailGetDataSuccess());
   }
 }

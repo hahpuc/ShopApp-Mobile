@@ -16,7 +16,7 @@ class OptionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: AppDimen.spacing_2),
+      margin: EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
       padding: EdgeInsets.symmetric(
           horizontal: AppDimen.spacing_3, vertical: AppDimen.spacing_3),
       child: InkWell(

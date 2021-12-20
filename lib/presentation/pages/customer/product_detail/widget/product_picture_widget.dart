@@ -31,7 +31,7 @@ class ProfilePictureList extends StatelessWidget {
   }) : super(key: key);
 
   final PageController pageController;
-  final List<ImageModel>? images;
+  final List<String>? images;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class ProfilePictureList extends StatelessWidget {
             controller: pageController,
             children: [
               for (int i = 0; i < images!.length; ++i)
-                ProductPicture(imageUrl: images?[i].imageUrl),
+                ProductPicture(imageUrl: images?[i]),
             ],
           ),
           Positioned(

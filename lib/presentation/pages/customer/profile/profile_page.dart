@@ -148,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
                 ),
                 OptionButton(
                   option: "Settings",
-                  detail: null,
+                  detail: 'Change your profile',
                   onPress: null,
                 )
               ],
