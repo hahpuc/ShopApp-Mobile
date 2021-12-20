@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
@@ -29,6 +30,8 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
   TextEditingController _promoCodeController = TextEditingController();
 
   MyCartPageBloc _bloc = MyCartPageBloc(appRepository: locator.get());
+
+  List<MyCartResponseData> _cartItems = [];
 
   @override
   void afterFirstFrame(BuildContext context) {
@@ -81,14 +84,16 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
         child: BlocBuilder<MyCartPageBloc, MyCartPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is MyCartPageGetDataSuccessState)
+            if (state is MyCartPageGetDataSuccessState) {
+              _cartItems = state.data;
               return Stack(
                 children: [
                   Container(height: double.infinity, width: double.infinity),
-                  _buildContent(state.data),
+                  _buildContent(),
                   _buildFooterButton(),
                 ],
               );
+            }
 
             return Container();
           },
@@ -115,7 +120,9 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
             SizedBox(height: AppDimen.verticalSpacing),
             PrimaryButton(
               title: 'Check out',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, RoutePaths.CHECKOUT_PAGE);
+              },
             ),
           ],
         ),
@@ -167,14 +174,15 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     );
   }
 
-  Widget _buildContent(List<MyCartResponseData> data) {
+  Widget _buildContent() {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (int i = 0; i < data.length; ++i) ..._buildCartList(data[i]),
+            for (int i = 0; i < _cartItems.length; ++i)
+              ..._buildCartList(_cartItems[i], i),
             SizedBox(height: 200.0)
           ],
         ),
@@ -182,7 +190,7 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     );
   }
 
-  List<Widget> _buildCartList(MyCartResponseData data) {
+  List<Widget> _buildCartList(MyCartResponseData data, int index) {
     return [
       SizedBox(height: AppDimen.spacing_2),
       Container(
@@ -216,7 +224,9 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
                   ),
                   QuantityView(
                     quantity: data.total,
-                    onMinusTapped: _onMinusTapped,
+                    onMinusTapped: (index) {
+                      _onMinusTapped(index);
+                    },
                     onPlusTapped: _onPlusTapped,
                   )
                 ],
@@ -241,6 +251,7 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     ];
   }
 
-  void _onMinusTapped() {}
+  void _onMinusTapped(int index) {}
+
   void _onPlusTapped() {}
 }
