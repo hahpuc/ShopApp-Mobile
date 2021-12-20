@@ -94,7 +94,9 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, RoutePaths.MY_CART);
+          },
           icon: SvgPicture.asset(
             Assets.images.icCart.path,
             width: AppDimen.icon_size,
