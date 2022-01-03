@@ -6,6 +6,25 @@ class MyCartPageState extends BaseState {}
 class MyCartPageLoadingState extends MyCartPageState {}
 
 class MyCartPageGetDataSuccessState extends MyCartPageState {
-  final List<MyCartResponseData> data;
+  final MyCartResponseModel data;
+
   MyCartPageGetDataSuccessState(this.data);
+}
+
+class MyCardPageGetDataFailedState extends MyCartPageState {
+  final String msg;
+
+  MyCardPageGetDataFailedState(this.msg);
+}
+
+class MyCartDeleteItemSuccessState extends MyCartPageState {
+  final String msg;
+
+  MyCartDeleteItemSuccessState(this.msg);
+}
+
+class MyCartDeleteItemFailedState extends MyCartPageState {
+  final String msg;
+
+  MyCartDeleteItemFailedState(this.msg);
 }

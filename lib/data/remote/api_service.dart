@@ -3,6 +3,7 @@ import 'package:furniture_shop/data/model/response/demo_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/data/remote/api_service_helper.dart';
+import 'package:furniture_shop/data/model/response/my_cart_response.dart';
 import 'package:http/http.dart';
 
 class ApiConfigs {
@@ -14,6 +15,9 @@ class ApiPath {
   static const SIGNUP = "/signup/";
   static const SIGNIN = "/signin/";
   static const PRODUCT_DETAIL = "/product/";
+  static const USER_CART = "/cart/";
+  static const ADD_PRODUCT_CART = "/cart/add-item/";
+  static const DELETE_PRODUCT_CART = "/cart/delete/";
 }
 
 class ApiService {
@@ -58,6 +62,35 @@ class ApiService {
       var response = await _apiServiceHelper.post(
           url: baseUrl + ApiPath.SIGNIN, body: user.toSignInJson());
       return UserResponse().tryParse(response);
+    });
+  }
+
+  // =========================== USER CART ===============================
+  Future<Result<MyCartResponse, Exception>> getUserCart() async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response =
+          await _apiServiceHelper.get(url: baseUrl + ApiPath.USER_CART);
+      return MyCartResponse().tryParse(response);
+    });
+  }
+
+  Future<Result<MyCartResponse, Exception>> postAddProductToCart(
+      ProductDetailModel product) async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response = await _apiServiceHelper.post(
+          url: baseUrl + ApiPath.ADD_PRODUCT_CART,
+          body: product.toAddProductJson());
+      return MyCartResponse().tryParse(response);
+    });
+  }
+
+  Future<Result<MyCartResponse, Exception>> postDeleteProductInCart(
+      ProductDetailModel product) async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response = await _apiServiceHelper.post(
+          url: baseUrl + ApiPath.DELETE_PRODUCT_CART,
+          body: product.toDeleteProductJson());
+      return MyCartResponse().tryParse(response);
     });
   }
 }

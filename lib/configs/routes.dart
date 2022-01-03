@@ -98,7 +98,6 @@ class Routes {
       case RoutePaths.ADD_SHIPPING_ADDRESSES:
         return MaterialPageRoute(
             builder: (_) => AddShippingAddressPage(), settings: settings);
-
       case RoutePaths.MY_CART:
         return MaterialPageRoute(
             builder: (_) => MyCartPage(), settings: settings);

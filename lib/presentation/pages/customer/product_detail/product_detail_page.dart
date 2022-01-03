@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
@@ -39,6 +40,7 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage>
     with AfterLayoutMixin {
   final PageController _pageController = PageController(initialPage: 0);
+  ProductDetailModel? product;
 
   ProductDetailPageBloc _bloc =
       ProductDetailPageBloc(appRepository: locator.get());
@@ -66,6 +68,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: const Text('Item added to cart'),
+      ),
+    );
+  }
+
   _blocListener(BuildContext context, ProductDetailPageState state) async {
     print("State $state");
     if (state is ProductDetailPageLoadingState) {
@@ -77,6 +89,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     if (state is ProductDetailGetDataFailed) {
       EasyLoading.showError(state.msg);
     }
+
+    if (state is ProductAddToCartSuccess) {
+      Navigator.pushNamed(context, RoutePaths.MY_CART);
+    }
   }
 
   Widget _buildBody() {
@@ -87,7 +103,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         child: BlocBuilder<ProductDetailPageBloc, ProductDetailPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is ProductDetailGetDataSuccess)
+            if (state is ProductDetailGetDataSuccess) {
+              product = state.data;
               return Stack(
                 children: [
                   Container(height: double.infinity, width: double.infinity),
@@ -95,6 +112,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   _buildFooterButton(),
                 ],
               );
+            }
 
             return Container();
           },
@@ -165,7 +183,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 Expanded(
                   child: PrimaryButton(
                     title: 'Add to cart',
-                    onPressed: () {},
+                    onPressed: () {
+                      if (product != null) {
+                        _bloc.addProductToCart(product!, currentQuantity);
+                      }
+                    },
                   ),
                 ),
                 SizedBox(width: AppDimen.horizontalSpacing),
@@ -250,7 +272,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  void _onMinusTapped() {}
+  void _onMinusTapped() {
+    if (currentQuantity <= 0) return;
+    setState(() {
+      currentQuantity--;
+    });
+  }
 
-  void _onPlusTapped() {}
+  void _onPlusTapped() {
+    setState(() {
+      currentQuantity++;
+    });
+  }
 }
