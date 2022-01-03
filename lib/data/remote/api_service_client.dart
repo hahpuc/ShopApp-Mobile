@@ -16,8 +16,9 @@ class ApiServiceClient extends BaseClient {
     final _preferences = await SharedPreferences.getInstance();
     final repo = PrefRepository(_preferences);
     String accessToken = repo.getAccessToken()!;
+    String a = "Bearer " + accessToken;
     if (accessToken.isNotEmpty) {
-      request.headers.putIfAbsent('Authorijjzation', () => accessToken);
+      request.headers.putIfAbsent('Authorization', () => a);
     }
 
     print("----> Header Request ${request.headers}");

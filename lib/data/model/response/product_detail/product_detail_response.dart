@@ -103,6 +103,19 @@ class ProductDetailModel {
     map['reviews'] = this.reviews;
     return map;
   }
+
+  Map<String, dynamic> toAddProductJson() {
+    final Map<String, dynamic> map = new Map<String, dynamic>();
+    map['productId'] = this.id;
+    map['quanlity'] = '$quantity';
+    return map;
+  }
+
+  Map<String, dynamic> toDeleteProductJson() {
+    final Map<String, dynamic> map = new Map<String, dynamic>();
+    map['productId'] = this.id;
+    return map;
+  }
 }
 
 class CategoryModel {

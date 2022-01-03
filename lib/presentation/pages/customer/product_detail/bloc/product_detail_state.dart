@@ -16,3 +16,15 @@ class ProductDetailGetDataFailed extends ProductDetailPageState {
 
   ProductDetailGetDataFailed(this.msg);
 }
+
+class ProductAddToCartSuccess extends ProductDetailPageState {
+  final String msg;
+
+  ProductAddToCartSuccess(this.msg);
+}
+
+class ProductAddToCartFailed extends ProductDetailPageState {
+  final String msg;
+
+  ProductAddToCartFailed(this.msg);
+}

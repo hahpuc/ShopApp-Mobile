@@ -28,6 +28,7 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage>
     with AfterLayoutMixin {
   final PageController _pageController = PageController(initialPage: 0);
+  ProductDetailModel? product;
 
   ProductDetailPageBloc _bloc =
       ProductDetailPageBloc(appRepository: locator.get());
@@ -55,6 +56,16 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: const Text('Item added to cart'),
+      ),
+    );
+  }
+
   _blocListener(BuildContext context, ProductDetailPageState state) async {
     print("State $state");
     if (state is ProductDetailPageLoadingState) {
@@ -76,7 +87,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         child: BlocBuilder<ProductDetailPageBloc, ProductDetailPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is ProductDetailGetDataSuccess)
+            if (state is ProductDetailGetDataSuccess) {
+              product = state.data;
               return Stack(
                 children: [
                   Container(height: double.infinity, width: double.infinity),
@@ -84,6 +96,14 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                   _buildFooterButton(),
                 ],
               );
+            }
+
+            if (state is ProductAddToCartSuccess) {
+              Future.delayed(const Duration(milliseconds: 500), () {
+                Navigator.pop(context);
+                _showToast(context);
+              });
+            }
 
             return Container();
           },
@@ -113,7 +133,11 @@ class _ProductDetailPageState extends State<ProductDetailPage>
             Expanded(
               child: PrimaryButton(
                 title: 'Add to cart',
-                onPressed: () {},
+                onPressed: () {
+                  if (product != null) {
+                    _bloc.addProductToCart(product!);
+                  }
+                },
               ),
             ),
             SizedBox(width: AppDimen.horizontalSpacing),

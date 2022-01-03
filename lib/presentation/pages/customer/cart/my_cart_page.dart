@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/cart/bloc/my_cart_page_bloc.dart';
 import 'package:furniture_shop/presentation/pages/customer/cart/bloc/my_cart_page_state.dart';
@@ -81,6 +82,10 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
         child: BlocBuilder<MyCartPageBloc, MyCartPageState>(
           bloc: _bloc,
           builder: (context, state) {
+            if (state is MyCartDeleteItemSuccessState) {
+              _bloc.getMyCart();
+            }
+
             if (state is MyCartPageGetDataSuccessState)
               return Stack(
                 children: [
@@ -167,14 +172,15 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     );
   }
 
-  Widget _buildContent(List<MyCartResponseData> data) {
+  Widget _buildContent(MyCartResponseModel data) {
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (int i = 0; i < data.length; ++i) ..._buildCartList(data[i]),
+            for (int i = 0; i < data.products!.length; ++i)
+              ..._buildCartList(data.products![i]),
             SizedBox(height: 200.0)
           ],
         ),
@@ -182,7 +188,7 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     );
   }
 
-  List<Widget> _buildCartList(MyCartResponseData data) {
+  List<Widget> _buildCartList(ProductModel data) {
     return [
       SizedBox(height: AppDimen.spacing_2),
       Container(
@@ -195,7 +201,8 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 image: DecorationImage(
-                  image: NetworkImage(data.urlImage ?? ''),
+                  image:
+                      NetworkImage(data.productId!.images![0].imageUrl ?? ''),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -207,15 +214,15 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
-                    data.productName!,
+                    data.productId!.name!,
                     fontWeight: FontWeight.w600,
                   ),
                   CustomText(
-                    '\$' + data.price!.toString(),
+                    '\$' + data.productId!.price.toString(),
                     fontWeight: FontWeight.w700,
                   ),
                   QuantityView(
-                    quantity: data.total,
+                    quantity: data.productId!.quantity,
                     onMinusTapped: _onMinusTapped,
                     onPlusTapped: _onPlusTapped,
                   )
@@ -223,7 +230,10 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _bloc.deleteProductInCart(
+                    ProductDetailModel(id: data.productId!.id));
+              },
               icon: Icon(
                 Icons.cancel,
                 size: 24.0,
