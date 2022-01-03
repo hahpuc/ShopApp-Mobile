@@ -75,11 +75,15 @@ class ApiService {
   }
 
   Future<Result<MyCartResponse, Exception>> postAddProductToCart(
-      ProductDetailModel product) async {
+      ProductDetailModel product, int quantity) async {
     return _apiServiceHelper.handleResponse(request: () async {
       var response = await _apiServiceHelper.post(
-          url: baseUrl + ApiPath.ADD_PRODUCT_CART,
-          body: product.toAddProductJson());
+        url: baseUrl + ApiPath.ADD_PRODUCT_CART,
+        body: {
+          "productId": product.id,
+          "quantity": quantity.toString(),
+        },
+      );
       return MyCartResponse().tryParse(response);
     });
   }

@@ -104,10 +104,10 @@ class ProductDetailModel {
     return map;
   }
 
-  Map<String, dynamic> toAddProductJson() {
+  Map<String, dynamic> toAddProductJson(int number) {
     final Map<String, dynamic> map = new Map<String, dynamic>();
     map['productId'] = this.id;
-    map['quanlity'] = '$quantity';
+    map['quanlity'] = '$number';
     return map;
   }
 

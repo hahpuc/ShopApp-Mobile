@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
@@ -120,7 +121,9 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
             SizedBox(height: AppDimen.verticalSpacing),
             PrimaryButton(
               title: 'Check out',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, RoutePaths.CHECKOUT_PAGE);
+              },
             ),
           ],
         ),
@@ -222,7 +225,7 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
                     fontWeight: FontWeight.w700,
                   ),
                   QuantityView(
-                    quantity: data.productId!.quantity,
+                    quantity: data.quantity,
                     onMinusTapped: _onMinusTapped,
                     onPlusTapped: _onPlusTapped,
                   )

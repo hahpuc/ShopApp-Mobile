@@ -22,10 +22,12 @@ class ProductDetailPageBloc extends BaseBloc<ProductDetailPageState> {
     }
   }
 
-  Future<void> addProductToCart(ProductDetailModel product) async {
+  Future<void> addProductToCart(
+      ProductDetailModel product, int quantity) async {
     emit(ProductDetailPageLoadingState());
 
-    var response = await appRepository.apiService.postAddProductToCart(product);
+    var response =
+        await appRepository.apiService.postAddProductToCart(product, quantity);
 
     if (response.isSuccessful()) {
       emit(ProductAddToCartSuccess("Added product to cart"));
