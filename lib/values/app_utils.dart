@@ -1,11 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/local/pref_repository.dart';
 
+import '../app.dart';
+
 class AppUtils {
-  static logout({showInfoDialog = false}) {
+  static void logout({showInfoDialog = false}) {
     // Clear user session info
     PrefRepository prefRepository = locator.get();
     prefRepository.clearUserSession();
+
+    Navigator.pushNamedAndRemoveUntil(
+        navigatorKey.currentContext!, RoutePaths.SIGNIN, (route) => false);
   }
 
   static bool isLoggedIn() {
@@ -25,5 +32,15 @@ class AppUtils {
   static void finishOnboarding() {
     PrefRepository prefRepository = locator.get();
     prefRepository.finishOnboarding();
+  }
+
+  static void setRoleUser(String role) {
+    PrefRepository prefRepository = locator.get();
+    prefRepository.setUserRole(role);
+  }
+
+  static String getRoleUser() {
+    PrefRepository prefRepository = locator.get();
+    return prefRepository.getUserRole();
   }
 }

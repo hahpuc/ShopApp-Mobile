@@ -7,6 +7,7 @@ import 'package:furniture_shop/presentation/pages/auth/forgot_password/forgot_pa
 import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_up/sign_up_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/add_shipping_address/add_shipping_address_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/cart/my_cart_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/demo/demo_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/home/home_page.dart';
@@ -33,6 +34,8 @@ class RoutePaths {
   static const String SHIPPING_ADDRESS_PAGE = '/shipping_address';
   static const String PAYMENT_METHODS = '/payment_methods';
   static const String ADD_SHIPPING_ADDRESSES = '/add_address';
+  static const String MY_CART = "/my_cart";
+  static const String CHAT_PAGE = '/chat';
 
   //ADMIN
   static const String ADMIN_HOME = '/admin_home';
@@ -95,6 +98,15 @@ class Routes {
       case RoutePaths.ADD_SHIPPING_ADDRESSES:
         return MaterialPageRoute(
             builder: (_) => AddShippingAddressPage(), settings: settings);
+
+      case RoutePaths.MY_CART:
+        return MaterialPageRoute(
+            builder: (_) => MyCartPage(), settings: settings);
+
+      //   case RoutePaths.CHAT_PAGE:
+      //     return MaterialPageRoute(
+      //         builder: (_) => ChatPage(), settings: settings);
+
       //ADMIN
       case RoutePaths.ADMIN_HOME:
         return MaterialPageRoute(

@@ -6,6 +6,7 @@ class PrefRepositoryKeys {
   static const String ACCESSTOKEN = "ACCESSTOKEN";
   static const String REFRESHTOKEN = "REFRESHTOKEN";
   static const String SHOW_ONBOARDING = "SHOW_ONBOARDING";
+  static const String USER_ROLE = "USER_ROLE";
 }
 
 class PrefRepository {
@@ -47,6 +48,14 @@ class PrefRepository {
 
   Future<bool> setRefreshToken(String token) {
     return _preferences.setString(PrefRepositoryKeys.REFRESHTOKEN, token);
+  }
+
+  Future<bool> setUserRole(String role) {
+    return _preferences.setString(PrefRepositoryKeys.USER_ROLE, role);
+  }
+
+  String getUserRole() {
+    return _preferences.getString(PrefRepositoryKeys.USER_ROLE) ?? "";
   }
 
   void clearUserSession() {

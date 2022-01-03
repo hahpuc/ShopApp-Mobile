@@ -22,6 +22,7 @@ class ProfilePageBloc extends BlocBase<ProfilePageState> {
   void logout() async {
     emit(ProfilePageLoadingState());
     appRepository.prefRepository.clearUserSession();
+    print("-----> Logout ${appRepository.prefRepository.getAccessToken()}");
     emit(LogoutSuccessState());
   }
 }
