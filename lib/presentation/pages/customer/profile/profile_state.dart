@@ -10,4 +10,6 @@ class ProfilePageGetDataSuccessState extends ProfilePageState {
   ProfilePageGetDataSuccessState(this.data);
 }
 
+class LogoutSuccessState extends ProfilePageState {}
+
 class ProfilePageGetDataFailState extends ProfilePageState {}

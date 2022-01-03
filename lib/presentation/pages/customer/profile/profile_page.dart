@@ -52,7 +52,9 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
       actions: [
         IconButton(
           padding: EdgeInsets.symmetric(horizontal: AppDimen.spacing_2),
-          onPressed: () {},
+          onPressed: () {
+            _bloc.logout();
+          },
           icon: SvgPicture.asset(Assets.images.icLogout.path,
               color: AppColor.colorTextLight),
         ),
@@ -66,6 +68,11 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
       EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
     } else {
       EasyLoading.dismiss();
+    }
+
+    if (state is LogoutSuccessState) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, RoutePaths.SIGNIN, (route) => false);
     }
   }
 

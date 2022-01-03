@@ -18,4 +18,10 @@ class ProfilePageBloc extends BlocBase<ProfilePageState> {
     } else
       emit(ProfilePageGetDataFailState());
   }
+
+  void logout() async {
+    emit(ProfilePageLoadingState());
+    appRepository.prefRepository.clearUserSession();
+    emit(LogoutSuccessState());
+  }
 }
