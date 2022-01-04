@@ -46,7 +46,7 @@ class ShippingAddressPageBloc extends BaseBloc<ShippingAddressPageState> {
 
     AppUtils.setDefaultAddress(address!);
 
-    print("---> ${AppUtils.getDefaultAddress().toJson()}");
+    print("***********> ${AppUtils.getDefaultAddress().toJson()}");
 
     emit(SetAddressToLocalSuccessState());
   }

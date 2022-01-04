@@ -6,9 +6,11 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/address.dart';
 import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/bloc/shipping_addresses_bloc.dart';
 import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/bloc/shipping_addresses_state.dart';
+import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/base/footer_scroll_view.dart';
@@ -27,8 +29,12 @@ class _ShippingAddressesPageState extends State<ShippingAddressesPage>
       ShippingAddressPageBloc(appRepository: locator.get());
 
   List<ShippingAddressModel> address = [];
-
   ShippingAddressModel? currentAddress;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void afterFirstFrame(BuildContext context) {
@@ -45,6 +51,14 @@ class _ShippingAddressesPageState extends State<ShippingAddressesPage>
 
   CustomAppBar _buildAppBar(BuildContext context) {
     return CustomAppBar(
+      leading: IconButton(
+        splashRadius: 24.0,
+        icon: Icon(Icons.keyboard_backspace),
+        color: Colors.black,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
       title: CustomText(
         'Shipping Addresses',
         fontFamily: FontFamily.gelasio,

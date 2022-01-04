@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/app_constants.dart';
+import 'package:furniture_shop/configs/routes.dart';
+import 'package:furniture_shop/configs/service_locator.dart';
+import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_bloc.dart';
+import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_state.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
@@ -13,14 +21,67 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class CheckOutPage extends StatelessWidget {
+abstract class OnUpadeCheckoutPage {
+  void onUpdateShippingAddress();
+}
+
+class CheckOutPage extends StatefulWidget {
   const CheckOutPage({Key? key}) : super(key: key);
 
   @override
+  State<CheckOutPage> createState() => _CheckOutPageState();
+}
+
+class _CheckOutPageState extends State<CheckOutPage>
+    with AfterLayoutMixin
+    implements OnUpadeCheckoutPage {
+  CheckOutPageBloc _bloc = CheckOutPageBloc(appRepository: locator.get());
+
+  ShippingAddressModel? userAddress;
+
+  @override
+  void afterFirstFrame(BuildContext context) {
+    _bloc.getUserAddress();
+  }
+
+  _blocListener(BuildContext context, CheckOutPageState state) async {
+    print("State $state");
+    if (state is CheckOutPageLoadingState) {
+      EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
+    } else {
+      EasyLoading.dismiss();
+    }
+
+    if (state is CheckOutPageGetDataErrorState) {
+      EasyLoading.showError(state.msg);
+    }
+
+    if (state is CheckOutPageGetUserAddress) {
+      setState(() {
+        userAddress = state.address;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: _buildBody(),
+    return BlocProvider(
+      create: (context) => _bloc,
+      child: BlocListener<CheckOutPageBloc, CheckOutPageState>(
+        listener: _blocListener,
+        child: BlocBuilder<CheckOutPageBloc, CheckOutPageState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            if (state is CheckOutPageGetUserAddress)
+              return Scaffold(
+                appBar: _buildAppBar(),
+                body: _buildBody(),
+              );
+
+            return Container();
+          },
+        ),
+      ),
     );
   }
 
@@ -90,9 +151,12 @@ class CheckOutPage extends StatelessWidget {
 
   Widget _buildDetailShippingAddress() {
     return ShippingInformation(
-      name: 'Long Nguyen',
-      phoneNumber: '(+84) 123456789',
-      address: '123 Nguyen Van Linh, District 1, Ho Chi Minh City',
+      name: userAddress?.name ?? 'user name',
+      phoneNumber: userAddress?.phoneNumber ?? 'phone number',
+      address: userAddress?.address ?? 'address',
+      onTap: () {
+        Navigator.pushNamed(context, RoutePaths.SHIPPING_ADDRESS_PAGE);
+      },
     );
   }
 
@@ -139,5 +203,11 @@ class CheckOutPage extends StatelessWidget {
       sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
       fontSize: FontSize.BIG,
     );
+  }
+
+  @override
+  void onUpdateShippingAddress() {
+    print("------> HANDLE UPDATE ADDRESS");
+    _bloc.getUserAddress();
   }
 }
