@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/data/model/response/my_cart_response.dart';
 import 'package:furniture_shop/presentation/pages/admin/home_admin/home_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/admin/order_admin/order_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/admin/order_detail_admin/order_detail_admin_page.dart';
@@ -69,8 +70,13 @@ class Routes {
             builder: (_) => NotificationPage(), settings: settings);
 
       case RoutePaths.CHECKOUT_PAGE:
+        var agr = settings.arguments as List;
+        MyCartResponseModel data = agr[0];
+        int totalMoney = agr[1];
+
         return MaterialPageRoute(
-            builder: (_) => CheckOutPage(), settings: settings);
+            builder: (_) => CheckOutPage(data: data, totalMoney: totalMoney),
+            settings: settings);
 
       case RoutePaths.WISHLIST_PAGE:
         return MaterialPageRoute(

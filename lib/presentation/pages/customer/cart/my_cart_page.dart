@@ -32,6 +32,8 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
 
   MyCartPageBloc _bloc = MyCartPageBloc(appRepository: locator.get());
 
+  int totalMoney = 0;
+
   @override
   void afterFirstFrame(BuildContext context) {
     _bloc.getMyCart();
@@ -73,6 +75,17 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     } else {
       EasyLoading.dismiss();
     }
+
+    if (state is MyCartPageGetDataSuccessState) {
+      var sum = 0;
+      for (ProductModel item in state.data.products ?? []) {
+        sum += item.productId?.price ?? 0 * item.quantity!;
+      }
+
+      setState(() {
+        totalMoney = sum;
+      });
+    }
   }
 
   Widget _buildBody() {
@@ -92,7 +105,7 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
                 children: [
                   Container(height: double.infinity, width: double.infinity),
                   _buildContent(state.data),
-                  _buildFooterButton(),
+                  _buildFooterButton(state.data),
                 ],
               );
 
@@ -103,7 +116,7 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     );
   }
 
-  Widget _buildFooterButton() {
+  Widget _buildFooterButton(MyCartResponseModel data) {
     return Positioned(
       bottom: 0,
       left: 0,
@@ -117,12 +130,13 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
           children: [
             _buildPromoCodeTextField(),
             SizedBox(height: AppDimen.verticalSpacing),
-            _buildTotalMoney(),
+            _buildTotalMoney(totalMoney),
             SizedBox(height: AppDimen.verticalSpacing),
             PrimaryButton(
               title: 'Check out',
               onPressed: () {
-                Navigator.pushNamed(context, RoutePaths.CHECKOUT_PAGE);
+                Navigator.pushNamed(context, RoutePaths.CHECKOUT_PAGE,
+                    arguments: [data, totalMoney]);
               },
             ),
           ],
@@ -131,13 +145,13 @@ class _MyCartPageState extends State<MyCartPage> with AfterLayoutMixin {
     );
   }
 
-  Widget _buildTotalMoney() {
+  Widget _buildTotalMoney(int totalMoney) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CustomText('Total',
             fontSize: FontSize.BIG, color: AppColor.colorTextLight),
-        CustomText('\$70.00',
+        CustomText('\$ $totalMoney',
             fontSize: FontSize.BIG, fontWeight: FontWeight.bold)
       ],
     );

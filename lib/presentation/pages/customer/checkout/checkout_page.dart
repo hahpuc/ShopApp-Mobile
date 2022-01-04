@@ -5,6 +5,7 @@ import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/app_constants.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
+import 'package:furniture_shop/data/model/response/my_cart_response.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
@@ -27,7 +28,10 @@ abstract class OnUpadeCheckoutPage {
 }
 
 class CheckOutPage extends StatefulWidget {
-  const CheckOutPage({Key? key}) : super(key: key);
+  final MyCartResponseModel? data;
+  final int? totalMoney;
+
+  const CheckOutPage({Key? key, this.data, this.totalMoney}) : super(key: key);
 
   @override
   State<CheckOutPage> createState() => _CheckOutPageState();
@@ -40,6 +44,14 @@ class _CheckOutPageState extends State<CheckOutPage>
 
   ShippingAddressModel? userAddress;
   PAYMENT_METHOD paymentMethod = PAYMENT_METHOD.CASH_ON_DELIVERY;
+  int totalMoney = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    totalMoney = widget.totalMoney! + 5;
+  }
 
   @override
   void afterFirstFrame(BuildContext context) {
@@ -211,19 +223,15 @@ class _CheckOutPageState extends State<CheckOutPage>
         children: [
           HorizontalInformations(
             title: 'Order',
-            value: '70.00 \$',
+            value: '${widget.totalMoney} \$',
           ),
           HorizontalInformations(
             title: 'Delivery',
-            value: '15.00 \$',
-          ),
-          HorizontalInformations(
-            title: 'Discount',
-            value: '-20.00 \$',
+            value: '5 \$',
           ),
           HorizontalInformations(
             title: 'Total',
-            value: '65.00 \$',
+            value: '${this.totalMoney} \$',
             fontWeight: FontWeight.bold,
           ),
         ],
