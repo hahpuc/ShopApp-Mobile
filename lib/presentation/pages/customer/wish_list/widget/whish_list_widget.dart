@@ -10,7 +10,7 @@ import 'icon_wishlist_widget.dart';
 class WishListWidget extends StatelessWidget {
   final String? title;
   final String? imageUrl;
-  final double? price;
+  final int? price;
   final bool? checked;
   final int? statusWhish;
 
@@ -215,13 +215,16 @@ class WishListWidget extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: CustomText(
-        title!,
-        fontSize: FontSize.MEDIUM,
-        color: statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
-        letterSpacing: 1,
+    return SizedBox(
+      width: 150,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: CustomText(
+          title!,
+          fontSize: FontSize.MEDIUM,
+          color: statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
+          letterSpacing: 1,
+        ),
       ),
     );
   }
