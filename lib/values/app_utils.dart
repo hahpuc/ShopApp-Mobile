@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/local/pref_repository.dart';
+import 'package:furniture_shop/data/model/response/user_response.dart';
 
 import '../app.dart';
 
@@ -42,5 +43,16 @@ class AppUtils {
   static String getRoleUser() {
     PrefRepository prefRepository = locator.get();
     return prefRepository.getUserRole();
+  }
+
+  static void setDefaultAddress(ShippingAddressModel address) {
+    PrefRepository prefRepository = locator.get();
+
+    return prefRepository.setDefaultAddress(address);
+  }
+
+  static ShippingAddressModel getDefaultAddress() {
+    PrefRepository prefRepository = locator.get();
+    return prefRepository.getDefaultAddress();
   }
 }

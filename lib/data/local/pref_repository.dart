@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefRepositoryKeys {
@@ -7,6 +10,7 @@ class PrefRepositoryKeys {
   static const String REFRESHTOKEN = "REFRESHTOKEN";
   static const String SHOW_ONBOARDING = "SHOW_ONBOARDING";
   static const String USER_ROLE = "USER_ROLE";
+  static const String USER_ADDRESS = "USER_ADDRESS";
 }
 
 class PrefRepository {
@@ -70,5 +74,15 @@ class PrefRepository {
 
   bool needOnboarding() {
     return _preferences.getBool(PrefRepositoryKeys.SHOW_ONBOARDING) ?? true;
+  }
+
+  void setDefaultAddress(ShippingAddressModel address) {
+    _preferences.setString(
+        PrefRepositoryKeys.USER_ADDRESS, jsonEncode(address.toJson()));
+  }
+
+  ShippingAddressModel getDefaultAddress() {
+    var address = _preferences.getString(PrefRepositoryKeys.USER_ADDRESS);
+    return ShippingAddressModel.fromJson(jsonDecode(address ?? "{}"));
   }
 }

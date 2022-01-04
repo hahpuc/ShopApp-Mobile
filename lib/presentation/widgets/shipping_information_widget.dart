@@ -12,11 +12,13 @@ class ShippingInformation extends StatelessWidget {
   final String name;
   final String phoneNumber;
   final String address;
+  final VoidCallback? onTap;
   const ShippingInformation({
     Key? key,
     required this.name,
     required this.phoneNumber,
     required this.address,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -36,10 +38,13 @@ class ShippingInformation extends StatelessWidget {
                   fontSize: FontSize.BIG,
                   fontWeight: FontWeight.bold,
                 ),
-                SvgPicture.asset(
-                  Assets.images.icEditSvg.path,
-                  height: 24.0,
-                  width: 24.0,
+                InkWell(
+                  onTap: onTap,
+                  child: SvgPicture.asset(
+                    Assets.images.icEditSvg.path,
+                    height: 24.0,
+                    width: 24.0,
+                  ),
                 ),
               ],
             ),

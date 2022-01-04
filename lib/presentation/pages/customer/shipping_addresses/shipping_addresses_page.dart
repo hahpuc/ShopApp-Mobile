@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/routes.dart';
+import 'package:furniture_shop/configs/service_locator.dart';
+import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/address.dart';
+import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/bloc/shipping_addresses_bloc.dart';
+import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/bloc/shipping_addresses_state.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/base/footer_scroll_view.dart';
@@ -14,7 +21,20 @@ class ShippingAddressesPage extends StatefulWidget {
   State<ShippingAddressesPage> createState() => _ShippingAddressesPageState();
 }
 
-class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
+class _ShippingAddressesPageState extends State<ShippingAddressesPage>
+    with AfterLayoutMixin {
+  ShippingAddressPageBloc _bloc =
+      ShippingAddressPageBloc(appRepository: locator.get());
+
+  List<ShippingAddressModel> address = [];
+
+  ShippingAddressModel? currentAddress;
+
+  @override
+  void afterFirstFrame(BuildContext context) {
+    _bloc.getUserAddress();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,10 +69,49 @@ class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
     Navigator.pushNamed(context, RoutePaths.ADD_SHIPPING_ADDRESSES);
   }
 
+  _blocListener(BuildContext context, ShippingAddressPageState state) async {
+    print("State $state");
+    if (state is ShippingAddressPageLoadingState) {
+      EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
+    } else {
+      EasyLoading.dismiss();
+    }
+
+    if (state is ShippingAddressPageGetDataErrorState) {
+      EasyLoading.showError(state.msg);
+    }
+
+    if (state is ShippingAddressPageGetDataSuccessState) {
+      setState(() {
+        address = state.data;
+      });
+    }
+
+    if (state is SetAddressDefaultSuccessState) {
+      _bloc.getUserAddress();
+    }
+  }
+
   Widget _buildBody() {
-    return FooterScrollView(
-      body: _buildListAddresses(),
-      footer: _buildFooter(),
+    return BlocProvider(
+      create: (context) => _bloc,
+      child: BlocListener<ShippingAddressPageBloc, ShippingAddressPageState>(
+        listener: _blocListener,
+        child: BlocBuilder<ShippingAddressPageBloc, ShippingAddressPageState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            if (state is ShippingAddressPageGetDataSuccessState ||
+                state is SetAddressDefaultSuccessState ||
+                state is SetAddressToLocalSuccessState) {
+              return FooterScrollView(
+                body: _buildListAddresses(),
+                footer: _buildFooter(),
+              );
+            } else
+              return Container();
+          },
+        ),
+      ),
     );
   }
 
@@ -63,7 +122,9 @@ class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
         height: 50.0,
         child: PrimaryButton(
           title: 'Save Address',
-          onPressed: () {},
+          onPressed: () {
+            _bloc.setDefaultAddressToLocal(currentAddress);
+          },
         ),
       ),
     );
@@ -74,31 +135,24 @@ class _ShippingAddressesPageState extends State<ShippingAddressesPage> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: mockAddress,
+        children: [...mockAddress()],
       ),
     );
   }
 
-  List<Address> mockAddress = [
-    Address(
-        name: "Đầu cắt moi",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: true),
-    Address(
-        name: "Ngô Bá Khá",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: false),
-    Address(
-        name: "Phúc XO",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: false),
-    Address(
-        name: "Bomman",
-        phoneNumber: "09099909009",
-        address: "Khu 2, Hoàng Cương, Thanh Ba, Phú Thọ.",
-        isDefaultAddress: false),
-  ];
+  List<Widget> mockAddress() {
+    return [
+      for (int i = 0; i < address.length; ++i)
+        Address(
+          name: address[i].name,
+          phoneNumber: address[i].phoneNumber,
+          address: address[i].address,
+          isDefaultAddress: address[i].isDefault,
+          onTap: () {
+            currentAddress = address[i];
+            _bloc.setDefaultAddress(address[i].id ?? '');
+          },
+        )
+    ];
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
+import 'package:furniture_shop/data/model/response/code_message_response.dart';
 import 'package:furniture_shop/data/model/response/demo_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
+import 'package:furniture_shop/data/model/response/user_address_response.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/data/remote/api_service_helper.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
@@ -18,6 +20,8 @@ class ApiPath {
   static const USER_CART = "/cart/";
   static const ADD_PRODUCT_CART = "/cart/add-item/";
   static const DELETE_PRODUCT_CART = "/cart/delete/";
+  static const USER_ADDRESS = '/user-adresses';
+  static const SET_ADDRESS_DEFAULT = '/set-default-address/';
 }
 
 class ApiService {
@@ -95,6 +99,26 @@ class ApiService {
           url: baseUrl + ApiPath.DELETE_PRODUCT_CART,
           body: product.toDeleteProductJson());
       return MyCartResponse().tryParse(response);
+    });
+  }
+
+  // =========================== USER ADDRESS ===============================
+
+  Future<Result<UserAddressResponse, Exception>> getUserAddress() {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response =
+          await _apiServiceHelper.get(url: baseUrl + ApiPath.USER_ADDRESS);
+
+      return UserAddressResponse().tryParse(response);
+    });
+  }
+
+  Future<Result<CodeMessageResponse, Exception>> setDefaultAddress(String id) {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response = await _apiServiceHelper.post(
+        url: baseUrl + ApiPath.SET_ADDRESS_DEFAULT + id,
+      );
+      return CodeMessageResponse().tryParse(response);
     });
   }
 }

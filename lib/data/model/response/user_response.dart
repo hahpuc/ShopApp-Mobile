@@ -136,7 +136,7 @@ class UserModel {
 
 class ShippingAddressModel {
   String? id;
-  String? isDefault;
+  bool? isDefault;
   String? name;
   String? address;
   String? phoneNumber;

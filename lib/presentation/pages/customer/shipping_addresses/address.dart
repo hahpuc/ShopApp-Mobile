@@ -8,23 +8,28 @@ class Address extends StatelessWidget {
   final String? phoneNumber;
   final String? address;
   final bool? isDefaultAddress;
+  final VoidCallback? onTap;
 
   Address(
       {required this.name,
       required this.phoneNumber,
       required this.address,
-      required this.isDefaultAddress});
+      required this.isDefaultAddress,
+      this.onTap});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
-            Icon(
-              isDefaultAddress == true
-                  ? Icons.check_circle
-                  : Icons.check_circle_outline,
-              size: 16.0,
+            InkWell(
+              onTap: onTap,
+              child: Icon(
+                isDefaultAddress == true
+                    ? Icons.check_circle
+                    : Icons.check_circle_outline,
+                size: 16.0,
+              ),
             ),
             SizedBox(width: AppDimen.horizontalSpacing),
             CustomText('Use as the shipping address'),
