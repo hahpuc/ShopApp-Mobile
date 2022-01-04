@@ -13,6 +13,7 @@ class WishListWidget extends StatelessWidget {
   final int? price;
   final bool? checked;
   final int? statusWhish;
+  final OnPressed? removeFromWishList;
 
   const WishListWidget({
     this.title,
@@ -20,6 +21,7 @@ class WishListWidget extends StatelessWidget {
     this.price,
     this.checked = false,
     this.statusWhish = 0, //0: In stock ---- 1: Sold out
+    this.removeFromWishList,
     Key? key,
   }) : super(key: key);
 
@@ -124,8 +126,9 @@ class WishListWidget extends StatelessWidget {
     print('changeColor');
   }
 
-  void removeWhishlist() {
-    print('removeWhishlist');
+  removeWhishlist(BuildContext context) {
+    removeFromWishList!.call();
+    Navigator.pop(context);
   }
 
   Widget _buildBottomSheet(BuildContext context) {
@@ -149,7 +152,7 @@ class WishListWidget extends StatelessWidget {
             _buildTileBottomSheet(
               icon: Icons.delete_outline,
               title: 'Remove from Whishlist',
-              onTap: removeWhishlist,
+              onTap: () => removeWhishlist(context),
             ),
             const SizedBox(height: 10),
             _buildFooterButtonSheet(),

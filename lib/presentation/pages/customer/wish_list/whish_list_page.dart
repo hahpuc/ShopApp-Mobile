@@ -14,6 +14,7 @@ import 'package:furniture_shop/presentation/widgets/primary_button.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:localstorage/localstorage.dart';
 
 class WishListPage extends StatefulWidget {
   const WishListPage({Key? key}) : super(key: key);
@@ -24,6 +25,8 @@ class WishListPage extends StatefulWidget {
 
 class _WishListPageState extends State<WishListPage> with AfterLayoutMixin {
   WishListBloc _bloc = WishListBloc(appRepository: locator.get());
+  final local = LocalStorage('ShopApp');
+  var wishList = WishList();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,12 +69,13 @@ class _WishListPageState extends State<WishListPage> with AfterLayoutMixin {
             bloc: _bloc,
             builder: (context, state) {
               if (state is WishListGetDataSuccess) {
+                wishList = state.data;
                 return Container(
                   padding: const EdgeInsets.all(AppDimen.spacing_2),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildWhishLists(state.data),
+                      _buildWhishLists(wishList),
                       _buildFooterButton(),
                     ],
                   ),
@@ -97,10 +101,22 @@ class _WishListPageState extends State<WishListPage> with AfterLayoutMixin {
             imageUrl: data.list[index].images!.first.imageUrl,
             title: data.list[index].name,
             price: data.list[index].price,
+            removeFromWishList: () => _removeFromWishList(data.list[index].id!),
           );
         },
       ),
     );
+  }
+
+  _removeFromWishList(String id) {
+    setState(() {
+      wishList.list.removeWhere((element) => element.id == id);
+      _saveToStorage(wishList);
+    });
+  }
+
+  _saveToStorage(WishList list) {
+    local.setItem("WishList", list.toJSON());
   }
 
   Widget _buildFooterButton() {
@@ -111,6 +127,6 @@ class _WishListPageState extends State<WishListPage> with AfterLayoutMixin {
 
   @override
   void afterFirstFrame(BuildContext context) {
-    _bloc.getWishListData();
+    _bloc.getWishListData(local);
   }
 }

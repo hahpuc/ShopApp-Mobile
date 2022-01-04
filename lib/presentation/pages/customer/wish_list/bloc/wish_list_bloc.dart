@@ -9,9 +9,8 @@ class WishListBloc extends BaseBloc<WishListState> {
   final AppRepository appRepository;
   WishListBloc({required this.appRepository}) : super(WishListState());
 
-  Future<void> getWishListData() async {
+  Future<void> getWishListData(LocalStorage local) async {
     emit(WishListLoadingState());
-    final local = LocalStorage('ShopApp');
     final isReady = await local.ready;
     var wishList = WishList();
     var localWishList = await local.getItem('WishList');
