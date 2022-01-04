@@ -3,6 +3,7 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/local/pref_repository.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
+import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
 
 import '../app.dart';
 
@@ -54,5 +55,15 @@ class AppUtils {
   static ShippingAddressModel getDefaultAddress() {
     PrefRepository prefRepository = locator.get();
     return prefRepository.getDefaultAddress();
+  }
+
+  static void setPaymentMethod(PAYMENT_METHOD method) {
+    PrefRepository prefRepository = locator.get();
+    prefRepository.setPaymentMethod(method);
+  }
+
+  static String getPaymentMethod() {
+    PrefRepository prefRepository = locator.get();
+    return prefRepository.getPaymentMethod();
   }
 }

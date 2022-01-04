@@ -15,4 +15,5 @@ class AppConstants {
 class AppPayment {
   static final zalo = 'Zalo';
   static final momo = 'Momo';
+  static final cartOnDelivery = 'Cart on Delivery';
 }

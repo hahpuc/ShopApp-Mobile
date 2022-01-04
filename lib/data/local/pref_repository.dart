@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
+import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefRepositoryKeys {
@@ -11,6 +12,7 @@ class PrefRepositoryKeys {
   static const String SHOW_ONBOARDING = "SHOW_ONBOARDING";
   static const String USER_ROLE = "USER_ROLE";
   static const String USER_ADDRESS = "USER_ADDRESS";
+  static const String PAYMENT_METHOD = "PAYMENT_METHOD";
 }
 
 class PrefRepository {
@@ -84,5 +86,14 @@ class PrefRepository {
   ShippingAddressModel getDefaultAddress() {
     var address = _preferences.getString(PrefRepositoryKeys.USER_ADDRESS);
     return ShippingAddressModel.fromJson(jsonDecode(address ?? "{}"));
+  }
+
+  void setPaymentMethod(PAYMENT_METHOD method) {
+    _preferences.setString(
+        PrefRepositoryKeys.PAYMENT_METHOD, method.toString());
+  }
+
+  String getPaymentMethod() {
+    return _preferences.getString(PrefRepositoryKeys.PAYMENT_METHOD) ?? "";
   }
 }

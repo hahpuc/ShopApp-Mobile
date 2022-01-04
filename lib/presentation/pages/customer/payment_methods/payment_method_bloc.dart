@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_shop/data/app_repository.dart';
 import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
 import 'package:furniture_shop/presentation/pages/customer/payment_methods/payment_method_state.dart';
+import 'package:furniture_shop/values/app_utils.dart';
 
 class PaymentMethodPageBloc extends BlocBase<PaymentMethodPageState> {
   final AppRepository appRepository;
@@ -13,6 +14,8 @@ class PaymentMethodPageBloc extends BlocBase<PaymentMethodPageState> {
   changePaymentMethod(PAYMENT_METHOD? method) {
     paymentMethod = method;
     emit(PaymentMethodPageGetDataSuccessState(paymentMethod: method));
+
+    AppUtils.setPaymentMethod(method!);
   }
 
   Future<void> loadData() async {

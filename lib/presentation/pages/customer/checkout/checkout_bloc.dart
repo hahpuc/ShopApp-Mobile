@@ -15,6 +15,14 @@ class CheckOutPageBloc extends BaseBloc<CheckOutPageState> {
     var address = AppUtils.getDefaultAddress();
 
     emit(CheckOutPageGetUserAddress(address));
+
+    getPaymentMethod();
+  }
+
+  void getPaymentMethod() async {
+    var method = AppUtils.getPaymentMethod();
+
+    emit(CheckOutPageGetPaymentMethod(method));
   }
 
   Future<void> checkoutOrder() async {

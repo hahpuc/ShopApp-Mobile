@@ -10,6 +10,11 @@ class CheckOutPageGetUserAddress extends CheckOutPageState {
   CheckOutPageGetUserAddress(this.address);
 }
 
+class CheckOutPageGetPaymentMethod extends CheckOutPageState {
+  String method;
+  CheckOutPageGetPaymentMethod(this.method);
+}
+
 class CheckOutPageGetDataSuccessState extends CheckOutPageState {
 //   final List<CheckOutResponseData> data;
 //   CheckOutPageGetDataSuccessState(this.data);

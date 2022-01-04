@@ -10,6 +10,7 @@ import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_bloc.dart';
 import 'package:furniture_shop/presentation/pages/customer/checkout/checkout_state.dart';
+import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
@@ -38,6 +39,7 @@ class _CheckOutPageState extends State<CheckOutPage>
   CheckOutPageBloc _bloc = CheckOutPageBloc(appRepository: locator.get());
 
   ShippingAddressModel? userAddress;
+  PAYMENT_METHOD paymentMethod = PAYMENT_METHOD.CASH_ON_DELIVERY;
 
   @override
   void afterFirstFrame(BuildContext context) {
@@ -61,6 +63,18 @@ class _CheckOutPageState extends State<CheckOutPage>
         userAddress = state.address;
       });
     }
+
+    if (state is CheckOutPageGetPaymentMethod) {
+      setState(() {
+        if (state.method == PAYMENT_METHOD.MOMO.toString())
+          paymentMethod = PAYMENT_METHOD.MOMO;
+        else if (state.method == PAYMENT_METHOD.ZALO.toString())
+          paymentMethod = PAYMENT_METHOD.ZALO;
+
+        if (state.method == PAYMENT_METHOD.CASH_ON_DELIVERY.toString())
+          paymentMethod = PAYMENT_METHOD.CASH_ON_DELIVERY;
+      });
+    }
   }
 
   @override
@@ -72,7 +86,8 @@ class _CheckOutPageState extends State<CheckOutPage>
         child: BlocBuilder<CheckOutPageBloc, CheckOutPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is CheckOutPageGetUserAddress)
+            if (state is CheckOutPageGetUserAddress ||
+                state is CheckOutPageGetPaymentMethod)
               return Scaffold(
                 appBar: _buildAppBar(),
                 body: _buildBody(),
@@ -162,9 +177,29 @@ class _CheckOutPageState extends State<CheckOutPage>
 
   Widget __buildDetailPayment() {
     return PaymentWidget(
-      namePayment: AppPayment.zalo,
-      icon: Assets.images.icZalo.image(),
+      namePayment: _buildNamePayment(),
+      icon: _buildLogoPayment(),
+      onTap: () {
+        Navigator.pushNamed(context, RoutePaths.PAYMENT_METHODS);
+      },
     );
+  }
+
+  String _buildNamePayment() {
+    if (paymentMethod == PAYMENT_METHOD.CASH_ON_DELIVERY)
+      return AppPayment.cartOnDelivery;
+    if (paymentMethod == PAYMENT_METHOD.MOMO) return AppPayment.momo;
+
+    return AppPayment.zalo;
+  }
+
+  Image _buildLogoPayment() {
+    if (paymentMethod == PAYMENT_METHOD.CASH_ON_DELIVERY)
+      return Assets.images.icCashOnDelivery.image();
+    if (paymentMethod == PAYMENT_METHOD.MOMO)
+      return Assets.images.icMomo.image();
+
+    return Assets.images.icZalo.image();
   }
 
   Widget _buildInfoPrice() {
