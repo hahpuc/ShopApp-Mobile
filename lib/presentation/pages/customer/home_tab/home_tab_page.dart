@@ -83,9 +83,9 @@ class _HomeTabPageState extends State<HomeTabPage>
               if (!tabController.indexIsChanging) {
                 setState(() {
                   _currentIndex = tabController.index;
-                  _bloc.getProductWithCategory(
-                      listCategories[tabController.index].id ?? '');
                 });
+                _bloc.getProductWithCategory(
+                    listCategories[tabController.index].id ?? '');
               }
             });
             return Scaffold(
@@ -145,24 +145,22 @@ class _HomeTabPageState extends State<HomeTabPage>
           )),
       bottom: PreferredSize(
         preferredSize: const Size(0.0, 80.0),
-        child: TabBar(
-            isScrollable: true,
-            labelColor: Colors.amber,
-            indicatorColor: Colors.transparent,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
+        child: TabBar(isScrollable: true, indicatorColor: Colors.transparent,
+            // onTap: (index) {
+            //   setState(() {
+            //     _currentIndex = index;
+            //   });
+            //   _bloc.getProductWithCategory(listCategories[index].id ?? '');
+            // },
             tabs: [
-              for (final item in listCategories)
+              for (int i = 0; i < listCategories.length; i++)
                 Column(children: [
                   Container(
                     margin: EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                      color: _currentIndex == listCategories.indexOf(item)
+                      color: _currentIndex == i
                           ? AppColor.colorPrimary
                           : AppColor.boxIcon,
                       borderRadius:
@@ -170,19 +168,20 @@ class _HomeTabPageState extends State<HomeTabPage>
                     ),
                     child: Center(
                       child: SvgPicture.asset(
-                        item.image ?? Assets.images.icArmchair.path,
+                        listCategories[i].image ??
+                            Assets.images.icArmchair.path,
                         width: AppDimen.icon_size,
                         height: AppDimen.icon_size,
-                        color: _currentIndex == listCategories.indexOf(item)
+                        color: _currentIndex == i
                             ? AppColor.colorWhite
                             : AppColor.colorGrey,
                       ),
                     ),
                   ),
                   CustomText(
-                    item.name ?? '',
+                    listCategories[i].name ?? '',
                     fontSize: FontSize.SMALL,
-                    color: _currentIndex == listCategories.indexOf(item)
+                    color: _currentIndex == i
                         ? AppColor.colorPrimary
                         : AppColor.colorGrey,
                   )
@@ -224,59 +223,63 @@ class _HomeTabPageState extends State<HomeTabPage>
             mainAxisSpacing: AppDimen.spacing_2,
           ),
           itemBuilder: (BuildContext context, int index) {
-            final item = list![index];
-            return Center(
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      alignment: Alignment.topLeft,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            item.images?[0].imageUrl ?? '',
-                            width: 150,
-                            height: 200,
-                            fit: BoxFit.cover,
+            if (list != null) {
+              ProductDetailModel item = list[index];
+              return Center(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        alignment: Alignment.topLeft,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              item.images?[0].imageUrl ?? '',
+                              width: 150,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        Positioned(
-                          right: AppDimen.spacing_1,
-                          bottom: AppDimen.spacing_2,
-                          child: Container(
-                            child: Row(children: [
-                              CustomText(item.ratingStar.toString()),
-                              SvgPicture.asset(
-                                Assets.images.icStar.path,
-                                width: AppDimen.spacing_2,
-                                height: AppDimen.spacing_2,
-                              )
-                            ]),
-                          ),
-                        )
-                      ],
-                    ),
-                    CustomText(
-                      item.name ?? "",
-                      fontSize: FontSize.SMALL,
-                      color: AppColor.colorGrey,
-                    ),
-                    CustomText(
-                      item.price.toString() + r"$",
-                      fontSize: FontSize.SMALL,
-                      color: AppColor.colorBlack,
-                      fontWeight: FontWeight.bold,
-                    )
-                  ],
+                          Positioned(
+                            right: AppDimen.spacing_1,
+                            bottom: AppDimen.spacing_2,
+                            child: Container(
+                              child: Row(children: [
+                                CustomText(item.ratingStar.toString()),
+                                SvgPicture.asset(
+                                  Assets.images.icStar.path,
+                                  width: AppDimen.spacing_2,
+                                  height: AppDimen.spacing_2,
+                                )
+                              ]),
+                            ),
+                          )
+                        ],
+                      ),
+                      CustomText(
+                        item.name ?? "",
+                        fontSize: FontSize.SMALL,
+                        color: AppColor.colorGrey,
+                      ),
+                      CustomText(
+                        item.price.toString() + r"$",
+                        fontSize: FontSize.SMALL,
+                        color: AppColor.colorBlack,
+                        fontWeight: FontWeight.bold,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            } else {
+              return Container();
+            }
           }),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 
@@ -11,6 +13,8 @@ class GetProductByCategoryResponse
 
 class GetCardByCategoryResponseData {
   int? code;
+  String? message;
+
   List<ProductDetailModel>? data;
   int? total;
   int? limit;
@@ -19,11 +23,13 @@ class GetCardByCategoryResponseData {
 
   GetCardByCategoryResponseData({
     this.code,
+    this.message,
     this.data,
   });
 
   GetCardByCategoryResponseData.fromJson(Map<String, dynamic> json) {
     code = json['code'];
+    message = json['message'];
     if (json['data'] != null) {
       data = [];
       json['data']['docs'].forEach((v) {
