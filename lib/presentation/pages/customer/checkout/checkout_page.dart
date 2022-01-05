@@ -87,6 +87,10 @@ class _CheckOutPageState extends State<CheckOutPage>
           paymentMethod = PAYMENT_METHOD.CASH_ON_DELIVERY;
       });
     }
+
+    if (state is CheckOutPageCreateOrderSuccess) {
+      Navigator.pushNamed(context, RoutePaths.SUCCESS_PAGE);
+    }
   }
 
   @override
@@ -245,7 +249,18 @@ class _CheckOutPageState extends State<CheckOutPage>
       padding: EdgeInsets.all(AppDimen.spacing_2),
       sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
       fontSize: FontSize.BIG,
+      onTap: onSubmitButtonTap,
     );
+  }
+
+  void onSubmitButtonTap() {
+    print("Payment method $paymentMethod");
+    print("Total Money $totalMoney");
+    print("List Item ${widget.data?.products?.toList()}");
+    print("Address ${userAddress?.toJson()}");
+
+    _bloc.checkoutOrder(
+        userAddress!, widget.data?.products ?? [], totalMoney, paymentMethod);
   }
 
   @override

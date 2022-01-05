@@ -24,3 +24,10 @@ class CheckOutPageGetDataErrorState extends CheckOutPageState {
   String msg;
   CheckOutPageGetDataErrorState(this.msg);
 }
+
+class CheckOutPageCreateOrderSuccess extends CheckOutPageState {}
+
+class CheckOutPageCreateOrderError extends CheckOutPageState {
+  String msg;
+  CheckOutPageCreateOrderError(this.msg);
+}

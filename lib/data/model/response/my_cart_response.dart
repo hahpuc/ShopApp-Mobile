@@ -84,6 +84,15 @@ class ProductModel {
     map['productId'] = this.productId;
     return map;
   }
+
+  Map<String, dynamic> toRequestOrder() {
+    final Map<String, dynamic> map = new Map<String, dynamic>();
+
+    map['productId'] = this.productId!.id;
+    map['quantity'] = this.quantity;
+
+    return map;
+  }
 }
 
 class ProductIdModel {

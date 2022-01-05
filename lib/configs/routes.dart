@@ -18,6 +18,7 @@ import 'package:furniture_shop/presentation/pages/customer/order_detail/order_de
 import 'package:furniture_shop/presentation/pages/customer/payment_methods/payment_methods_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/product_detail/product_detail_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/shipping_addresses/shipping_addresses_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/success/success_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/wish_list/whish_list_page.dart';
 
 class RoutePaths {
@@ -37,6 +38,7 @@ class RoutePaths {
   static const String ADD_SHIPPING_ADDRESSES = '/add_address';
   static const String MY_CART = "/my_cart";
   static const String CHAT_PAGE = '/chat';
+  static const String SUCCESS_PAGE = '/success';
 
   //ADMIN
   static const String ADMIN_HOME = '/admin_home';
@@ -108,6 +110,9 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => MyCartPage(), settings: settings);
 
+      case RoutePaths.SUCCESS_PAGE:
+        return MaterialPageRoute(
+            builder: (_) => SuccessPage(), settings: settings);
       //   case RoutePaths.CHAT_PAGE:
       //     return MaterialPageRoute(
       //         builder: (_) => ChatPage(), settings: settings);

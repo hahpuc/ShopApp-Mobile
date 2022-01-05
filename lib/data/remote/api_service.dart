@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
 import 'package:furniture_shop/data/model/response/code_message_response.dart';
 import 'package:furniture_shop/data/model/response/demo_response.dart';
@@ -6,6 +8,7 @@ import 'package:furniture_shop/data/model/response/user_address_response.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/data/remote/api_service_helper.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
+import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
 import 'package:http/http.dart';
 
 class ApiConfigs {
@@ -22,6 +25,7 @@ class ApiPath {
   static const DELETE_PRODUCT_CART = "/cart/delete/";
   static const USER_ADDRESS = '/user-adresses';
   static const SET_ADDRESS_DEFAULT = '/set-default-address/';
+  static const CREATE_ORDER = '/create-order';
 }
 
 class ApiService {
@@ -117,6 +121,48 @@ class ApiService {
     return _apiServiceHelper.handleResponse(request: () async {
       var response = await _apiServiceHelper.post(
         url: baseUrl + ApiPath.SET_ADDRESS_DEFAULT + id,
+      );
+      return CodeMessageResponse().tryParse(response);
+    });
+  }
+
+  // =========================== ORDER ===============================
+  Future<Result<CodeMessageResponse, Exception>> createOrder(
+    ShippingAddressModel address,
+    List<ProductModel> items,
+    int totalMoney,
+    PAYMENT_METHOD method,
+  ) {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var paymentMethod = 1;
+      var paid = false;
+
+      if (method == PAYMENT_METHOD.MOMO) {
+        paymentMethod = 2;
+        paid = true;
+      } else if (method == PAYMENT_METHOD.ZALO) {
+        paymentMethod = 3;
+        paid = true;
+      }
+
+      //   print("BODY REQUEST ORDER: ${body.toString()}");
+
+      var response = await _apiServiceHelper.post(
+        url: baseUrl + ApiPath.CREATE_ORDER,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+        },
+        body: jsonEncode({
+          "name": address.name,
+          "email": "longnguyen@gmail.com",
+          "phone_number": address.phoneNumber,
+          "shipping_address": address.address,
+          "total_money": totalMoney,
+          "payment_method": paymentMethod,
+          "paid": paid,
+          "items": items.map((item) => item.toRequestOrder()).toList(),
+        }),
       );
       return CodeMessageResponse().tryParse(response);
     });
