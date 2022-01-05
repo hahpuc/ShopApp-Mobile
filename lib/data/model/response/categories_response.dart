@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
 
 class CategoriesResponse extends BaseResponseData<CategoriesResponseData> {
