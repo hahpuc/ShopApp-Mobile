@@ -43,4 +43,32 @@ class CheckOutPageBloc extends BaseBloc<CheckOutPageState> {
       emit(CheckOutPageCreateOrderError(getErrorMessage(response)));
     }
   }
+
+  void createZalopayOrder(int price) async {
+    emit(CheckOutPageLoadingState());
+
+    var response = await appRepository.apiService.createZaloOrder(price);
+
+    if (response.isSuccessful()) {
+      final resultData = response.response?.data;
+
+      emit(CreateZaloPayOrderSuccessState(resultData!));
+    } else {
+      emit(CreateZaloPayOrderErrorState(getErrorMessage(response)));
+    }
+  }
+
+  void createMomoOrder(int price) async {
+    emit(CheckOutPageLoadingState());
+
+    var response = await appRepository.apiService.createMomoOrder(price);
+
+    if (response.isSuccessful()) {
+      final resultData = response.response?.data;
+
+      emit(CreateMomoOrderSuccessState(resultData!));
+    } else {
+      emit(CreateMomoOrderErrorState(getErrorMessage(response)));
+    }
+  }
 }

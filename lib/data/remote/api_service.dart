@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
 import 'package:furniture_shop/data/model/response/code_message_response.dart';
+import 'package:furniture_shop/data/model/response/create_order_response.dart';
 import 'package:furniture_shop/data/model/response/demo_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/data/model/response/user_address_response.dart';
@@ -9,7 +11,9 @@ import 'package:furniture_shop/data/model/response/user_response.dart';
 import 'package:furniture_shop/data/remote/api_service_helper.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
 import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
-import 'package:http/http.dart';
+
+import 'package:furniture_shop/utils/utils.dart' as utils;
+import 'package:sprintf/sprintf.dart';
 
 class ApiConfigs {
   static const TIME_OUT_SECONDS = 30;
@@ -26,6 +30,15 @@ class ApiPath {
   static const USER_ADDRESS = '/user-adresses';
   static const SET_ADDRESS_DEFAULT = '/set-default-address/';
   static const CREATE_ORDER = '/create-order';
+}
+
+class ZaloPayConfig {
+  static const String appId = "2554";
+  static const String key1 = "sdngKKJmqEMzvh5QQcdD2A9XBSKUNaYn";
+  static const String key2 = "trMrHtvjo6myautxDUiAcYsVtaeQ8nhf";
+
+  static const String appUser = "zalopaydemo";
+  static int transIdDefault = 1;
 }
 
 class ApiService {
@@ -165,6 +178,115 @@ class ApiService {
         }),
       );
       return CodeMessageResponse().tryParse(response);
+    });
+  }
+
+  Future<Result<CreateOrderZaloResponse, Exception>> createZaloOrder(
+      int price) async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var body = new Map<String, String>();
+
+      body["app_id"] = ZaloPayConfig.appId;
+      body["app_user"] = ZaloPayConfig.appUser;
+      body["app_time"] = DateTime.now().millisecondsSinceEpoch.toString();
+      body["amount"] = price.toStringAsFixed(0);
+      body["app_trans_id"] = utils.getAppTransId();
+      body["embed_data"] = "{}";
+      body["item"] = "[]";
+      body["bank_code"] = utils.getBankCode();
+      body["description"] = utils.getDescription(body["app_trans_id"] ?? "");
+
+      var dataGetMac = sprintf("%s|%s|%s|%s|%s|%s|%s", [
+        body["app_id"],
+        body["app_trans_id"],
+        body["app_user"],
+        body["amount"],
+        body["app_time"],
+        body["embed_data"],
+        body["item"]
+      ]);
+      body["mac"] = utils.getMacCreateOrder(dataGetMac);
+
+      var response = await _apiServiceHelper.post(
+        url: 'https://sb-openapi.zalopay.vn/v2/create',
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: body,
+      );
+      return CreateOrderZaloResponse().tryParse(response);
+    });
+  }
+
+  Future<Result<CreateOrderMomoResponse, Exception>> createMomoOrder(
+      int price) async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      //parameters
+      var partnerCode = "MOMORWQP20211125";
+      var partnerName = "Muard";
+      var accessKey = "bOWRkXLqfiwxCmjp";
+      var secretkey =
+          "KMLlfdzjBCuohh7YOsCmtd081mP7x9Z7"; // To create Signatur Hmac SHA256
+      var requestId = partnerCode +
+          DateTime.now()
+              .millisecondsSinceEpoch
+              .toString(); // requestID = partnerCode + Time.now()
+      var storeId = "app";
+      var orderId = requestId;
+      var orderInfo = "pay with MoMo";
+      var redirectUrl = "momo-redirect://order-success";
+      var ipnUrl = "https://callback.url/notify";
+      var amount = price;
+      var requestType = "captureWallet";
+      var extraData =
+          ""; //pass empty value if your merchant does not have stores
+
+      // Signature
+      var rawSignature = "accessKey=" +
+          accessKey +
+          "&amount=" +
+          amount.toString() +
+          "&extraData=" +
+          extraData +
+          "&ipnUrl=" +
+          ipnUrl +
+          "&orderId=" +
+          orderId +
+          "&orderInfo=" +
+          orderInfo +
+          "&partnerCode=" +
+          partnerCode +
+          "&redirectUrl=" +
+          redirectUrl +
+          "&requestId=" +
+          requestId +
+          "&requestType=" +
+          requestType;
+
+      var signature = Hmac(sha256, secretkey.codeUnits)
+          .convert(rawSignature.codeUnits)
+          .toString();
+
+      Map requestBody = {
+        "partnerCode": partnerCode,
+        "partnerName": partnerName,
+        "requestId": requestId,
+        "storeId": storeId,
+        "amount": price,
+        "orderId": orderId,
+        "orderInfo": orderInfo,
+        "redirectUrl": redirectUrl,
+        "ipnUrl": ipnUrl,
+        "extraData": "",
+        "requestType": requestType,
+        "signature": signature,
+        "lang": "en"
+      };
+
+      var response = await _apiServiceHelper.post(
+        url: 'https://test-payment.momo.vn/v2/gateway/api/create',
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(requestBody),
+      );
+      return CreateOrderMomoResponse().tryParse(response);
     });
   }
 }

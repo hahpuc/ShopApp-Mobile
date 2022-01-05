@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
@@ -22,6 +25,7 @@ import 'package:furniture_shop/presentation/widgets/shipping_information_widget.
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 abstract class OnUpadeCheckoutPage {
   void onUpdateShippingAddress();
@@ -46,11 +50,52 @@ class _CheckOutPageState extends State<CheckOutPage>
   PAYMENT_METHOD paymentMethod = PAYMENT_METHOD.CASH_ON_DELIVERY;
   int totalMoney = 0;
 
+  String zpTransToken = "";
+  String payResult = "";
+  String appId = "2554";
+
+  // EVENT CHANNEL
+  static const EventChannel eventChannel =
+      EventChannel('flutter.native/eventPayOrder');
+
+  static const MethodChannel platform =
+      MethodChannel('flutter.native/channelPayOrder');
+
   @override
   void initState() {
     super.initState();
 
-    totalMoney = widget.totalMoney! + 5;
+    totalMoney = widget.totalMoney! + 15000;
+
+    if (Platform.isIOS) {
+      eventChannel.receiveBroadcastStream().listen(
+        (event) {
+          _onEvent(event);
+        },
+        onError: _onError,
+      ); //Listening for event
+    }
+  }
+
+  void _onEvent(dynamic event) {
+    print("_onEvent: '$event'.");
+    var res = Map<String, dynamic>.from(event);
+    setState(() {
+      if (res["errorCode"] == 1) {
+        payResult = "Thanh toán thành công";
+      } else if (res["errorCode"] == 4) {
+        payResult = "User hủy thanh toán";
+      } else {
+        payResult = "Giao dịch thất bại";
+      }
+    });
+  }
+
+  void _onError(Object error) {
+    print("_onError: '$error'.");
+    setState(() {
+      payResult = "Giao dịch thất bại";
+    });
   }
 
   @override
@@ -91,6 +136,25 @@ class _CheckOutPageState extends State<CheckOutPage>
     if (state is CheckOutPageCreateOrderSuccess) {
       Navigator.pushNamed(context, RoutePaths.SUCCESS_PAGE);
     }
+
+    if (state is CreateZaloPayOrderSuccessState) {
+      print("ZP_TOKEN: ${state.data.zptranstoken}");
+
+      setState(() {
+        zpTransToken = state.data.zptranstoken ?? '';
+      });
+
+      //   _bloc.checkoutOrder(
+      //       userAddress!, widget.data?.products ?? [], totalMoney, paymentMethod);
+
+      //   onZaloPay(zpTransToken);
+    }
+
+    if (state is CreateMomoOrderSuccessState) {
+      print("----> DEEPLINK: ${state.data.deeplink}");
+
+      launch(state.data.deeplink ?? "");
+    }
   }
 
   @override
@@ -103,7 +167,9 @@ class _CheckOutPageState extends State<CheckOutPage>
           bloc: _bloc,
           builder: (context, state) {
             if (state is CheckOutPageGetUserAddress ||
-                state is CheckOutPageGetPaymentMethod)
+                state is CheckOutPageGetPaymentMethod ||
+                state is CreateZaloPayOrderSuccessState ||
+                state is CreateMomoOrderSuccessState)
               return Scaffold(
                 appBar: _buildAppBar(),
                 body: _buildBody(),
@@ -164,6 +230,8 @@ class _CheckOutPageState extends State<CheckOutPage>
       children: [
         _buildInfoPrice(),
         _buildButton(),
+        SizedBox(height: 16.0),
+        // _buildPayButton(),
       ],
     );
   }
@@ -231,7 +299,7 @@ class _CheckOutPageState extends State<CheckOutPage>
           ),
           HorizontalInformations(
             title: 'Delivery',
-            value: '5 \$',
+            value: '15000 \$',
           ),
           HorizontalInformations(
             title: 'Total',
@@ -240,6 +308,31 @@ class _CheckOutPageState extends State<CheckOutPage>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildPayButton() {
+    return CustomButton(
+      'Pay Order',
+      padding: EdgeInsets.all(AppDimen.spacing_2),
+      sizeStyle: CustomBottomSizeStyle.MATCH_PARENT,
+      fontSize: FontSize.BIG,
+      onTap: () async {
+        String response = "";
+        try {
+          final String result = await platform
+              .invokeMethod('payOrder', {"zptoken": zpTransToken});
+          response = result;
+          print("payOrder Result: '$result'.");
+        } on PlatformException catch (e) {
+          print("Failed to Invoke: '${e.message}'.");
+          response = "Thanh toán thất bại";
+        }
+        print(response);
+        setState(() {
+          payResult = response;
+        });
+      },
     );
   }
 
@@ -261,6 +354,31 @@ class _CheckOutPageState extends State<CheckOutPage>
 
     _bloc.checkoutOrder(
         userAddress!, widget.data?.products ?? [], totalMoney, paymentMethod);
+
+    // if (paymentMethod == PAYMENT_METHOD.ZALO) {
+    //   _bloc.createZalopayOrder(totalMoney);
+    // }
+
+    // if (paymentMethod == PAYMENT_METHOD.MOMO) {
+    //   _bloc.createMomoOrder(totalMoney);
+    // }
+  }
+
+  void onZaloPay(String zpToken) async {
+    String response = "";
+    try {
+      final String result =
+          await platform.invokeMethod('payOrder', {"zptoken": zpToken});
+      response = result;
+      print("payOrder Result: '$result'.");
+    } on PlatformException catch (e) {
+      print("Failed to Invoke: '${e.message}'.");
+      response = "Thanh toán thất bại";
+    }
+    print(response);
+    setState(() {
+      payResult = response;
+    });
   }
 
   @override
