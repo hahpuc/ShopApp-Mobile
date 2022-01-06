@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/common/interfaces/iOrder.dart';
 import 'package:furniture_shop/configs/routes.dart';
+import 'package:furniture_shop/data/model/response/order_response.dart';
 import 'package:furniture_shop/presentation/pages/admin/order_detail_admin/order_detail_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/order/fake_data.dart';
 import 'package:furniture_shop/presentation/widgets/order_cart.dart';
@@ -22,7 +23,7 @@ class _NewOrderAdminState extends State<NewOrderAdmin>
         itemBuilder: (BuildContext context, int index) {
           var order = listOrders[index];
           return OrderCard(
-            idOrder: order['idOrder'],
+            orderCode: order['idOrder'],
             date: order['date'],
             quantity: order['quantity'],
             total: order['total'],
@@ -36,7 +37,7 @@ class _NewOrderAdminState extends State<NewOrderAdmin>
   }
 
   @override
-  void onOrderItemClick(String orderId) {
+  void onOrderItemClick(OrderDataModel orderId) {
     print("Navigate to $orderId");
     Navigator.push(
       context,

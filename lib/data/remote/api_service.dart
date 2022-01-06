@@ -10,6 +10,7 @@ import 'package:furniture_shop/data/model/response/base/base_response.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
 import 'package:furniture_shop/data/model/response/demo_response.dart';
 import 'package:furniture_shop/data/model/response/get_product_category_response.dart';
+import 'package:furniture_shop/data/model/response/order_response.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/data/model/response/user_address_response.dart';
 import 'package:furniture_shop/data/model/response/user_response.dart';
@@ -37,6 +38,8 @@ class ApiPath {
   static const CREATE_ORDER = '/create-order';
   static const CATEGORIES = "/categories";
   static const PRODUCT_BY_CATEGORY = "/category/%s/products?page=%s&limit=%s";
+  static const ORDER_BY_STATUS = '/order/status/';
+  static const ALL_ORDERS = '/get-order';
 }
 
 class ZaloPayConfig {
@@ -314,6 +317,26 @@ class ApiService {
       var response = await _apiServiceHelper.get(
           url: sprintf('$baseUrl${ApiPath.PRODUCT_BY_CATEGORY}', [id, 1, 20]));
       return GetProductByCategoryResponse().tryParse(response);
+    });
+  }
+
+  // =========================== ORDER ===============================
+
+  Future<Result<OrderResponse, Exception>> getOrderByStatus(int status) async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response = await _apiServiceHelper.get(
+          url: baseUrl + ApiPath.ORDER_BY_STATUS + status.toString());
+      return OrderResponse().tryParse(response);
+      // return response;
+    });
+  }
+
+  Future<Result<OrderResponse, Exception>> getAllOrder() async {
+    return _apiServiceHelper.handleResponse(request: () async {
+      var response =
+          await _apiServiceHelper.get(url: baseUrl + ApiPath.ALL_ORDERS);
+      return OrderResponse().tryParse(response);
+      // return response;
     });
   }
 }

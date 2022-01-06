@@ -17,32 +17,29 @@ import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:intl/intl.dart';
 
 List<CategoriesModel> listCategories = [
   CategoriesModel(
       id: '6166a79e1ca0b44b1d0e9380',
-      name: "Popular",
-      image: Assets.images.icPopular.path),
+      name: "Desk",
+      image: Assets.images.icArmchair.path),
   CategoriesModel(
-      id: '616a8f57a845933851fbdecf',
+      id: '61d6b3750d10587b01f6e3ec',
       name: "Chair",
       image: Assets.images.icChair.path),
   CategoriesModel(
-      id: '619d07ded96396890640b8e7',
+      id: '616a8f57a845933851fbdecf',
       name: "Lamp",
       image: Assets.images.icLamp.path),
   CategoriesModel(
-      id: '6166a79e1ca0b44b1d0e9380',
-      name: "Armchair",
-      image: Assets.images.icArmchair.path),
+      id: '61d6b37c0d10587b01f6e3ef',
+      name: "Bed",
+      image: Assets.images.icBed.path),
   CategoriesModel(
       id: '619d07ded96396890640b8e7',
       name: "TV",
       image: Assets.images.icTv.path),
-  CategoriesModel(
-      id: '616a8f57a845933851fbdecf',
-      name: "Bed",
-      image: Assets.images.icBed.path)
 ];
 
 class HomeTabPage extends StatefulWidget {
@@ -224,6 +221,7 @@ class _HomeTabPageState extends State<HomeTabPage>
   }
 
   Widget _buildGridView(List<ProductDetailModel>? list) {
+    final formatterPrice = NumberFormat.decimalPattern();
     return Container(
       child: GridView.builder(
           itemCount: list?.length,
@@ -280,7 +278,7 @@ class _HomeTabPageState extends State<HomeTabPage>
                         color: AppColor.colorGrey,
                       ),
                       CustomText(
-                        item.price.toString() + r"$",
+                        formatterPrice.format(item.price) + ' \$',
                         fontSize: FontSize.SMALL,
                         color: AppColor.colorBlack,
                         fontWeight: FontWeight.bold,

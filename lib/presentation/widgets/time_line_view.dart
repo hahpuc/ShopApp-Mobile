@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/data/model/response/order_response.dart';
+import 'package:furniture_shop/utils/datetime_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
@@ -7,8 +9,13 @@ import 'base/custom_text.dart';
 class TimeLiveView extends StatefulWidget {
   final int statusOrder;
 
+  final List<StatusModel>? statusList;
+  final OrderDataModel? orderData;
+
   const TimeLiveView({
-    this.statusOrder = 0,
+    this.statusOrder = 1,
+    this.statusList,
+    this.orderData,
     Key? key,
   }) : super(key: key);
 
@@ -38,7 +45,7 @@ class _TimeLiveViewState extends State<TimeLiveView> {
                 width: 24.0,
                 height: 24.0,
                 decoration: BoxDecoration(
-                  color: index <= widget.statusOrder
+                  color: index <= widget.statusList!.length - 1
                       ? AppColor.colorPrimary
                       : AppColor.colorGreyLight,
                   borderRadius: BorderRadius.circular(12.0),
@@ -49,7 +56,7 @@ class _TimeLiveViewState extends State<TimeLiveView> {
                 Container(
                   width: 1.0,
                   height: 48.0,
-                  color: index < widget.statusOrder
+                  color: index <= widget.statusList!.length - 1
                       ? AppColor.colorPrimary
                       : AppColor.colorGreyLight,
                 ),
@@ -58,7 +65,7 @@ class _TimeLiveViewState extends State<TimeLiveView> {
         ),
 
         // Information
-        index <= widget.statusOrder
+        index <= widget.statusList!.length - 1
             ? _buildTime(index)
             : _buildTextTimeLine(index),
       ],
@@ -72,11 +79,12 @@ class _TimeLiveViewState extends State<TimeLiveView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(
-              'Paid',
+              'Order',
             ),
             SizedBox(height: 16.0),
             CustomText(
-              '09-09-2021 21:15',
+              DateTimeUtils.convertToDateTimeString(
+                  widget.orderData?.orderTime ?? ''),
               fontSize: FontSize.SMALL_1,
               color: AppColor.colorTextLight,
             )
@@ -91,7 +99,8 @@ class _TimeLiveViewState extends State<TimeLiveView> {
             ),
             SizedBox(height: 16.0),
             CustomText(
-              '09-09-2021 21:15',
+              DateTimeUtils.convertToDateTimeString(
+                  widget.orderData?.shipTime ?? ''),
               fontSize: FontSize.SMALL_1,
               color: AppColor.colorTextLight,
             )
@@ -106,7 +115,8 @@ class _TimeLiveViewState extends State<TimeLiveView> {
             ),
             SizedBox(height: 16.0),
             CustomText(
-              '09-09-2021 21:15',
+              DateTimeUtils.convertToDateTimeString(
+                  widget.orderData?.completedTime ?? ''),
               fontSize: FontSize.SMALL_1,
               color: AppColor.colorTextLight,
             )

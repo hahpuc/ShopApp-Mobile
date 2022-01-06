@@ -1,35 +1,48 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/common/interfaces/iOrder.dart';
+import 'package:furniture_shop/data/model/response/order_response.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
+import 'package:furniture_shop/utils/datetime_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:intl/intl.dart';
 
 enum OrderCardType {
   Customer,
   Admin,
 }
 
+class StatusOrderCode {
+  static const int toOrder = 1;
+  static const int toShip = 3;
+  static const int completed = 4;
+  static const int canceled = 5;
+}
+
 class OrderCard extends StatelessWidget {
-  final String? idOrder;
+  final String? orderId;
+  final String? orderCode;
   final String? date;
   final int? quantity;
-  final double? total;
+  final int? total;
   final int? status;
   final OrderCardType typeOrder;
+  final OrderDataModel? orderDetailData;
 
   final OnOrderItemListener? listener;
 
   const OrderCard({
     Key? key,
-    this.idOrder = '123456789',
+    this.orderId,
+    this.orderCode = '123456789',
     this.date,
     this.total = 0,
     this.quantity = 1,
     this.status = 2,
     this.typeOrder = OrderCardType.Customer,
     this.listener,
+    this.orderDetailData,
   }) : super(key: key);
 
   @override
@@ -37,7 +50,7 @@ class OrderCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('Navigator to Order Detail');
-        listener?.onOrderItemClick(idOrder ?? '');
+        listener?.onOrderItemClick(orderDetailData!);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -86,11 +99,11 @@ class OrderCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomText(
-            'Order #$idOrder',
+            'Order #$orderCode',
             fontWeight: FontWeight.bold,
           ),
           CustomText(
-            '$date',
+            DateTimeUtils.convertToDateString(date ?? ''),
             fontSize: FontSize.SMALL,
             color: AppColor.colorGrey,
           ),
@@ -100,6 +113,7 @@ class OrderCard extends StatelessWidget {
   }
 
   Widget _buildInfo() {
+    final formatterPrice = NumberFormat.decimalPattern();
     return Padding(
       padding: const EdgeInsets.all(AppDimen.verticalSpacing),
       child: Column(
@@ -108,7 +122,7 @@ class OrderCard extends StatelessWidget {
           _buildDetailInfo(title: 'Quantity', number: '$quantity'),
           _buildDetailInfo(
             title: 'Total Amount',
-            number: '${total!.toStringAsFixed(3)} \$',
+            number: formatterPrice.format(total) + ' \$',
           ),
           typeOrder == OrderCardType.Customer
               ? _buildStatusOrder()
@@ -136,17 +150,23 @@ class OrderCard extends StatelessWidget {
 
   Widget _buildStatusOrder() {
     switch (status) {
-      case 0: // cancelled
-        return _buildStatusStyle(
-          // icon: Icons.local_shipping_outlined,
-          title: 'Cancelled',
-          color: Colors.red,
-        );
       case 1: //in processing
         return _buildStatusStyle(
           icon: Icons.watch_later_outlined,
           title: 'In Processing',
           color: AppColor.colorPrimary,
+        );
+      case 3: // to Ship
+        return _buildStatusStyle(
+          icon: Icons.local_shipping_outlined,
+          title: 'In Shipping',
+          color: AppColor.colorPrimary,
+        );
+      case 5: // cancelled
+        return _buildStatusStyle(
+          // icon: Icons.local_shipping_outlined,
+          title: 'Cancelled',
+          color: Colors.red,
         );
       default: //delivered
         return _buildStatusStyle(

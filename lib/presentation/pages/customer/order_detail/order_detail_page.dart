@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:furniture_shop/configs/app_constants.dart';
+import 'package:furniture_shop/data/model/response/my_cart_response.dart';
+import 'package:furniture_shop/data/model/response/order_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/customer/payment_methods/enum.dart';
 import 'package:furniture_shop/presentation/widgets/card_shadow_widget.dart';
 import 'package:furniture_shop/presentation/widgets/horizontal_informations_widget.dart';
 import 'package:furniture_shop/presentation/widgets/payment_widget.dart';
@@ -13,11 +16,17 @@ import 'package:furniture_shop/presentation/widgets/base/footer_scroll_view.dart
 import 'package:furniture_shop/presentation/widgets/primary_button.dart';
 import 'package:furniture_shop/presentation/widgets/shipping_information_widget.dart';
 import 'package:furniture_shop/presentation/widgets/time_line_view.dart';
+import 'package:furniture_shop/utils/datetime_utils.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetailPage extends StatefulWidget {
+  final OrderDataModel? orderData;
+
+  const OrderDetailPage({Key? key, this.orderData}) : super(key: key);
+
   @override
   _OrderDetailPageState createState() => new _OrderDetailPageState();
 }
@@ -96,7 +105,11 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         ],
       ),
       SizedBox(height: AppDimen.verticalSpacing),
-      TimeLiveView(),
+      TimeLiveView(
+        orderData: widget.orderData,
+        statusOrder: widget.orderData?.statusCode ?? 1,
+        statusList: widget.orderData?.statusList ?? [],
+      ),
       SizedBox(height: AppDimen.verticalSpacing),
       Divider(color: AppColor.indicator, height: 1.0),
       SizedBox(height: AppDimen.verticalSpacing),
@@ -117,18 +130,20 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       ),
       SizedBox(height: AppDimen.verticalSpacing),
       ShippingInformation(
-        name: 'Long Nguyen',
-        phoneNumber: '(+84) 123456789',
-        address: '123 Nguyen Van Linh, District 1, Ho Chi Minh City',
+        name: widget.orderData?.name ?? '',
+        phoneNumber: widget.orderData?.phoneNumber ?? '',
+        address: widget.orderData?.shippingAddress ?? '',
       ),
     ];
   }
 
   List<Widget> _buildListItem() {
+    final formatterPrice = NumberFormat.decimalPattern();
     return [
       SizedBox(height: AppDimen.verticalSpacing),
 
-      for (int i = 0; i < 2; ++i) ..._buildItem(),
+      for (var item in widget.orderData!.items!) ..._buildItem(item),
+
       SizedBox(height: AppDimen.verticalSpacing),
 
       // Total price
@@ -136,13 +151,16 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomText('Order total', fontWeight: FontWeight.w600),
-          CustomText('\$100.00', fontWeight: FontWeight.w700),
+          CustomText(
+              '\$' + formatterPrice.format(widget.orderData?.totalMoney ?? 0),
+              fontWeight: FontWeight.w700),
         ],
       )
     ];
   }
 
-  List<Widget> _buildItem() {
+  List<Widget> _buildItem(ProductModel item) {
+    final formatterPrice = NumberFormat.decimalPattern();
     return [
       SizedBox(height: AppDimen.verticalSpacing),
       Container(
@@ -156,22 +174,23 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 borderRadius: BorderRadius.circular(10.0),
                 image: DecorationImage(
                   image: NetworkImage(
-                      'http://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg'),
+                      item.productId?.images?.first.imageUrl ?? ''),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             SizedBox(width: AppDimen.horizontalSpacing),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CustomText(
-                    'Gaming Table',
+                    item.productId?.name ?? '',
                     fontWeight: FontWeight.w600,
                   ),
                   CustomText(
-                    '\$' + '50.00',
+                    '\$' + formatterPrice.format(item.productId?.price ?? 0),
                     fontWeight: FontWeight.w700,
                   ),
                 ],
@@ -196,12 +215,28 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       SizedBox(height: AppDimen.verticalSpacing),
       Container(
         height: 75.0,
-        child: PaymentWidget(
-          namePayment: AppPayment.momo,
-          icon: Assets.images.icMomo.image(),
-        ),
+        child: _buildPaymentWidget(),
       ),
     ];
+  }
+
+  Widget _buildPaymentWidget() {
+    if (widget.orderData?.paymentMethod == 2)
+      return PaymentWidget(
+        namePayment: AppPayment.momo,
+        icon: Assets.images.icMomo.image(),
+      );
+
+    if (widget.orderData?.paymentMethod == 3)
+      return PaymentWidget(
+        namePayment: AppPayment.zalo,
+        icon: Assets.images.icZalo.image(),
+      );
+
+    return PaymentWidget(
+      namePayment: AppPayment.cartOnDelivery,
+      icon: Assets.images.icCashOnDelivery.image(),
+    );
   }
 
   List<Widget> _buildInfoPrice() {
@@ -213,27 +248,41 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HorizontalInformations(
-              title: 'Order ID',
-              value: '210909T28121W6XD',
-              fontWeight: FontWeight.bold,
-            ),
-            HorizontalInformations(
-              title: 'Order Time',
-              value: '09-09-2021 21:09',
-            ),
-            HorizontalInformations(
-              title: 'Payment Time',
-              value: '09-09-2021 21:15',
-            ),
-            HorizontalInformations(
-              title: 'Shipping Time',
-              value: '11-09-2021 09:05',
-            ),
-            HorizontalInformations(
-              title: 'Completed time',
-              value: '22-09-2021 11:03',
-            ),
+            widget.orderData?.orderCode != null
+                ? HorizontalInformations(
+                    title: 'Order ID',
+                    value: widget.orderData!.orderCode,
+                    fontWeight: FontWeight.bold,
+                  )
+                : Container(),
+            widget.orderData?.orderTime != null
+                ? HorizontalInformations(
+                    title: 'Order Time',
+                    value: DateTimeUtils.convertToDateTimeString(
+                        widget.orderData!.orderTime!),
+                  )
+                : Container(),
+            widget.orderData?.paymentTime != null
+                ? HorizontalInformations(
+                    title: 'Pay Time',
+                    value: DateTimeUtils.convertToDateTimeString(
+                        widget.orderData!.paymentTime!),
+                  )
+                : Container(),
+            widget.orderData?.shipTime != null
+                ? HorizontalInformations(
+                    title: 'To Ship',
+                    value: DateTimeUtils.convertToDateTimeString(
+                        widget.orderData!.shipTime!),
+                  )
+                : Container(),
+            widget.orderData?.completedTime != null
+                ? HorizontalInformations(
+                    title: 'Completed',
+                    value: DateTimeUtils.convertToDateTimeString(
+                        widget.orderData!.completedTime!),
+                  )
+                : Container(),
           ],
         ),
       )
