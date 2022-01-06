@@ -1,7 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:furniture_shop/common/mixins/after_layout.dart';
+import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
+import 'package:furniture_shop/presentation/pages/admin/product/edit_product_bloc.dart';
+import 'package:furniture_shop/presentation/pages/admin/product/edit_product_state.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_textfield.dart';
@@ -11,12 +16,18 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-final List<String> items = ['Lamp', 'Chair', 'Arm Chair', 'TV', 'Bed'];
+final List<String> items = ['Desk', 'Chair', 'Lamp', 'Bed', 'Tv'];
 
 enum EditAdminType {
   New,
   Edit,
 }
+
+final List<String> images = [
+  "http://res.cloudinary.com/dynk5q1io/image/upload/v1634120352/products/Gaming%20Table/axmlvoybwtp7xekzz6eq.jpg",
+  "http://res.cloudinary.com/dynk5q1io/image/upload/v1634120354/products/Gaming%20Table/z36qyy9awic0eltow6qi.jpg",
+  "http://res.cloudinary.com/dynk5q1io/image/upload/v1634120357/products/Gaming%20Table/g9xxtp6mtfdmh00kosmt.jpg",
+];
 
 class EditAdminProductPage extends StatefulWidget {
   final EditAdminType typeEdit;
@@ -30,14 +41,22 @@ class EditAdminProductPage extends StatefulWidget {
   State<EditAdminProductPage> createState() => _EditAdminProductPageState();
 }
 
-class _EditAdminProductPageState extends State<EditAdminProductPage> {
+class _EditAdminProductPageState extends State<EditAdminProductPage>
+    with AfterLayoutMixin {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController nameController;
   late TextEditingController categoryController;
   late TextEditingController priceController;
   late TextEditingController quantityController;
   late TextEditingController descriptionController;
-  String chooseValue = items[2];
+  String chooseValue = items[0];
+
+  EditProductBloc _bloc = EditProductBloc(appRepository: locator.get());
+
+  @override
+  void afterFirstFrame(BuildContext context) {
+    _bloc.getProductDetailsData();
+  }
 
   @override
   void initState() {
@@ -48,6 +67,12 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
     priceController = TextEditingController();
     quantityController = TextEditingController();
     descriptionController = TextEditingController();
+
+    nameController.text = 'Gaming Table Ver3';
+    priceController.text = '5500000';
+    quantityController.text = '0';
+    descriptionController.text =
+        'Table Mouse Pad, Gaming Computer Desk, 63 in, Black';
   }
 
   @override
@@ -70,23 +95,56 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
         fontSize: FontSize.BIG_1,
         fontFamily: FontFamily.gelasio,
       )),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(AppDimen.spacing_1),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildInput(),
-                _buildDescription(),
-                _buildImages(),
-              ],
-            ),
-          ),
+      body: _buildBody(),
+      bottomNavigationBar: _buildButton(),
+    );
+  }
+
+  _blocListener(BuildContext context, EditProductState state) async {
+    print("State $state");
+    if (state is EditProductLoadingState) {
+      EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
+    } else {
+      EasyLoading.dismiss();
+    }
+
+    if (state is UpdateProductSuccessState) {
+      EasyLoading.showSuccess('Update product success');
+    }
+  }
+
+  Widget _buildBody() {
+    return BlocProvider(
+      create: (context) => _bloc,
+      child: BlocListener<EditProductBloc, EditProductState>(
+        listener: _blocListener,
+        child: BlocBuilder<EditProductBloc, EditProductState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            if (state is EditProductGetDataSuccess ||
+                state is UpdateProductSuccessState) {
+              return SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppDimen.spacing_1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildInput(),
+                        _buildDescription(),
+                        _buildImages(),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return Container();
+          },
         ),
       ),
-      bottomNavigationBar: _buildButton(),
     );
   }
 
@@ -101,7 +159,10 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
           ),
           child: PrimaryButton(
             title: 'Update',
-            onPressed: () {},
+            onPressed: () {
+              setState(() {});
+              _bloc.updateProduct();
+            },
           ),
         );
       default:
@@ -203,10 +264,10 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
         Container(
           height: 200,
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: 3,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              return _buildCustomImage();
+              return _buildCustomImage(index);
             },
           ),
         ),
@@ -214,7 +275,7 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
     );
   }
 
-  Widget _buildCustomImage() {
+  Widget _buildCustomImage(int index) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
       height: 200,
@@ -222,7 +283,8 @@ class _EditAdminProductPageState extends State<EditAdminProductPage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppDimen.radiusNormal),
         image: DecorationImage(
-          image: AssetImage(Assets.images.imgChair.path),
+          image: NetworkImage(images[index]),
+          //   image: AssetImage(Assets.images.imgChair.path),
           fit: BoxFit.cover,
         ),
       ),

@@ -11,6 +11,8 @@ import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/admin/home_tab/home_tab_admin_bloc.dart';
 import 'package:furniture_shop/presentation/pages/admin/home_tab/home_tab_admin_state.dart';
+import 'package:furniture_shop/presentation/pages/admin/product/edit_product_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/wish_list/widget/icon_wishlist_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
@@ -20,28 +22,24 @@ import 'package:furniture_shop/values/font_sizes.dart';
 List<CategoriesModel> listCategories = [
   CategoriesModel(
       id: '6166a79e1ca0b44b1d0e9380',
-      name: "Popular",
-      image: Assets.images.icPopular.path),
+      name: "Desk",
+      image: Assets.images.icArmchair.path),
   CategoriesModel(
-      id: '616a8f57a845933851fbdecf',
+      id: '61d6b3750d10587b01f6e3ec',
       name: "Chair",
       image: Assets.images.icChair.path),
   CategoriesModel(
-      id: '619d07ded96396890640b8e7',
+      id: '616a8f57a845933851fbdecf',
       name: "Lamp",
       image: Assets.images.icLamp.path),
   CategoriesModel(
-      id: '6166a79e1ca0b44b1d0e9380',
-      name: "Armchair",
-      image: Assets.images.icArmchair.path),
+      id: '61d6b37c0d10587b01f6e3ef',
+      name: "Bed",
+      image: Assets.images.icBed.path),
   CategoriesModel(
       id: '619d07ded96396890640b8e7',
       name: "TV",
       image: Assets.images.icTv.path),
-  CategoriesModel(
-      id: '616a8f57a845933851fbdecf',
-      name: "Bed",
-      image: Assets.images.icBed.path)
 ];
 
 class HomeTabAdminPage extends StatefulWidget {
@@ -114,42 +112,22 @@ class _HomeTabAdminPageState extends State<HomeTabAdminPage>
       ),
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            Assets.images.icCart.path,
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return _buildBottomSheet(context);
+              },
+            );
+          },
+          icon: Image.asset(
+            Assets.images.icAddNew.path,
             width: AppDimen.icon_size,
             height: AppDimen.icon_size,
           ),
         ),
-        IconButton(
-            onPressed: () {},
-            icon: Center(
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    Assets.images.icMessage.path,
-                    width: AppDimen.icon_size,
-                    height: AppDimen.icon_size,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Icon(
-                      Icons.brightness_1,
-                      color: AppColor.dotMessage,
-                      size: 6,
-                    ),
-                  )
-                ],
-              ),
-            )),
       ],
-      leading: IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            Assets.images.icSearch.path,
-            width: AppDimen.icon_size,
-            height: AppDimen.icon_size,
-          )),
+      leading: Container(),
       bottom: PreferredSize(
         preferredSize: const Size(0.0, 80.0),
         child: TabBar(
@@ -202,22 +180,28 @@ class _HomeTabAdminPageState extends State<HomeTabAdminPage>
 
   Widget _buildListProduct(String id) {
     List<ProductDetailModel>? list;
-    return BlocListener<HomeTabAdminPageBloc, HomeTabAdminPageState>(
-      listener: _blocListener,
-      child: BlocBuilder<HomeTabAdminPageBloc, HomeTabAdminPageState>(
-          bloc: _bloc,
-          builder: (context, state) {
-            if (state is HomeTabAdminPageGetDataSuccessState) {
-              list = state.data;
-              return Container(
-                  margin: EdgeInsets.symmetric(
-                      vertical: AppDimen.spacing_3,
-                      horizontal: AppDimen.spacing_2),
-                  child: _buildGridView(list ?? []));
-            } else {
-              return Container();
-            }
-          }),
+    return RefreshIndicator(
+      onRefresh: () async {
+        _bloc.getProductWithCategory(
+            listCategories[tabController.index].id ?? '');
+      },
+      child: BlocListener<HomeTabAdminPageBloc, HomeTabAdminPageState>(
+        listener: _blocListener,
+        child: BlocBuilder<HomeTabAdminPageBloc, HomeTabAdminPageState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state is HomeTabAdminPageGetDataSuccessState) {
+                list = state.data;
+                return Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: AppDimen.spacing_3,
+                        horizontal: AppDimen.spacing_2),
+                    child: _buildGridView(list ?? []));
+              } else {
+                return Container();
+              }
+            }),
+      ),
     );
   }
 
@@ -237,7 +221,9 @@ class _HomeTabAdminPageState extends State<HomeTabAdminPage>
               return Center(
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
+                    Navigator.of(context).pushNamed(
+                        RoutePaths.ADMIN_EDIT_PRODUCT_PAGE,
+                        arguments: EditAdminType.Edit);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -295,4 +281,85 @@ class _HomeTabAdminPageState extends State<HomeTabAdminPage>
 
   @override
   bool get wantKeepAlive => true;
+
+  Widget _buildBottomSheet(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppDimen.spacing_3,
+        horizontal: AppDimen.spacing_2,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeaderBottomSheet(context),
+            customDivider(),
+            _buildTileBottomSheet(
+              icon: Icons.color_lens_outlined,
+              title: 'Category',
+              onTap: () {},
+            ),
+            customDivider(),
+            _buildTileBottomSheet(
+              icon: Icons.delete_outline,
+              title: 'Product',
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(RoutePaths.ADMIN_EDIT_PRODUCT_PAGE);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderBottomSheet(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomText(
+            'Options',
+            fontSize: FontSize.BIG,
+            fontWeight: FontWeight.w600,
+          ),
+          IconWishList(
+            icon: Icons.close,
+            color: AppColor.colorGrey,
+            onTap: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTileBottomSheet(
+      {IconData? icon, String? title, Function()? onTap}) {
+    return InkWell(
+      onTap: onTap!,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+        child: Row(
+          children: [
+            IconWishList(icon: icon, color: AppColor.colorGrey),
+            const SizedBox(width: AppDimen.spacing_2),
+            CustomText(
+              title!,
+              fontSize: FontSize.BIG,
+              fontWeight: FontWeight.w300,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget customDivider() {
+    return Divider(
+      thickness: 1,
+      color: AppColor.colorGreyLight,
+    );
+  }
 }

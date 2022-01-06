@@ -57,27 +57,3 @@ class CategoriesModel {
     return map;
   }
 }
-
-class CategoriesModel {
-  String? id;
-  String? name;
-  String? image;
-
-  CategoriesModel(
-      {this.id, this.name, this.image = 'assets/images/ic_armchair.svg'});
-
-  CategoriesModel.fromJson(Map<String, dynamic> json) {
-    id = json["_id"];
-    name = json["name"];
-    image = json["image"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> map = new Map<String, dynamic>();
-    map['_id'] = this.id;
-    map['name'] = this.name;
-    map['image'] = this.id;
-
-    return map;
-  }
-}

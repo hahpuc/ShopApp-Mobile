@@ -131,8 +131,13 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => HomeAdminPage(), settings: settings);
       case RoutePaths.ADMIN_EDIT_PRODUCT_PAGE:
+        var arg = settings.arguments as EditAdminType;
+
         return MaterialPageRoute(
-            builder: (_) => EditAdminProductPage(), settings: settings);
+            builder: (_) => EditAdminProductPage(
+                  typeEdit: arg,
+                ),
+            settings: settings);
       case RoutePaths.ADMIN_ORDER:
         return MaterialPageRoute(
             builder: (_) => OrderAdminPage(), settings: settings);
