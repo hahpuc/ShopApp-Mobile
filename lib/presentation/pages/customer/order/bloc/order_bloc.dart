@@ -19,4 +19,18 @@ class OrderPageBloc extends BaseBloc<OrderPageState> {
       emit(OrderPageFailedState(getErrorMessage(response)));
     }
   }
+
+  Future<void> getOrderByStatus(int status) async {
+    emit(OrderPageLoadingState());
+
+    var response = await appRepository.apiService.getOrderByStatus(status);
+
+    if (response.isSuccessful()) {
+      final resultData = response.response?.data;
+
+      emit(OrderPageSuccessState(resultData!.data!));
+    } else {
+      emit(OrderPageFailedState(getErrorMessage(response)));
+    }
+  }
 }

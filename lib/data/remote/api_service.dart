@@ -327,7 +327,6 @@ class ApiService {
       var response = await _apiServiceHelper.get(
           url: baseUrl + ApiPath.ORDER_BY_STATUS + status.toString());
       return OrderResponse().tryParse(response);
-      // return response;
     });
   }
 
@@ -336,7 +335,6 @@ class ApiService {
       var response =
           await _apiServiceHelper.get(url: baseUrl + ApiPath.ALL_ORDERS);
       return OrderResponse().tryParse(response);
-      // return response;
     });
   }
 }
