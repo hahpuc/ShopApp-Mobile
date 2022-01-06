@@ -18,6 +18,33 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
+List<CategoriesModel> listCategories = [
+  CategoriesModel(
+      id: '6166a79e1ca0b44b1d0e9380',
+      name: "Popular",
+      image: Assets.images.icPopular.path),
+  CategoriesModel(
+      id: '616a8f57a845933851fbdecf',
+      name: "Chair",
+      image: Assets.images.icChair.path),
+  CategoriesModel(
+      id: '619d07ded96396890640b8e7',
+      name: "Lamp",
+      image: Assets.images.icLamp.path),
+  CategoriesModel(
+      id: '6166a79e1ca0b44b1d0e9380',
+      name: "Armchair",
+      image: Assets.images.icArmchair.path),
+  CategoriesModel(
+      id: '619d07ded96396890640b8e7',
+      name: "TV",
+      image: Assets.images.icTv.path),
+  CategoriesModel(
+      id: '616a8f57a845933851fbdecf',
+      name: "Bed",
+      image: Assets.images.icBed.path)
+];
+
 class HomeTabPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -26,35 +53,21 @@ class HomeTabPage extends StatefulWidget {
 }
 
 class _HomeTabPageState extends State<HomeTabPage>
-    with AfterLayoutMixin, AutomaticKeepAliveClientMixin {
+    with
+        AfterLayoutMixin,
+        AutomaticKeepAliveClientMixin,
+        TickerProviderStateMixin {
   HomeTabPageBloc _bloc = HomeTabPageBloc(appRepository: locator.get());
-  int _currentIndex = 0;
-  List<CategoriesModel> listCategories = [
-    CategoriesModel(
-        id: '6166a79e1ca0b44b1d0e9380',
-        name: "Popular",
-        image: Assets.images.icPopular.path),
-    CategoriesModel(
-        id: '616a8f57a845933851fbdecf',
-        name: "Chair",
-        image: Assets.images.icChair.path),
-    CategoriesModel(
-        id: '619d07ded96396890640b8e7',
-        name: "Lamp",
-        image: Assets.images.icLamp.path),
-    CategoriesModel(
-        id: '6166a79e1ca0b44b1d0e9380',
-        name: "Armchair",
-        image: Assets.images.icArmchair.path),
-    CategoriesModel(
-        id: '6166a79e1ca0b44b1d0e9380',
-        name: "TV",
-        image: Assets.images.icTv.path),
-    CategoriesModel(
-        id: '6166a79e1ca0b44b1d0e9380',
-        name: "Bed",
-        image: Assets.images.icBed.path)
-  ];
+
+  ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
+  late final TabController tabController;
+  @override
+  void initState() {
+    tabController = TabController(vsync: this, length: listCategories.length);
+    tabController.addListener(_handleSelected);
+    super.initState();
+  }
+
   @override
   void afterFirstFrame(BuildContext context) {
     _bloc.getProductWithCategory(listCategories[0].id ?? '');
@@ -68,6 +81,11 @@ class _HomeTabPageState extends State<HomeTabPage>
     }
   }
 
+  void _handleSelected() {
+    _currentIndex.value = tabController.index;
+    _bloc.getProductWithCategory(listCategories[tabController.index].id ?? '');
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -77,20 +95,9 @@ class _HomeTabPageState extends State<HomeTabPage>
         child: DefaultTabController(
           length: listCategories.length,
           child: Builder(builder: (BuildContext context) {
-            final TabController tabController =
-                DefaultTabController.of(context)!;
-            tabController.addListener(() {
-              if (!tabController.indexIsChanging) {
-                setState(() {
-                  _currentIndex = tabController.index;
-                });
-                _bloc.getProductWithCategory(
-                    listCategories[tabController.index].id ?? '');
-              }
-            });
             return Scaffold(
                 appBar: _buildAppBar(),
-                body: TabBarView(children: [
+                body: TabBarView(controller: tabController, children: [
                   for (int i = 0; i < listCategories.length; i++)
                     _buildListProduct(listCategories[i].id ?? '')
                 ]));
@@ -145,47 +152,49 @@ class _HomeTabPageState extends State<HomeTabPage>
           )),
       bottom: PreferredSize(
         preferredSize: const Size(0.0, 80.0),
-        child: TabBar(isScrollable: true, indicatorColor: Colors.transparent,
-            // onTap: (index) {
-            //   setState(() {
-            //     _currentIndex = index;
-            //   });
-            //   _bloc.getProductWithCategory(listCategories[index].id ?? '');
-            // },
+        child: TabBar(
+            isScrollable: true,
+            indicatorColor: Colors.transparent,
+            controller: tabController,
             tabs: [
               for (int i = 0; i < listCategories.length; i++)
-                Column(children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: _currentIndex == i
-                          ? AppColor.colorPrimary
-                          : AppColor.boxIcon,
-                      borderRadius:
-                          BorderRadius.circular(AppDimen.radiusNormal),
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        listCategories[i].image ??
-                            Assets.images.icArmchair.path,
-                        width: AppDimen.icon_size,
-                        height: AppDimen.icon_size,
-                        color: _currentIndex == i
-                            ? AppColor.colorWhite
-                            : AppColor.colorGrey,
-                      ),
-                    ),
-                  ),
-                  CustomText(
-                    listCategories[i].name ?? '',
-                    fontSize: FontSize.SMALL,
-                    color: _currentIndex == i
-                        ? AppColor.colorPrimary
-                        : AppColor.colorGrey,
-                  )
-                ]),
+                ValueListenableBuilder<int>(
+                    valueListenable: _currentIndex,
+                    builder: (BuildContext context, int value, Widget? child) {
+                      return Column(children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: AppDimen.spacing_1),
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: value == i
+                                ? AppColor.colorPrimary
+                                : AppColor.boxIcon,
+                            borderRadius:
+                                BorderRadius.circular(AppDimen.radiusNormal),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              listCategories[i].image ??
+                                  Assets.images.icArmchair.path,
+                              width: AppDimen.icon_size,
+                              height: AppDimen.icon_size,
+                              color: value == i
+                                  ? AppColor.colorWhite
+                                  : AppColor.colorGrey,
+                            ),
+                          ),
+                        ),
+                        CustomText(
+                          listCategories[i].name ?? '',
+                          fontSize: FontSize.SMALL,
+                          color: value == i
+                              ? AppColor.colorPrimary
+                              : AppColor.colorGrey,
+                        )
+                      ]);
+                    }),
             ]),
       ),
     );

@@ -17,8 +17,7 @@ class ApiPath {
 
   static const PRODUCT_DETAIL = "/product/";
   static const CATEGORIES = "/categories";
-  static const PRODUCT_BY_CATEGORY =
-      "/category/6166a79e1ca0b44b1d0e9380/products?page=1&limit=10";
+  static const PRODUCT_BY_CATEGORY = "/category/%s/products?page=%s&limit=%s";
 }
 
 class ApiService {
@@ -63,13 +62,7 @@ class ApiService {
       String id) async {
     return _apiServiceHelper.handleResponse(request: () async {
       var response = await _apiServiceHelper.get(
-          url: baseUrl +
-              ApiPath.PRODUCT_BY_CATEGORY +
-              id +
-              '/products?page=' +
-              '1' +
-              '&limit=' +
-              '10');
+          url: sprintf('$baseUrl${ApiPath.PRODUCT_BY_CATEGORY}', [id, 1, 20]));
       return GetProductByCategoryResponse().tryParse(response);
     });
   }
