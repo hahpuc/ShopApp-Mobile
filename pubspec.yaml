@@ -42,6 +42,7 @@ dependencies:
 
   # Local persistence
   shared_preferences: ^2.0.7
+  localstorage: ^4.0.0+1
 
   # Compare objects
   equatable: ^2.0.3

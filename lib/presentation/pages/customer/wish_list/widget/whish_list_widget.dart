@@ -10,9 +10,10 @@ import 'icon_wishlist_widget.dart';
 class WishListWidget extends StatelessWidget {
   final String? title;
   final String? imageUrl;
-  final double? price;
+  final int? price;
   final bool? checked;
   final int? statusWhish;
+  final OnPressed? removeFromWishList;
 
   const WishListWidget({
     this.title,
@@ -20,6 +21,7 @@ class WishListWidget extends StatelessWidget {
     this.price,
     this.checked = false,
     this.statusWhish = 0, //0: In stock ---- 1: Sold out
+    this.removeFromWishList,
     Key? key,
   }) : super(key: key);
 
@@ -124,8 +126,9 @@ class WishListWidget extends StatelessWidget {
     print('changeColor');
   }
 
-  void removeWhishlist() {
-    print('removeWhishlist');
+  removeWhishlist(BuildContext context) {
+    removeFromWishList!.call();
+    Navigator.pop(context);
   }
 
   Widget _buildBottomSheet(BuildContext context) {
@@ -149,7 +152,7 @@ class WishListWidget extends StatelessWidget {
             _buildTileBottomSheet(
               icon: Icons.delete_outline,
               title: 'Remove from Whishlist',
-              onTap: removeWhishlist,
+              onTap: () => removeWhishlist(context),
             ),
             const SizedBox(height: 10),
             _buildFooterButtonSheet(),
@@ -215,13 +218,16 @@ class WishListWidget extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: CustomText(
-        title!,
-        fontSize: FontSize.MEDIUM,
-        color: statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
-        letterSpacing: 1,
+    return SizedBox(
+      width: 150,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: CustomText(
+          title!,
+          fontSize: FontSize.MEDIUM,
+          color: statusWhish == 1 ? AppColor.colorTextLight : Colors.black,
+          letterSpacing: 1,
+        ),
       ),
     );
   }

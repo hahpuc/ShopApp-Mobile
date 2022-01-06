@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
+import 'package:furniture_shop/data/local/wish_list.dart';
 import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/presentation/pages/admin/product/edit_product_admin_page.dart';
@@ -16,6 +17,7 @@ import 'package:furniture_shop/presentation/widgets/quantity_view.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
+import 'package:localstorage/localstorage.dart';
 
 import 'bloc/product_detail_bloc.dart';
 import 'bloc/product_detail_state.dart';
@@ -43,6 +45,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     with AfterLayoutMixin {
   final PageController _pageController = PageController(initialPage: 0);
   ProductDetailModel? product;
+  final local = LocalStorage('ShopApp');
+  final wishList = WishList();
 
   ProductDetailPageBloc _bloc =
       ProductDetailPageBloc(appRepository: locator.get());
@@ -54,6 +58,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     // HARD CODE HERE
     _bloc.getProductDetailsData(
         widget.productData?.id ?? '6166b1a5f1300453bc24adb5');
+    _getWishList();
   }
 
   @override
@@ -98,6 +103,42 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     }
   }
 
+  _getWishList() {
+    var wishList = local.getItem('WishList');
+    if (wishList != null) {
+      this.wishList.list = List<ProductDetailModel>.from(
+        (wishList as List).map(
+          (item) => ProductDetailModel.fromJson(item),
+        ),
+      );
+    }
+  }
+
+  _addToWishList(ProductDetailModel product) {
+    setState(() {
+      wishList.list.insert(0, product);
+      _saveToStorage(wishList);
+    });
+  }
+
+  _removeFromWistList(String id) {
+    setState(() {
+      wishList.list.removeWhere((element) => element.id == id);
+      _saveToStorage(wishList);
+    });
+  }
+
+  _saveToStorage(WishList list) {
+    local.setItem("WishList", list.toJSON());
+  }
+
+  bool _isInWishList(String id) {
+    for (var item in wishList.list) {
+      if (id == item.id) return true;
+    }
+    return false;
+  }
+
   Widget _buildBody() {
     return BlocProvider(
       create: (context) => _bloc,
@@ -112,7 +153,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 children: [
                   Container(height: double.infinity, width: double.infinity),
                   _buildProductInformation(state.data),
-                  _buildFooterButton(),
+                  _buildFooterButton(state.data),
                 ],
               );
             }
@@ -124,7 +165,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildFooterButton() {
+  Widget _buildFooterButton(ProductDetailModel data) {
     switch (widget.typeProduct) {
       case ProductDetailType.Admin:
         return Positioned(
@@ -177,10 +218,21 @@ class _ProductDetailPageState extends State<ProductDetailPage>
                 SizedBox(width: AppDimen.horizontalSpacing),
                 IconButton(
                   iconSize: 50.0,
-                  onPressed: () {},
-                  icon: Image(
-                    image: Assets.images.icAddWishList,
-                  ),
+                  onPressed: () {
+                    if (_isInWishList(data.id!)) {
+                      _removeFromWistList(data.id!);
+                    } else {
+                      _addToWishList(data);
+                    }
+                  },
+                  icon: _isInWishList(data.id!)
+                      ? Image(
+                          image: Assets.images.icAddWishList,
+                          color: Colors.black,
+                        )
+                      : Image(
+                          image: Assets.images.icAddWishList,
+                        ),
                 ),
                 SizedBox(width: AppDimen.spacing_1),
                 Expanded(
