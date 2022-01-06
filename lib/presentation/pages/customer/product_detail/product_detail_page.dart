@@ -27,10 +27,12 @@ enum ProductDetailType {
 
 class ProductDetailPage extends StatefulWidget {
   final ProductDetailType typeProduct;
+  final ProductDetailModel? productData;
 
   const ProductDetailPage({
-    this.typeProduct = ProductDetailType.Customer,
     Key? key,
+    this.typeProduct = ProductDetailType.Customer,
+    this.productData,
   }) : super(key: key);
 
   @override
@@ -50,7 +52,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   @override
   void afterFirstFrame(BuildContext context) {
     // HARD CODE HERE
-    _bloc.getProductDetailsData('6166b1a5f1300453bc24adb5');
+    _bloc.getProductDetailsData(
+        widget.productData?.id ?? '6166b1a5f1300453bc24adb5');
   }
 
   @override

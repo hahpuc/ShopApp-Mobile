@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/presentation/pages/admin/home_tab/home_tab_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/admin/order_admin/order_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/notification/notification_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/profile/profile_page.dart';
 import 'package:furniture_shop/presentation/widgets/bottom_navigation_admin_view.dart';
@@ -16,7 +17,7 @@ class HomeAdminPage extends StatefulWidget {
 class _HomeAdminPageState extends State<HomeAdminPage>
     with SingleTickerProviderStateMixin {
   final _tabs = [
-    HomeAdminTabPage(),
+    HomeTabPage(),
     OrderAdminPage(),
     NotificationPage(),
     ProfilePage(),

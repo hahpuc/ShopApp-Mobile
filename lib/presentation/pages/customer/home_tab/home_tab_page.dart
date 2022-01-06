@@ -239,7 +239,8 @@ class _HomeTabPageState extends State<HomeTabPage>
               return Center(
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
+                    Navigator.of(context)
+                        .pushNamed(RoutePaths.PRODUCT_DETAIL, arguments: item);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

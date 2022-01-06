@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/data/model/response/my_cart_response.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/presentation/pages/admin/home_admin/home_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/admin/order_admin/order_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/admin/order_detail_admin/order_detail_admin_page.dart';
@@ -93,8 +94,12 @@ class Routes {
             builder: (_) => OrderDetailPage(), settings: settings);
 
       case RoutePaths.PRODUCT_DETAIL:
+        var arg = settings.arguments as ProductDetailModel;
         return MaterialPageRoute(
-            builder: (_) => ProductDetailPage(), settings: settings);
+            builder: (_) => ProductDetailPage(
+                  productData: arg,
+                ),
+            settings: settings);
 
       case RoutePaths.PAYMENT_METHODS:
         return MaterialPageRoute(
