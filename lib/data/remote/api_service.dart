@@ -4,9 +4,6 @@ import 'package:crypto/crypto.dart';
 import 'package:furniture_shop/data/model/response/base/base_response.dart';
 import 'package:furniture_shop/data/model/response/code_message_response.dart';
 import 'package:furniture_shop/data/model/response/create_order_response.dart';
-import 'dart:developer';
-
-import 'package:furniture_shop/data/model/response/base/base_response.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
 import 'package:furniture_shop/data/model/response/demo_response.dart';
 import 'package:furniture_shop/data/model/response/get_product_category_response.dart';

@@ -12,6 +12,7 @@ import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_form.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/home/home_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
 import 'package:furniture_shop/values/app_utils.dart';
 
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: _getHomeScreen(),
+              home: HomeAdminPage(),
             );
           }),
     );
