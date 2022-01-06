@@ -3,8 +3,6 @@ PODS:
     - Flutter
     - Reachability
   - Flutter (1.0.0)
-  - flutter_zalopay_sdk (0.0.1):
-    - Flutter
   - Reachability (3.2)
   - shared_preferences (0.0.1):
     - Flutter
@@ -14,7 +12,6 @@ PODS:
 DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
-  - flutter_zalopay_sdk (from `.symlinks/plugins/flutter_zalopay_sdk/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
@@ -27,8 +24,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity_plus/ios"
   Flutter:
     :path: Flutter
-  flutter_zalopay_sdk:
-    :path: ".symlinks/plugins/flutter_zalopay_sdk/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   url_launcher_ios:
@@ -37,7 +32,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   connectivity_plus: 5f0eb61093bec56935f21a1699dd2758bc895587
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  flutter_zalopay_sdk: 4dfab8a385e710c7ea326341b41de7ae87cde76b
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
