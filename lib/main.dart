@@ -5,7 +5,7 @@ void main() async {
   var flavorConfig = FlavorConfig(
       flavor: Flavor.DEV,
       values: FlavorValues(
-        baseUrl: "https://7926-171-242-121-53.ngrok.io",
+        baseUrl: "https://hahpuc-test-shop-app.herokuapp.com",
       ));
   return MyApp.appRunner(flavorConfig);
 }

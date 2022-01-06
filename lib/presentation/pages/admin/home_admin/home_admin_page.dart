@@ -16,7 +16,7 @@ class HomeAdminPage extends StatefulWidget {
 class _HomeAdminPageState extends State<HomeAdminPage>
     with SingleTickerProviderStateMixin {
   final _tabs = [
-    HomeAdminTabPage(),
+    HomeTabAdminPage(),
     OrderAdminPage(),
     NotificationPage(),
     ProfilePage(),

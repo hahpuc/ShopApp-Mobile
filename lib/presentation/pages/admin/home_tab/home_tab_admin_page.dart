@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -8,86 +6,106 @@ import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
-import 'package:furniture_shop/data/model/response/test_product.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
-import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_bloc.dart';
-import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_state.dart';
-import 'package:furniture_shop/presentation/pages/customer/product_detail/product_detail_page.dart';
-import 'package:furniture_shop/presentation/pages/customer/wish_list/widget/icon_wishlist_widget.dart';
+import 'package:furniture_shop/presentation/pages/admin/home_tab/home_tab_admin_bloc.dart';
+import 'package:furniture_shop/presentation/pages/admin/home_tab/home_tab_admin_state.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class HomeAdminTabPage extends StatefulWidget {
+List<CategoriesModel> listCategories = [
+  CategoriesModel(
+      id: '6166a79e1ca0b44b1d0e9380',
+      name: "Popular",
+      image: Assets.images.icPopular.path),
+  CategoriesModel(
+      id: '616a8f57a845933851fbdecf',
+      name: "Chair",
+      image: Assets.images.icChair.path),
+  CategoriesModel(
+      id: '619d07ded96396890640b8e7',
+      name: "Lamp",
+      image: Assets.images.icLamp.path),
+  CategoriesModel(
+      id: '6166a79e1ca0b44b1d0e9380',
+      name: "Armchair",
+      image: Assets.images.icArmchair.path),
+  CategoriesModel(
+      id: '619d07ded96396890640b8e7',
+      name: "TV",
+      image: Assets.images.icTv.path),
+  CategoriesModel(
+      id: '616a8f57a845933851fbdecf',
+      name: "Bed",
+      image: Assets.images.icBed.path)
+];
+
+class HomeTabAdminPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomeAdminTabPageState();
+    return _HomeTabAdminPageState();
   }
 }
 
-class _HomeAdminTabPageState extends State<HomeAdminTabPage>
-    with AfterLayoutMixin {
-  HomeTabPageBloc _bloc = HomeTabPageBloc(appRepository: locator.get());
-  int _currentIndex = 1;
+class _HomeTabAdminPageState extends State<HomeTabAdminPage>
+    with
+        AfterLayoutMixin,
+        AutomaticKeepAliveClientMixin,
+        TickerProviderStateMixin {
+  HomeTabAdminPageBloc _bloc =
+      HomeTabAdminPageBloc(appRepository: locator.get());
+
+  ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
+  late final TabController tabController;
   @override
-  void afterFirstFrame(BuildContext context) {
-    _bloc.getCategoriesData();
+  void initState() {
+    tabController = TabController(vsync: this, length: listCategories.length);
+    tabController.addListener(_handleSelected);
+    super.initState();
   }
 
-  _blocListener(BuildContext context, HomeTabPageState state) async {
-    if (state is HomeTabPageLoadingState) {
+  @override
+  void afterFirstFrame(BuildContext context) {
+    _bloc.getProductWithCategory(listCategories[0].id ?? '');
+  }
+
+  _blocListener(BuildContext context, HomeTabAdminPageState state) async {
+    if (state is HomeTabAdminPageLoadingState) {
       EasyLoading.show(status: 'loading', maskType: EasyLoadingMaskType.black);
     } else {
       EasyLoading.dismiss();
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc,
-      child: BlocListener<HomeTabPageBloc, HomeTabPageState>(
-        listener: _blocListener,
-        child: BlocBuilder<HomeTabPageBloc, HomeTabPageState>(
-          bloc: _bloc,
-          builder: (context, state) {
-            if (state is HomeTabPageGetDataSuccessState) {
-              return DefaultTabController(
-                length: state.data.length,
-                child: Builder(builder: (BuildContext context) {
-                  final TabController tabController =
-                      DefaultTabController.of(context)!;
-                  tabController.addListener(() {
-                    if (!tabController.indexIsChanging) {
-                      log(tabController.index.toString());
-                      setState(() {
-                        _currentIndex = tabController.index + 1;
-                      });
-                    }
-                  });
-                  return Scaffold(
-                      appBar: _buildAppBar(state.data),
-                      body: TabBarView(children: [
-                        for (int i = 0; i < 6; i++) _buildListProduct(i + 1)
-                      ]));
-                }),
-              );
-            }
-
-            return Container(
-              color: Colors.red,
-              height: 50,
-            );
-          },
-        ),
-      ),
-    );
+  void _handleSelected() {
+    _currentIndex.value = tabController.index;
+    _bloc.getProductWithCategory(listCategories[tabController.index].id ?? '');
   }
 
-  CustomAppBar _buildAppBar(List<CategoriesResponseData> data) {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return BlocProvider(
+        create: (context) => _bloc,
+        child: DefaultTabController(
+          length: listCategories.length,
+          child: Builder(builder: (BuildContext context) {
+            return Scaffold(
+                appBar: _buildAppBar(),
+                body: TabBarView(controller: tabController, children: [
+                  for (int i = 0; i < listCategories.length; i++)
+                    _buildListProduct(listCategories[i].id ?? '')
+                ]));
+          }),
+        ));
+  }
+
+  CustomAppBar _buildAppBar() {
     return CustomAppBar(
       title: CustomText(
         'Home',
@@ -96,20 +114,34 @@ class _HomeAdminTabPageState extends State<HomeAdminTabPage>
       ),
       actions: [
         IconButton(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return _buildBottomSheet(context);
-              },
-            );
-          },
-          icon: Image.asset(
-            Assets.images.icAddNew.path,
+          onPressed: () {},
+          icon: SvgPicture.asset(
+            Assets.images.icCart.path,
             width: AppDimen.icon_size,
             height: AppDimen.icon_size,
           ),
         ),
+        IconButton(
+            onPressed: () {},
+            icon: Center(
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    Assets.images.icMessage.path,
+                    width: AppDimen.icon_size,
+                    height: AppDimen.icon_size,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Icon(
+                      Icons.brightness_1,
+                      color: AppColor.dotMessage,
+                      size: 6,
+                    ),
+                  )
+                ],
+              ),
+            )),
       ],
       leading: IconButton(
           onPressed: () {},
@@ -122,77 +154,90 @@ class _HomeAdminTabPageState extends State<HomeAdminTabPage>
         preferredSize: const Size(0.0, 80.0),
         child: TabBar(
             isScrollable: true,
-            labelColor: Colors.amber,
             indicatorColor: Colors.transparent,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index + 1;
-              });
-            },
+            controller: tabController,
             tabs: [
-              for (final item in data)
-                Column(children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: _currentIndex == item.id
-                          ? AppColor.colorPrimary
-                          : AppColor.boxIcon,
-                      borderRadius:
-                          BorderRadius.circular(AppDimen.radiusNormal),
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        item.image,
-                        width: AppDimen.icon_size,
-                        height: AppDimen.icon_size,
-                        color: _currentIndex == item.id
-                            ? AppColor.colorWhite
-                            : AppColor.colorGrey,
-                      ),
-                    ),
-                  ),
-                  CustomText(
-                    item.name,
-                    fontSize: FontSize.SMALL,
-                    color: _currentIndex == item.id
-                        ? AppColor.colorPrimary
-                        : AppColor.colorGrey,
-                  )
-                ]),
+              for (int i = 0; i < listCategories.length; i++)
+                ValueListenableBuilder<int>(
+                    valueListenable: _currentIndex,
+                    builder: (BuildContext context, int value, Widget? child) {
+                      return Column(children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: AppDimen.spacing_1),
+                          width: 44,
+                          height: 44,
+                          decoration: BoxDecoration(
+                            color: value == i
+                                ? AppColor.colorPrimary
+                                : AppColor.boxIcon,
+                            borderRadius:
+                                BorderRadius.circular(AppDimen.radiusNormal),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              listCategories[i].image ??
+                                  Assets.images.icArmchair.path,
+                              width: AppDimen.icon_size,
+                              height: AppDimen.icon_size,
+                              color: value == i
+                                  ? AppColor.colorWhite
+                                  : AppColor.colorGrey,
+                            ),
+                          ),
+                        ),
+                        CustomText(
+                          listCategories[i].name ?? '',
+                          fontSize: FontSize.SMALL,
+                          color: value == i
+                              ? AppColor.colorPrimary
+                              : AppColor.colorGrey,
+                        )
+                      ]);
+                    }),
             ]),
       ),
     );
   }
 
-  _buildListProduct(int id) {
-    List<ProductTest>? list = _bloc.getProductWithCategoriesID(id);
+  Widget _buildListProduct(String id) {
+    List<ProductDetailModel>? list;
+    return BlocListener<HomeTabAdminPageBloc, HomeTabAdminPageState>(
+      listener: _blocListener,
+      child: BlocBuilder<HomeTabAdminPageBloc, HomeTabAdminPageState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            if (state is HomeTabAdminPageGetDataSuccessState) {
+              list = state.data;
+              return Container(
+                  margin: EdgeInsets.symmetric(
+                      vertical: AppDimen.spacing_3,
+                      horizontal: AppDimen.spacing_2),
+                  child: _buildGridView(list ?? []));
+            } else {
+              return Container();
+            }
+          }),
+    );
+  }
+
+  Widget _buildGridView(List<ProductDetailModel>? list) {
     return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: AppDimen.spacing_3, horizontal: AppDimen.spacing_2),
-      child: Container(
-        child: GridView.builder(
-            itemCount: list?.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.6,
-              crossAxisSpacing: AppDimen.spacing_2,
-              mainAxisSpacing: AppDimen.spacing_2,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              final item = list![index];
+      child: GridView.builder(
+          itemCount: list?.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.6,
+            crossAxisSpacing: AppDimen.spacing_2,
+            mainAxisSpacing: AppDimen.spacing_2,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            if (list != null) {
+              ProductDetailModel item = list[index];
               return Center(
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => ProductDetailPage(
-                            typeProduct: ProductDetailType.Admin),
-                      ),
-                    );
+                    Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -204,9 +249,10 @@ class _HomeAdminTabPageState extends State<HomeAdminTabPage>
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image.network(
-                              item.images![0],
+                              item.images?[0].imageUrl ?? '',
                               width: 150,
                               height: 200,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           Positioned(
@@ -240,89 +286,13 @@ class _HomeAdminTabPageState extends State<HomeAdminTabPage>
                   ),
                 ),
               );
-            }),
-      ),
+            } else {
+              return Container();
+            }
+          }),
     );
   }
 
-  Widget _buildBottomSheet(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppDimen.spacing_3,
-        horizontal: AppDimen.spacing_2,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeaderBottomSheet(context),
-            customDivider(),
-            _buildTileBottomSheet(
-              icon: Icons.color_lens_outlined,
-              title: 'Category',
-              onTap: () {},
-            ),
-            customDivider(),
-            _buildTileBottomSheet(
-              icon: Icons.delete_outline,
-              title: 'Product',
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(RoutePaths.ADMIN_EDIT_PRODUCT_PAGE);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeaderBottomSheet(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomText(
-            'Options',
-            fontSize: FontSize.BIG,
-            fontWeight: FontWeight.w600,
-          ),
-          IconWishList(
-            icon: Icons.close,
-            color: AppColor.colorGrey,
-            onTap: () => Navigator.pop(context),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTileBottomSheet(
-      {IconData? icon, String? title, Function()? onTap}) {
-    return InkWell(
-      onTap: onTap!,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
-        child: Row(
-          children: [
-            IconWishList(icon: icon, color: AppColor.colorGrey),
-            const SizedBox(width: AppDimen.spacing_2),
-            CustomText(
-              title!,
-              fontSize: FontSize.BIG,
-              fontWeight: FontWeight.w300,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget customDivider() {
-    return Divider(
-      thickness: 1,
-      color: AppColor.colorGreyLight,
-    );
-  }
+  @override
+  bool get wantKeepAlive => true;
 }
