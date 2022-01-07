@@ -19,7 +19,6 @@ class _HomeAdminPageState extends State<HomeAdminPage>
   final _tabs = [
     HomeTabAdminPage(),
     OrderAdminPage(),
-    NotificationPage(),
     ProfilePage(),
   ];
 

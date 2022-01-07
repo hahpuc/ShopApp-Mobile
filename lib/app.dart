@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: HomeAdminPage(),
+              home: _getHomeScreen(),
             );
           }),
     );

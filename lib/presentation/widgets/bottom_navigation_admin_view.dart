@@ -74,6 +74,26 @@ class _BottomNavigationAdminView extends State<BottomNavigationAdminView> {
                             height: AppDimen.bottomNavigationIcon),
                       )),
           )),
+          //   Expanded(
+          //       child: InkWell(
+          //     onTap: () {
+          //       _clickTab(2);
+          //     },
+          //     onDoubleTap: () {
+          //       _clickTab(2, isDoubleTab: true);
+          //     },
+          //     child: Container(
+          //       child: _currentIndex == 2
+          //           ? Assets.images.icNotificationSelected.image(
+          //               width: AppDimen.bottomNavigationIcon,
+          //               height: AppDimen.bottomNavigationIcon)
+          //           : Opacity(
+          //               opacity: _opacityUnselected,
+          //               child: Assets.images.icNotification.image(
+          //                   width: AppDimen.bottomNavigationIcon,
+          //                   height: AppDimen.bottomNavigationIcon)),
+          //     ),
+          //   )),
           Expanded(
               child: InkWell(
             onTap: () {
@@ -84,26 +104,6 @@ class _BottomNavigationAdminView extends State<BottomNavigationAdminView> {
             },
             child: Container(
               child: _currentIndex == 2
-                  ? Assets.images.icNotificationSelected.image(
-                      width: AppDimen.bottomNavigationIcon,
-                      height: AppDimen.bottomNavigationIcon)
-                  : Opacity(
-                      opacity: _opacityUnselected,
-                      child: Assets.images.icNotification.image(
-                          width: AppDimen.bottomNavigationIcon,
-                          height: AppDimen.bottomNavigationIcon)),
-            ),
-          )),
-          Expanded(
-              child: InkWell(
-            onTap: () {
-              _clickTab(3);
-            },
-            onDoubleTap: () {
-              _clickTab(3, isDoubleTab: true);
-            },
-            child: Container(
-              child: _currentIndex == 3
                   ? Assets.images.icProfileSelected.image(
                       width: AppDimen.bottomNavigationIcon,
                       height: AppDimen.bottomNavigationIcon)

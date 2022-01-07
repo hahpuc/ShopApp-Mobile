@@ -49,20 +49,12 @@ class _OrderAdminPageState extends State<OrderAdminPage> {
   CustomAppBar _buildAppBar() {
     return CustomAppBar(
       title: CustomText(
-        'My Order',
+        'List Orders',
         fontSize: FontSize.BIG_1,
         fontFamily: FontFamily.gelasio,
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            Assets.images.icSearch.path,
-            width: AppDimen.icon_size,
-            height: AppDimen.icon_size,
-          ),
-        ),
-      ],
+      leading: Container(),
+      actions: [],
       bottom: PreferredSize(
         preferredSize: Size(0, 25),
         child: Padding(
@@ -77,7 +69,7 @@ class _OrderAdminPageState extends State<OrderAdminPage> {
               _buildTabText('New Orders'),
               _buildTabText('To Ship'),
               _buildTabText('Completed'),
-              _buildTabText('Cancelled'),
+              _buildTabText('All Order'),
             ],
           ),
         ),

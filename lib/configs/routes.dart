@@ -142,8 +142,12 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => OrderAdminPage(), settings: settings);
       case RoutePaths.ADMIN_ORDER_DETAIL:
+        var arg = settings.arguments as OrderDataModel;
         return MaterialPageRoute(
-            builder: (_) => OrderDetailAdminPage(), settings: settings);
+            builder: (_) => OrderDetailAdminPage(
+                  orderData: arg,
+                ),
+            settings: settings);
       default:
         return null;
     }
