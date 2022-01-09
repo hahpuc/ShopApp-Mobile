@@ -8,7 +8,11 @@ import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/chat/chat_page.dart';
+import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_in_page.dart';
+import 'package:furniture_shop/presentation/pages/boarding/boarding_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/home/home_page.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_configs_widgets.dart';
+import 'package:furniture_shop/values/app_utils.dart';
 
 import 'bloc/app/app_bloc.dart';
 import 'bloc/locale/locale_bloc.dart';
@@ -52,7 +56,7 @@ class MyApp extends StatelessWidget {
               supportedLocales: S.delegate.supportedLocales,
               locale: state.locale,
               onGenerateRoute: Routes.generateRoute,
-              home: ChatPage(),
+              home: _getHomeScreen(),
             );
           }),
     );
@@ -93,5 +97,15 @@ class MyApp extends StatelessWidget {
       flavorConfig: flavorConfig,
       child: MyApp(),
     ));
+  }
+
+  Widget _getHomeScreen() {
+    if (AppUtils.needOnboarding()) {
+      return BoardingPage();
+    } else if (AppUtils.isLoggedIn()) {
+      return HomePage();
+    } else {
+      return SignInPage();
+    }
   }
 }

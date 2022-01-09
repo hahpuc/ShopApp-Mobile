@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/presentation/pages/admin/home_admin/home_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/admin/order_admin/order_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/admin/order_detail_admin/order_detail_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/admin/product/edit_product_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/auth/forgot_password/forgot_password_page.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_in/sign_in_page.dart';
 import 'package:furniture_shop/presentation/pages/auth/sign_up/sign_up_page.dart';
@@ -29,6 +33,12 @@ class RoutePaths {
   static const String SHIPPING_ADDRESS_PAGE = '/shipping_address';
   static const String PAYMENT_METHODS = '/payment_methods';
   static const String ADD_SHIPPING_ADDRESSES = '/add_address';
+
+  //ADMIN
+  static const String ADMIN_HOME = '/admin_home';
+  static const String ADMIN_EDIT_PRODUCT_PAGE = '/admin_eidt_product';
+  static const String ADMIN_ORDER = '/admin_order';
+  static const String ADMIN_ORDER_DETAIL = '/admin_order_detail';
 }
 
 class Routes {
@@ -85,6 +95,19 @@ class Routes {
       case RoutePaths.ADD_SHIPPING_ADDRESSES:
         return MaterialPageRoute(
             builder: (_) => AddShippingAddressPage(), settings: settings);
+      //ADMIN
+      case RoutePaths.ADMIN_HOME:
+        return MaterialPageRoute(
+            builder: (_) => HomeAdminPage(), settings: settings);
+      case RoutePaths.ADMIN_EDIT_PRODUCT_PAGE:
+        return MaterialPageRoute(
+            builder: (_) => EditAdminProductPage(), settings: settings);
+      case RoutePaths.ADMIN_ORDER:
+        return MaterialPageRoute(
+            builder: (_) => OrderAdminPage(), settings: settings);
+      case RoutePaths.ADMIN_ORDER_DETAIL:
+        return MaterialPageRoute(
+            builder: (_) => OrderDetailAdminPage(), settings: settings);
       default:
         return null;
     }

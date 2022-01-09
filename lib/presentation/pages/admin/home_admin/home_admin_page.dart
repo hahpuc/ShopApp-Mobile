@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_shop/presentation/pages/admin/home_tab/home_tab_admin_page.dart';
+import 'package:furniture_shop/presentation/pages/admin/order_admin/order_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/notification/notification_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/profile/profile_page.dart';
-import 'package:furniture_shop/presentation/pages/customer/wish_list/whish_list_page.dart';
-import 'package:furniture_shop/presentation/widgets/bottom_navigation_view.dart';
+import 'package:furniture_shop/presentation/widgets/bottom_navigation_admin_view.dart';
 import 'package:furniture_shop/values/colors.dart';
 
-class HomePage extends StatefulWidget {
+class HomeAdminPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomePageState();
+    return _HomeAdminPageState();
   }
 }
 
-class _HomePageState extends State<HomePage>
+class _HomeAdminPageState extends State<HomeAdminPage>
     with SingleTickerProviderStateMixin {
   final _tabs = [
     HomeAdminTabPage(),
-    // HomeTabPage(),
-    WishListPage(),
+    OrderAdminPage(),
     NotificationPage(),
     ProfilePage(),
   ];
@@ -60,7 +59,7 @@ class _HomePageState extends State<HomePage>
               ),
             ],
           ),
-          child: BottomNavigationView(listener: _clickTab),
+          child: BottomNavigationAdminView(listener: _clickTab),
         ),
       ),
     );

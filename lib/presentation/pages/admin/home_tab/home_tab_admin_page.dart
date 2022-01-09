@@ -8,26 +8,28 @@ import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/routes.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
 import 'package:furniture_shop/data/model/response/categories_response.dart';
-import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/data/model/response/test_product.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
 import 'package:furniture_shop/generated/assets/fonts.gen.dart';
 import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_bloc.dart';
 import 'package:furniture_shop/presentation/pages/customer/home_tab/home_tab_state.dart';
+import 'package:furniture_shop/presentation/pages/customer/product_detail/product_detail_page.dart';
+import 'package:furniture_shop/presentation/pages/customer/wish_list/widget/icon_wishlist_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_text.dart';
 import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
-class HomeTabPage extends StatefulWidget {
+class HomeAdminTabPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomeTabPageState();
+    return _HomeAdminTabPageState();
   }
 }
 
-class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
+class _HomeAdminTabPageState extends State<HomeAdminTabPage>
+    with AfterLayoutMixin {
   HomeTabPageBloc _bloc = HomeTabPageBloc(appRepository: locator.get());
   int _currentIndex = 1;
   @override
@@ -94,34 +96,20 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset(
-            Assets.images.icCart.path,
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return _buildBottomSheet(context);
+              },
+            );
+          },
+          icon: Image.asset(
+            Assets.images.icAddNew.path,
             width: AppDimen.icon_size,
             height: AppDimen.icon_size,
           ),
         ),
-        IconButton(
-            onPressed: () {},
-            icon: Center(
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    Assets.images.icMessage.path,
-                    width: AppDimen.icon_size,
-                    height: AppDimen.icon_size,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Icon(
-                      Icons.brightness_1,
-                      color: AppColor.dotMessage,
-                      size: 6,
-                    ),
-                  )
-                ],
-              ),
-            )),
       ],
       leading: IconButton(
           onPressed: () {},
@@ -198,7 +186,13 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
               return Center(
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(RoutePaths.PRODUCT_DETAIL);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => ProductDetailPage(
+                            typeProduct: ProductDetailType.Admin),
+                      ),
+                    );
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -248,6 +242,87 @@ class _HomeTabPageState extends State<HomeTabPage> with AfterLayoutMixin {
               );
             }),
       ),
+    );
+  }
+
+  Widget _buildBottomSheet(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppDimen.spacing_3,
+        horizontal: AppDimen.spacing_2,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeaderBottomSheet(context),
+            customDivider(),
+            _buildTileBottomSheet(
+              icon: Icons.color_lens_outlined,
+              title: 'Category',
+              onTap: () {},
+            ),
+            customDivider(),
+            _buildTileBottomSheet(
+              icon: Icons.delete_outline,
+              title: 'Product',
+              onTap: () {
+                Navigator.of(context)
+                    .pushNamed(RoutePaths.ADMIN_EDIT_PRODUCT_PAGE);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderBottomSheet(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppDimen.spacing_1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomText(
+            'Options',
+            fontSize: FontSize.BIG,
+            fontWeight: FontWeight.w600,
+          ),
+          IconWishList(
+            icon: Icons.close,
+            color: AppColor.colorGrey,
+            onTap: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTileBottomSheet(
+      {IconData? icon, String? title, Function()? onTap}) {
+    return InkWell(
+      onTap: onTap!,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppDimen.spacing_1),
+        child: Row(
+          children: [
+            IconWishList(icon: icon, color: AppColor.colorGrey),
+            const SizedBox(width: AppDimen.spacing_2),
+            CustomText(
+              title!,
+              fontSize: FontSize.BIG,
+              fontWeight: FontWeight.w300,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget customDivider() {
+    return Divider(
+      thickness: 1,
+      color: AppColor.colorGreyLight,
     );
   }
 }

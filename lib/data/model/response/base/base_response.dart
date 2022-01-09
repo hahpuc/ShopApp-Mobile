@@ -14,12 +14,8 @@ abstract class BaseResponseData<T> {
   BaseResponseData<T> tryParse(dynamic data) {
     if (data is Map && data.containsKey("error")) {
       // Error
-      if (data["error"].containsKey("code")) {
-        errorCode = data["error"]["code"];
-      }
-      if (data["error"].containsKey("code")) {
-        errorMsg = data["error"]["message"];
-      }
+      errorCode = data["code"];
+      errorMsg = data["error"];
       data = null;
     } else {
       // Success, try parsing data

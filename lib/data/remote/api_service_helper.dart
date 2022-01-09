@@ -39,8 +39,10 @@ class ApiServiceHelper {
       result.response = await request.call();
     } on Exception catch (e) {
       result.exception = e;
+      print("-----> Exception ${e.toString()}");
     } catch (e) {
       result.exception = UnknownApiException();
+      print("-----> Exception ${e.toString()}");
     } finally {
       // Make sure to close client after each request
       _client.close();
@@ -58,6 +60,11 @@ class ApiServiceHelper {
     final response = await _client
         .get(Uri.parse(url), headers: headers)
         .timeout(Duration(seconds: ApiConfigs.TIME_OUT_SECONDS));
+
+    print("----> Url: $url");
+    print("----> Method: GET");
+    print("----> Headers: $headers");
+    print("-----> Response ${response.body}");
     responseJson = _checkHttpResponse(response);
     return responseJson;
   }
@@ -75,6 +82,13 @@ class ApiServiceHelper {
     final response = await _client
         .post(Uri.parse(url), headers: headers, body: body, encoding: encoding)
         .timeout(Duration(seconds: ApiConfigs.TIME_OUT_SECONDS));
+
+    print("----> Url: $url");
+    print("----> Method: POST");
+    print("----> Headers: $headers");
+    print("----> Body: $body");
+    print("-----> Response ${response.body}");
+
     responseJson = _checkHttpResponse(response);
     return responseJson;
   }
@@ -92,7 +106,14 @@ class ApiServiceHelper {
     final response = await _client
         .put(Uri.parse(url), headers: headers, body: body, encoding: encoding)
         .timeout(Duration(seconds: ApiConfigs.TIME_OUT_SECONDS));
+
+    print("----> Url: $url");
+    print("----> Method: PUT");
+    print("----> Headers: $headers");
+    print("----> Body: $body");
+    print("-----> Response ${response.body}");
     responseJson = _checkHttpResponse(response);
+
     return responseJson;
   }
 
@@ -117,6 +138,8 @@ class ApiServiceHelper {
   dynamic _checkHttpResponse(Response response) {
     switch (response.statusCode) {
       case 200:
+      case 201:
+      case 204:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
       case 400:

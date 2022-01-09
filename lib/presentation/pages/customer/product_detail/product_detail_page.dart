@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:furniture_shop/common/mixins/after_layout.dart';
 import 'package:furniture_shop/configs/service_locator.dart';
-import 'package:furniture_shop/data/model/response/product_detail_response.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/generated/assets/assets.gen.dart';
+import 'package:furniture_shop/presentation/pages/admin/product/edit_product_admin_page.dart';
 import 'package:furniture_shop/presentation/pages/customer/product_detail/widget/product_picture_widget.dart';
 import 'package:furniture_shop/presentation/widgets/base/app_back_button.dart';
 import 'package:furniture_shop/presentation/widgets/base/custom_appbar.dart';
@@ -18,8 +19,18 @@ import 'package:furniture_shop/values/font_sizes.dart';
 import 'bloc/product_detail_bloc.dart';
 import 'bloc/product_detail_state.dart';
 
+enum ProductDetailType {
+  Customer,
+  Admin,
+}
+
 class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({Key? key}) : super(key: key);
+  final ProductDetailType typeProduct;
+
+  const ProductDetailPage({
+    this.typeProduct = ProductDetailType.Customer,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -36,7 +47,8 @@ class _ProductDetailPageState extends State<ProductDetailPage>
 
   @override
   void afterFirstFrame(BuildContext context) {
-    _bloc.getProductDetailsData('productID');
+    // HARD CODE HERE
+    _bloc.getProductDetailsData('6166b1a5f1300453bc24adb5');
   }
 
   @override
@@ -61,6 +73,10 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     } else {
       EasyLoading.dismiss();
     }
+
+    if (state is ProductDetailGetDataFailed) {
+      EasyLoading.showError(state.msg);
+    }
   }
 
   Widget _buildBody() {
@@ -71,7 +87,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
         child: BlocBuilder<ProductDetailPageBloc, ProductDetailPageState>(
           bloc: _bloc,
           builder: (context, state) {
-            if (state is ProductDetailPageGetDataSuccessState)
+            if (state is ProductDetailGetDataSuccess)
               return Stack(
                 children: [
                   Container(height: double.infinity, width: double.infinity),
@@ -88,37 +104,79 @@ class _ProductDetailPageState extends State<ProductDetailPage>
   }
 
   Widget _buildFooterButton() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        height: AppDimen.footerButtonHeight,
-        child: Row(
-          children: [
-            SizedBox(width: AppDimen.horizontalSpacing),
-            IconButton(
-              iconSize: 50.0,
-              onPressed: () {},
-              icon: Image(
-                image: Assets.images.icAddWishList,
-              ),
+    switch (widget.typeProduct) {
+      case ProductDetailType.Admin:
+        return Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: AppDimen.footerButtonHeight,
+            child: Row(
+              children: [
+                SizedBox(width: AppDimen.horizontalSpacing),
+                IconButton(
+                  iconSize: 50.0,
+                  onPressed: () {},
+                  icon: Image(
+                    image: Assets.images.icBin,
+                  ),
+                ),
+                SizedBox(width: AppDimen.spacing_1),
+                Expanded(
+                  child: PrimaryButton(
+                    title: 'Edit product',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              EditAdminProductPage(
+                            typeEdit: EditAdminType.Edit,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(width: AppDimen.horizontalSpacing),
+              ],
             ),
-            SizedBox(width: AppDimen.spacing_1),
-            Expanded(
-              child: PrimaryButton(
-                title: 'Add to cart',
-                onPressed: () {},
-              ),
+          ),
+        );
+      default:
+        return Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: AppDimen.footerButtonHeight,
+            child: Row(
+              children: [
+                SizedBox(width: AppDimen.horizontalSpacing),
+                IconButton(
+                  iconSize: 50.0,
+                  onPressed: () {},
+                  icon: Image(
+                    image: Assets.images.icAddWishList,
+                  ),
+                ),
+                SizedBox(width: AppDimen.spacing_1),
+                Expanded(
+                  child: PrimaryButton(
+                    title: 'Add to cart',
+                    onPressed: () {},
+                  ),
+                ),
+                SizedBox(width: AppDimen.horizontalSpacing),
+              ],
             ),
-            SizedBox(width: AppDimen.horizontalSpacing),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
+    }
   }
 
-  Widget _buildProductInformation(ProductDetailResponseData data) {
+  Widget _buildProductInformation(ProductDetailModel data) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +192,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildDetailInfo(ProductDetailResponseData data) {
+  Widget _buildDetailInfo(ProductDetailModel data) {
     return Container(
       padding: const EdgeInsets.all(AppDimen.spacing_2),
       child: Column(
@@ -168,7 +226,7 @@ class _ProductDetailPageState extends State<ProductDetailPage>
     );
   }
 
-  Widget _buildRatingView(ProductDetailResponseData data) {
+  Widget _buildRatingView(ProductDetailModel data) {
     return Row(
       children: [
         Icon(

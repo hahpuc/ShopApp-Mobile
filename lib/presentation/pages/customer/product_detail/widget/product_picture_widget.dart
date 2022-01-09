@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_shop/data/model/response/product_detail/product_detail_response.dart';
 import 'package:furniture_shop/presentation/widgets/indicator_view.dart';
 import 'package:furniture_shop/values/dimens.dart';
 
@@ -30,7 +31,7 @@ class ProfilePictureList extends StatelessWidget {
   }) : super(key: key);
 
   final PageController pageController;
-  final List<String>? images;
+  final List<ImageModel>? images;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class ProfilePictureList extends StatelessWidget {
             controller: pageController,
             children: [
               for (int i = 0; i < images!.length; ++i)
-                ProductPicture(imageUrl: images?[i]),
+                ProductPicture(imageUrl: images?[i].imageUrl),
             ],
           ),
           Positioned(

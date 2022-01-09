@@ -1,15 +1,4 @@
-import 'base/base_response.dart';
-
-class ProductDetailResponse
-    extends BaseResponseData<ProductDetailResponseData> {
-  @override
-  ProductDetailResponseData parseData(data) {
-    // TODO: implement parseData
-    throw UnimplementedError();
-  }
-}
-
-class ProductDetailResponseData {
+class ProductTest {
   final int? categoriesID;
   final String? name;
   final String? description;
@@ -18,7 +7,7 @@ class ProductDetailResponseData {
   final int? reviews;
   final List<String>? images;
 
-  ProductDetailResponseData({
+  ProductTest({
     this.categoriesID,
     this.name,
     this.description,

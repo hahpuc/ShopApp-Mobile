@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> with AfterLayoutMixin {
     );
   }
 
-  Widget _buildInformation(UserResponseData data) {
+  Widget _buildInformation(UserModel data) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: AppDimen.spacing_3),
       child: Row(

@@ -6,12 +6,19 @@ import 'package:furniture_shop/values/colors.dart';
 import 'package:furniture_shop/values/dimens.dart';
 import 'package:furniture_shop/values/font_sizes.dart';
 
+enum OrderCardType {
+  Customer,
+  Admin,
+}
+
 class OrderCard extends StatelessWidget {
   final String? idOrder;
   final String? date;
   final int? quantity;
   final double? total;
   final int? status;
+  final OrderCardType typeOrder;
+
   final OnOrderItemListener? listener;
 
   const OrderCard({
@@ -21,6 +28,7 @@ class OrderCard extends StatelessWidget {
     this.total = 0,
     this.quantity = 1,
     this.status = 2,
+    this.typeOrder = OrderCardType.Customer,
     this.listener,
   }) : super(key: key);
 
@@ -102,7 +110,9 @@ class OrderCard extends StatelessWidget {
             title: 'Total Amount',
             number: '${total!.toStringAsFixed(3)} \$',
           ),
-          _buildStatusOrder(),
+          typeOrder == OrderCardType.Customer
+              ? _buildStatusOrder()
+              : const SizedBox.shrink(),
         ],
       ),
     );
